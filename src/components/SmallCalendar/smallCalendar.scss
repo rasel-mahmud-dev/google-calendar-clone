@@ -1,0 +1,29 @@
+
+
+.small-calendar{
+    .date{
+        font-size: 10px;
+        .date-cell{
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #3d3d3d;
+            font-weight: 500;
+            cursor: pointer;
+            &:hover{
+                background: var(--hover);
+                border-radius: 20px;
+                color: var(--white);
+
+            }
+        }
+
+        &.inactive{
+            .date-cell {
+                color: #a8a8a8;
+            }
+        }
+    }
+}

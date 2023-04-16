@@ -1,0 +1,33 @@
+
+
+
+
+.btn {
+    background: white;
+    padding: 4px 15px;
+    outline: none;
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-circle {
+    border: none;
+    padding: 5px;
+  border-radius: 100%;
+    &:hover {
+        background: rgba(229, 229, 229, 0.87);
+    }
+}
+
+.container{
+    padding: 0 15px;
+}
+
+.add-new-btn{
+    border: 1px solid rgba(141, 141, 141, 0.57);
+    transition: all .3s linear;
+    &:hover{
+        box-shadow: 1px 4px 13px 0px #2d2d2dba
+    }
+}

@@ -1,0 +1,39 @@
+.input-root {
+    background: #f6f6f6;
+
+    position: relative;
+
+    &.input-focus {
+        //border-bottom: 2px solid red;
+    }
+
+    .input-wrapper{
+        transition: width .3s ease;
+        //background: #ff92b2;
+        border-bottom: 1px solid rgba(184, 197, 197, 0.34);
+        width: 100%;
+        input{
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 4px 2px;
+        }
+    }
+
+    .input-border {
+        position: absolute;
+        bottom: 0;
+        width: 0;
+        transition: width .3s ease;
+        height: 2px;
+        background: #66a3ff;
+
+        &.input-border-focus {
+            width: 100%;
+        }
+    }
+
+}

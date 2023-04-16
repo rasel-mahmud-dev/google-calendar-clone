@@ -1,34 +1,51 @@
 
-
-
-
 .btn {
     background: white;
-    padding: 4px 15px;
+    padding: 6px 18px;
     outline: none;
     border: 1px solid #dadada;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+}
+.btn-primary{
+    background: var(--active);
+    color: var(--white);
+    outline: none;
+    border: none;
+    box-shadow: 0 2px 7px -3px rgb(40 40 40 / 60%);
+    transition: box-shadow .4s ease;
+    &:hover{
+        box-shadow: 0 2px 7px 0px rgb(40 40 40 / 61%)
+    }
 }
 
 .btn-circle {
     border: none;
     padding: 5px;
-  border-radius: 100%;
+    border-radius: 100%;
+
     &:hover {
         background: rgba(229, 229, 229, 0.87);
     }
 }
 
-.container{
+.my-container {
     padding: 0 15px;
+    width: 100% !important;
+    max-width: 100%;
 }
 
-.add-new-btn{
+.sidebar {
+    width: 260px;
+}
+
+.add-new-btn {
     border: 1px solid rgba(234, 234, 234, 0.57);
     transition: all .3s linear;
     color: #595959;
-    &:hover{
+
+    &:hover {
         box-shadow: 1px 4px 13px 0px #2d2d2dba
     }
 }

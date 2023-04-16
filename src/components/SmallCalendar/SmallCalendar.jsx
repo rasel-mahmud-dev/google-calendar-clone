@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {BiChevronLeft, BiChevronRight} from "react-icons/all";
 import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
@@ -7,7 +7,7 @@ import {isToday} from "date-fns";
 
 const SmallCalendar = () => {
 
-    const {smallCalendarMonth, setSmallCalendarMonth} = useContext(CalendarContext)
+    const {smallCalendarMonth, monthIndex, setSmallCalendarMonth} = useContext(CalendarContext)
 
     let weeks = [
         "Su",
@@ -19,19 +19,17 @@ const SmallCalendar = () => {
         "Sa"
     ]
 
-    const [currentMonthIdx, setCurrentMonthIdx] = useState(
-        dayjs().month()
-    );
 
-    let todayDayInPrevMonth = dayjs(new Date(dayjs().year(), currentMonthIdx - 1)).daysInMonth()
-    let todayDayInCurrentMonth = dayjs(new Date(dayjs().year(), currentMonthIdx)).daysInMonth()
-    let nextMonth = dayjs(new Date(dayjs().year(), currentMonthIdx + 1)).daysInMonth()
+
+    let todayDayInPrevMonth = dayjs(new Date(dayjs().year(), monthIndex - 1)).daysInMonth()
+    let todayDayInCurrentMonth = dayjs(new Date(dayjs().year(), monthIndex)).daysInMonth()
+    let nextMonth = dayjs(new Date(dayjs().year(), monthIndex + 1)).daysInMonth()
 
     let totalCell = 42
 
     function prevCalendarEnd() {
 
-        let day = dayjs(new Date(dayjs().year(), currentMonthIdx))
+        let day = dayjs(new Date(dayjs().year(), monthIndex))
         let dayIndex = day.day()
 
         let arr = Array.from({length: todayDayInPrevMonth}).map((_item, index) => index + 1).reverse()
@@ -46,7 +44,7 @@ const SmallCalendar = () => {
 
     function nextCalendarStart() {
 
-        let day = dayjs(new Date(dayjs().year(), currentMonthIdx))
+        let day = dayjs(new Date(dayjs().year(), monthIndex))
         let dayIndex = day.day()
 
 
@@ -70,34 +68,38 @@ const SmallCalendar = () => {
         setCurrentMonthIdx(val)
     }
 
-    function isToday2(date){
-        let r = dayjs(new Date(dayjs().year(), currentMonthIdx, date))
+    function isToday2(date) {
+        let r = dayjs(new Date(dayjs().year(), monthIndex, date))
         return isToday(r.toDate())
     }
 
     return (
-        <div className="mt-5 w-52  p-2 rounded-xl small-calendar">
+        <div className="mt-5 w-full p-2 rounded-xl small-calendar">
 
             <div className="flex justify-between px-1">
                 <p className="text-sm text-gray-700 font-medium">{
-                    dayjs(new Date(dayjs().year(), currentMonthIdx)).format(
+                    dayjs(new Date(dayjs().year(), monthIndex)).format(
                         "MMMM YYYY"
                     )}</p>
 
-                <div className="flex items-center gap-x-1 ml-4">
-                    <li className="  list-none text-2xl"
-                        onClick={() => jumpPrevMonth(currentMonthIdx - 1)}>
-                        <BiChevronLeft className="text-sm"/>
+                <div className="flex items-center gap-x-1">
+                    <li className="date list-none text-2xl"
+                        onClick={() => jumpPrevMonth(monthIndex - 1)}>
+                        <div className="date-cell">
+                            <BiChevronLeft className="text-sm"/>
+                        </div>
                     </li>
-                    <li className="  list-none text-2xl"
-                        onClick={() => jumpNextMonth(currentMonthIdx + 1)}>
-                        <BiChevronRight className="text-sm"/>
+                    <li className="date list-none text-2xl mr-3"
+                        onClick={() => jumpNextMonth(monthIndex + 1)}>
+                        <div className="date-cell">
+                            <BiChevronRight className="text-sm"/>
+                        </div>
                     </li>
                 </div>
             </div>
 
             <div>
-                <div className="flex justify-between mt-1">
+                <div className="grid grid-cols-7">
                     {weeks.map(week => (
                         <div className="date">
                             <span className="date-cell">{week}</span>

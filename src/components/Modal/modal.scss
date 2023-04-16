@@ -1,0 +1,46 @@
+
+.backdrop{
+    width: 100%;
+    height: 100%;
+    background: rgba(91, 91, 91, 0.23);
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    &.open-backdrop{
+        display: block;
+    }
+
+    &.close-backdrop{
+        display: none;
+    }
+}
+
+.modal{
+    width: 500px;
+    background: white;
+    //height: 400px;
+    position: fixed;
+    z-index: 1000;
+    box-shadow: 0 2px 30px -3px #5656566b;
+    border-radius: 11px;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 40%;
+    visibility: hidden;
+    transition: all .2s ease-out;
+
+    &.open-modal{
+        transform: translate(-50%, -30%);
+        visibility: visible;
+        opacity: 1;
+    }
+
+    &.close-modal{
+        transform: translate(-50%, 50%);
+        visibility: hidden;
+        opacity: 0;
+
+    }
+
+}

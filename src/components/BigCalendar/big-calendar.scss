@@ -1,0 +1,63 @@
+
+.big-calendar{
+    padding: 0 10px;
+    height: 100%;
+
+
+    .big-date{
+        min-height: 100px;
+        background: #f1f1f1;
+        margin: 4px;
+        padding-top: 6px;
+        justify-content: center;
+        display: flex;
+        .big-date-cell{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            &:hover{
+                width: 25px;
+                height: 25px;
+                border-radius: 20px;
+                background: var(--hover);
+                color: var(--white);
+            }
+        }
+
+        &.today {
+            .big-date-cell {
+                border-radius: 20px;
+                background: var(--active);
+                color: var(--white);
+            }
+
+        }
+
+        &.inactive {
+            .big-date-cell {
+                color: #a8a8a8;
+            }
+        }
+
+    }
+
+
+
+
+    .day-row{
+        //background: red;
+        min-height: 10px !important;
+        .big-date {
+            min-height: 10px;
+        }
+        transform: translateY(8px);
+    }
+
+
+}
+

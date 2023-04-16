@@ -5,35 +5,18 @@ import dayjs from "dayjs";
 
 const Header = () => {
 
-    const {monthIndex, calendar, setCalendar} = useContext(CalendarContext)
+    const {monthIndex, setMonthIndex, setCalendar} = useContext(CalendarContext)
 
     function jumpNextMonth() {
-        setCalendar(prev => {
-            return {
-                ...prev,
-                monthIndex: prev.monthIndex + 1
-            }
-        })
+        setMonthIndex(monthIndex  + 1)
     }
 
     function jumpPrevMonth() {
-        setCalendar(prev => {
-            return {
-                ...prev,
-                monthIndex: prev.monthIndex - 1
-            }
-        })
+        setMonthIndex(monthIndex - 1)
     }
 
     function resetDate() {
-        setCalendar(prev => {
-            return {
-                ...prev,
-                monthIndex: monthIndex === dayjs().month()
-                    ? monthIndex + Math.random()
-                    : dayjs().month()
-            }
-        })
+        setMonthIndex(dayjs().month())
     }
 
     console.log(monthIndex)

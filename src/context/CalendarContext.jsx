@@ -8,7 +8,7 @@ export const CalendarProvider = (props) => {
     const [state, setState] = useState({
         selectedDate: new Date(),
         currentDate: new Date(),
-        monthIndex: 0,
+        monthIndex: 3,
         smallCalendarMonth: 0,
     })
 
@@ -22,6 +22,9 @@ export const CalendarProvider = (props) => {
         },
         setCalendar: function (val) {
             setState(prev => ({...prev, ...val}))
+        },
+        setMonthIndex: function (val) {
+            setState(prev => ({...prev, monthIndex: val}))
         },
     }
 

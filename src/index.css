@@ -17,7 +17,7 @@ body{
 
 
 :root{
-  --hover: rgba(246, 61, 61, 0.77);
+  --hover: rgba(123, 163, 255, 0.65);
   --active: rgb(44, 101, 236);
   --white: rgb(243, 243, 243);
 }

@@ -25,8 +25,9 @@
 }
 
 .add-new-btn{
-    border: 1px solid rgba(141, 141, 141, 0.57);
+    border: 1px solid rgba(234, 234, 234, 0.57);
     transition: all .3s linear;
+    color: #595959;
     &:hover{
         box-shadow: 1px 4px 13px 0px #2d2d2dba
     }

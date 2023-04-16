@@ -3,6 +3,7 @@ import {BiChevronLeft, BiChevronRight} from "react-icons/all";
 import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
 import "./smallCalendar.scss"
+import {isToday} from "date-fns";
 
 const SmallCalendar = () => {
 
@@ -60,7 +61,6 @@ const SmallCalendar = () => {
         }
     }
 
-    prevCalendarEnd()
 
     function jumpNextMonth(val) {
         setCurrentMonthIdx(val)
@@ -68,6 +68,11 @@ const SmallCalendar = () => {
 
     function jumpPrevMonth(val) {
         setCurrentMonthIdx(val)
+    }
+
+    function isToday2(date){
+        let r = dayjs(new Date(dayjs().year(), currentMonthIdx, date))
+        return isToday(r.toDate())
     }
 
     return (
@@ -118,7 +123,7 @@ const SmallCalendar = () => {
                     {Array.from({length: todayDayInCurrentMonth}).map((_, i) => {
                         let date = i + 1
                         return (
-                            <div className="date py-1">
+                            <div className={`date py-1 ${isToday2(date) ? "today" : ""}`}>
                                 <span className="date-cell">{date}</span>
                             </div>
                         )
@@ -136,7 +141,6 @@ const SmallCalendar = () => {
 
 
                 </div>
-
 
                 <div>
 

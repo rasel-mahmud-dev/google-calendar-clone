@@ -1,8 +1,12 @@
 {
-  "name": "google-calendar",
+  "name": "google-calendar-clone",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": {
+    "email": "rasel.mahmud.dev@gmail.com",
+    "name": "rasel mahmud"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

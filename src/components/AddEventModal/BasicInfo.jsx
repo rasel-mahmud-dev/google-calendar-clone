@@ -1,22 +1,28 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Input from "../Form/Input";
 import {BsDash, FaAngleLeft, FiClock, FiUsers, HiBars3BottomLeft} from "react-icons/all";
 import ClickExpand from "../Form/ClickExpand/ClickExpand";
 import TextArea from "../Form/TextArea";
 import RichTextEditor from "../Form/RichTextEditor/RichTextEditor";
 import EventModalTitle from "./EventModalTitle";
+import CalendarContext from "../../context/CalendarContext";
 
-const BasicInfo = ({handleChange, newEventData, setTab}) => {
+const BasicInfo = ({ handleChange, newEventData, setTab}) => {
+
+
+    const {
+        newEventData: {  invitations }
+    } = useContext(CalendarContext)
+
     return (
         <div className="">
 
 
-            <EventModalTitle onClose={() => {
-            }}/>
-            <div className="p-4">
+            <EventModalTitle onClose={() => {}} />
 
+            <div className="p-4">
                 <div className="ml-12">
-                    <Input className="" label="Add meeting title" onChange={(e) => handleChange(e.target.value)}
+                    <Input className="" label="Add meeting title" onChange={(e) => handleChange(e.target.value, "title")}
                            value={newEventData.title}/>
                 </div>
 
@@ -45,9 +51,21 @@ const BasicInfo = ({handleChange, newEventData, setTab}) => {
                         <FiUsers className="text-gray-600"/>
                     </div>
 
-                    <div onClick={()=>setTab("addUsers")} className="hover:bg-gray-100 p-2 rounded-md">
-                        <span className="text-sm text-gray-600">Add Invitation</span>
+                    <div>
+                        <div onClick={()=>setTab("addUsers")} className="hover:bg-gray-100 p-2 rounded-md">
+                            <span className="text-sm text-gray-600">Add Invitation</span>
+                        </div>
+
+                        {/**** selected users ****/}
+                        <div className="flex flex-wrap items-center gap-x-0 users-avatar-list">
+                            {invitations.map(user=>(
+                                <div className="user-avatar">
+                                    <img src={user.image} className="w-7 rounded-full" alt=""/>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+
                 </div>
 
 

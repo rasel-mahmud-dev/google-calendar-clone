@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import "./big-calendar.scss"
 import CalendarContext from "../../context/CalendarContext";
@@ -11,18 +11,26 @@ const BigCalendar = () => {
 
     const {
         selectedDate,
+        setNewEventData,
         currentDate,
+        newEventData,
         monthIndex,
 
     } = useContext(CalendarContext)
 
 
-    const [addEventData, setAddEventData] = useState({
-        isOpen: false,
-        selectedDate: 0,
-        monthIndex: 0
-    })
 
+
+    const [isOpenChooseEventModal, setOpenChooseEventModal] = useState(false)
+
+    function openAddNewEventModal(eventType) {
+        setNewEventData(prev => ({
+            ...prev,
+            isOpen: true,
+            type: eventType
+        }))
+        setOpenChooseEventModal(false)
+    }
 
 
     let weeks = [
@@ -80,12 +88,16 @@ const BigCalendar = () => {
     }
 
 
+
+    // jump to day view...
     function handleClickOnDate(date){
         console.log("clicked date is ", date)
     }
 
+
+    // open create event modal panel
     function clickOnCell(date, monthIndex){
-        setAddEventData(prev=>({
+        setNewEventData(prev=>({
             ...prev,
             isOpen: true,
             selectedDate: date,
@@ -93,8 +105,10 @@ const BigCalendar = () => {
         }))
     }
 
+
+
     function handleClose(){
-        setAddEventData(prev=>({
+        setNewEventData(prev=>({
             ...prev,
             isOpen: false,
             selectedDate: 0,
@@ -106,7 +120,7 @@ const BigCalendar = () => {
         <div>
 
 
-            <AddEventModal isOpenAddEventModal={addEventData.isOpen} onClose={handleClose}  />
+            <AddEventModal isOpenAddEventModal={newEventData.isOpen} onClose={handleClose}  />
 
             <div className="mt-5 w-full p-2 rounded-xl big-calendar">
 

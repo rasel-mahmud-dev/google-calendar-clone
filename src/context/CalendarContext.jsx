@@ -11,6 +11,8 @@ export const CalendarProvider = (props) => {
         monthIndex: 3,
         smallCalendarMonth: 0,
         newEventData: {
+            isOpen: false,
+            type: "event", // or  task
             title: "",
             meetingLink: "",
             program: "",
@@ -38,15 +40,29 @@ export const CalendarProvider = (props) => {
 
         newEventData: state.newEventData,
 
-        setNewEventData: (cb)=>{
-            setState(prev=>({
+        setNewEventData: (cb) => {
+            setState(prev => ({
                 ...prev,
                 newEventData: cb(prev.newEventData)
             }))
+        },
+        setCloseNewEventModal: () => {
+            setState(prev => ({
+                ...prev,
+                newEventData: {
+                    isOpen: false,
+                    type: "event", // or  task
+                    title: "",
+                    meetingLink: "",
+                    program: "",
+                    session: "",
+                    startDateTime: new Date(),
+                    endDateTime: new Date(),
+                    invitations: []
+                }
+            }))
         }
-
     }
-
 
 
     return (

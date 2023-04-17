@@ -1,21 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Input from "../Form/Input";
-import {
-    BsDash,
-    BsFillTrash2Fill,
-    FaAngleLeft,
-    FiClock,
-    FiTrash,
-    FiUsers,
-    HiBars3BottomLeft,
-    TfiAngleLeft
-} from "react-icons/all";
-import ClickExpand from "../Form/ClickExpand/ClickExpand";
-import TextArea from "../Form/TextArea";
-import RichTextEditor from "../Form/RichTextEditor/RichTextEditor";
+import {BsFillTrash2Fill, FaAngleLeft} from "react-icons/all";
 import EventModalTitle from "./EventModalTitle";
 import Select from "../Form/Select";
 import CalendarContext from "../../context/CalendarContext";
+import Input from "../Form/Input";
 
 const AddUser = ({handleClose, handleChange, setTab}) => {
 
@@ -92,14 +80,15 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
     }
 
 
-    function handleChangeProgram(program){
-        setNewEventData(prev=>({
+    function handleChangeProgram(program) {
+        setNewEventData(prev => ({
             ...prev,
             program: program
         }))
     }
-    function handleChangeSession(session){
-        setNewEventData(prev=>({
+
+    function handleChangeSession(session) {
+        setNewEventData(prev => ({
             ...prev,
             session: session
         }))
@@ -135,26 +124,28 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                 </div>
 
 
-                {/*<Input*/}
-                {/*    onChange={(e) => setUserPayload(prev => ({...prev, email: e.target.value}))}*/}
-                {/*    withBg={true}*/}
-                {/*    dataList={usersList}*/}
-                {/*    selectedDateList={newEventData.invitations}*/}
-                {/*    inputBg="px-1 py-1 rounded"*/}
-                {/*    showSuggestion={() => (*/}
-                {/*        <div>*/}
-                {/*            {searchUsersList.map(user => (*/}
-                {/*                <div>*/}
-                {/*                    <p onClick={() => {*/}
-                {/*                        handleAddUser(user)*/}
-                {/*                    }} className="suggestion-item">{user.username}</p>*/}
-                {/*                </div>*/}
-                {/*            ))}*/}
-                {/*        </div>*/}
-                {/*    )}*/}
-                {/*    label="Email"*/}
-                {/*    type="email"*/}
-                {/*/>*/}
+                <Input
+                    onChange={(e) => setUserPayload(prev => ({...prev, email: e.target.value}))}
+                    withBg={true}
+                    dataList={usersList}
+                    selectedDateList={newEventData.invitations}
+                    inputBg="px-1 py-1 rounded"
+                    onClickItem={handleAddUser}
+                    showSuggestion={(onClick) => (
+                        <div>
+                            {searchUsersList.map(user => (
+                                <div>
+                                    <p onClick={() => onClick(user)} className="suggestion-item">{user.username}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    label="Email"
+                    type="email"
+                />
+
+
+
 
                 <Select value={newEventData.program}
                         onChange={handleChangeProgram}
@@ -163,14 +154,32 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                         inputBg="px-1 py-1 rounded"
                         withBg={true}
                         renderOptions={(onChange) => (
-                    <>
-                        <li onClick={()=>onChange("All Program")} className="suggestion-item">All Program</li>
-                        <li onClick={()=>onChange("All")} className="suggestion-item">All</li>
-                        <li onClick={()=>onChange("All Program")} className="suggestion-item">All Program</li>
-                        <li onClick={()=>onChange("All Program")} className="suggestion-item">All Program</li>
-                        <li onClick={()=>onChange("All Program")} className="suggestion-item">All Program</li>
-                    </>
-                )}>
+                            <>
+                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
+                                <li onClick={() => onChange("All")} className="suggestion-item">All</li>
+                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
+                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
+                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
+                            </>
+                        )}>
+
+
+                </Select>
+                <Select value={newEventData.session}
+                        onChange={handleChangeSession}
+                        label={newEventData.session ? newEventData.session : "Select Session"}
+                        className="mt-2"
+                        inputBg="px-1 py-1 rounded"
+                        withBg={true}
+                        renderOptions={(onChange) => (
+                            <>
+                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
+                                <li onClick={() => onChange("All")} className="suggestion-item">All</li>
+                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
+                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
+                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
+                            </>
+                        )}>
 
 
                 </Select>

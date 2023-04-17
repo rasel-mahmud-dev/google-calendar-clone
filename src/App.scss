@@ -65,3 +65,18 @@
     }
 
 }
+
+.mui-select{
+    border-bottom: 2px solid var(--hover); ;
+    width: 100%;
+    outline: none;
+    padding: 3px 2px !important;
+    border-radius: 0 !important;
+}
+
+.users-avatar-list{
+    margin-left: 15px;
+    .user-avatar{
+        margin-left: -10px;
+    }
+}

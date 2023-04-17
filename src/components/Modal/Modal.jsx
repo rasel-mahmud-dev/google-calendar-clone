@@ -1,11 +1,11 @@
 import React from 'react';
 
 import "./modal.scss"
-const Modal = ({isOpen, onClose, children}) => {
+const Modal = ({isOpen, onClose, className="", children}) => {
     return (
         <div>
             <div onClick={()=>onClose()} className={`backdrop ${isOpen ? "open-backdrop" : "close-backdrop"}`} ></div>
-            <div  className={`modal ${isOpen ? "open-modal" : "close-modal"}`} >
+            <div className={`modal ${className} ${isOpen ? "open-modal" : "close-modal"}`} >
                 {children}
             </div>
         </div

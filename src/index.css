@@ -3,21 +3,23 @@
 @tailwind utilities;
 
 
-*{
-  font-family: 'Poppins', sans-serif;;
+* {
+    font-family: 'Poppins', sans-serif;;
 }
 
 
-body{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  user-select: none;
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
 }
 
 
-:root{
-  --hover: rgba(123, 163, 255, 0.65);
-  --active: rgb(44, 101, 236);
-  --white: rgb(243, 243, 243);
+:root {
+    --hover: rgba(123, 163, 255, 0.65);
+    --active: rgb(44, 101, 236);
+    --white: rgb(243, 243, 243);
+    --gray-100: rgb(243 244 246 / 1);
 }
+

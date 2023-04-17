@@ -1,5 +1,5 @@
 .input-root {
-    background: #f6f6f6;
+    //background: #f6f6f6;
 
     position: relative;
 
@@ -7,20 +7,42 @@
         //border-bottom: 2px solid red;
     }
 
-    .input-wrapper{
+    .input-wrapper {
         transition: width .3s ease;
         //background: #ff92b2;
         border-bottom: 1px solid rgba(184, 197, 197, 0.34);
         width: 100%;
-        input{
+
+        &.with-bg {
+            background: var(--gray-100);
+            border-bottom: 1px solid transparent;
+        }
+
+        .input-select{
             width: 100%;
             border: none;
             outline: none;
             font-size: 14px;
             font-weight: 400;
             cursor: pointer;
+            color: #5d5d5d;
             padding: 4px 2px;
+            background: transparent;
+
         }
+
+        input, textarea, select {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            color: #5d5d5d;
+            padding: 4px 2px;
+            background: transparent;
+        }
+
     }
 
     .input-border {
@@ -36,4 +58,52 @@
         }
     }
 
+    &.textarea {
+        background: var(--gray-100);
+
+        .input-wrapper {
+            textarea {
+                background: transparent;
+            }
+        }
+    }
+}
+
+.suggestion-list {
+    background: white;
+    padding: 10px 5px;
+    box-shadow: 0px 7px 10px -5px #7c7c7ccf;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+
+    .suggestion-item {
+        @apply text-sm font-normal text-gray-600 py-1 px-2 rounded cursor-pointer ;
+        &:hover {
+            background: var(--hover);
+            color: var(--white);
+        }
+    }
+}
+
+.select-dropdown {
+    z-index: 1001;
+
+    width: 100%;
+    background: white;
+    //height: 400px;
+    position: fixed;
+
+    box-shadow: 0 2px 30px -3px #5656566b;
+    border-radius: 11px;
+
+
+    transition: all .2s ease-out;
+
+}
+
+.select-input{
+    .ant-select{
+        width: 100%;
+    }
 }

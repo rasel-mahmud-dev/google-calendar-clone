@@ -10,6 +10,15 @@ export const CalendarProvider = (props) => {
         currentDate: new Date(),
         monthIndex: 3,
         smallCalendarMonth: 0,
+        newEventData: {
+            title: "",
+            meetingLink: "",
+            program: "",
+            session: "",
+            startDateTime: new Date(),
+            endDateTime: new Date(),
+            invitations: []
+        },
     })
 
     const value = {
@@ -26,6 +35,16 @@ export const CalendarProvider = (props) => {
         setMonthIndex: function (val) {
             setState(prev => ({...prev, monthIndex: val}))
         },
+
+        newEventData: state.newEventData,
+
+        setNewEventData: (cb)=>{
+            setState(prev=>({
+                ...prev,
+                newEventData: cb(prev.newEventData)
+            }))
+        }
+
     }
 
 

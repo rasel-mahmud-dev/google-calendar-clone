@@ -3,6 +3,7 @@ import {BiChevronLeft, BiChevronRight, BiInfoCircle, BiSearch, BsGear} from "rea
 import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
 
+
 const Header = () => {
 
     const {monthIndex, setMonthIndex, setCalendar} = useContext(CalendarContext)

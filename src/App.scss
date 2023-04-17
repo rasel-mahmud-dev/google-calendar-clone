@@ -49,3 +49,19 @@
         box-shadow: 1px 4px 13px 0px #2d2d2dba
     }
 }
+
+.custom-scrollbar{
+    &::-webkit-scrollbar{
+        width: 3px;
+        background: #484848;
+    }
+    &::-webkit-scrollbar-thumb{
+        height: 2px;
+        background: var(--hover);
+    }
+    &::-webkit-scrollbar-track{
+        height: 2px;
+        background: var(--gray-100);
+    }
+
+}

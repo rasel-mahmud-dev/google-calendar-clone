@@ -5,7 +5,7 @@ import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
 import {isToday} from "date-fns";
 import AddEventModal from "../AddEventModal/AddEventModal";
-import {da} from "date-fns/locale";
+
 
 const BigCalendar = () => {
 

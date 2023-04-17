@@ -1,0 +1,14 @@
+
+
+.expand-able{
+    background: white;
+    transition: all .2s ease-out;
+    overflow: hidden;
+
+    &.expand-content{
+
+    }
+    &.collapse-content{
+        height: 0;
+    }
+}

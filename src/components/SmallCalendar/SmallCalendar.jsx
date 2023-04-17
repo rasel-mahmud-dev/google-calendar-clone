@@ -1,13 +1,10 @@
-import React, {useContext, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BiChevronLeft, BiChevronRight} from "react-icons/all";
-import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
 import "./smallCalendar.scss"
-import {isToday} from "date-fns";
+import {compareAsc, isToday} from "date-fns";
 
-const SmallCalendar = () => {
-
-    const {smallCalendarMonth, monthIndex, setSmallCalendarMonth} = useContext(CalendarContext)
+const SmallCalendar = ({onChange, value}) => {
 
     let weeks = [
         "Su",
@@ -19,6 +16,9 @@ const SmallCalendar = () => {
         "Sa"
     ]
 
+    const [monthIndex, setMonthIndex] = useState(dayjs().month())
+
+    const [selectDate, setSelectDate] = useState(new Date())
 
 
     let todayDayInPrevMonth = dayjs(new Date(dayjs().year(), monthIndex - 1)).daysInMonth()
@@ -59,13 +59,39 @@ const SmallCalendar = () => {
         }
     }
 
-
     function jumpNextMonth(val) {
-        setCurrentMonthIdx(val)
+        setMonthIndex(val)
     }
 
     function jumpPrevMonth(val) {
-        setCurrentMonthIdx(val)
+        setMonthIndex(val)
+    }
+
+    useEffect(() => {
+        setSelectDate(new Date(value))
+    }, [value])
+
+    useEffect(() => {
+        // let selectedDate = dayjs().month(monthIndex || dayjs().month()).toDate()
+        // setSelectDate(selectedDate)
+        // onChange && onChange(selectedDate)
+    }, [monthIndex]);
+
+
+    function handleSelectDate(date, monthIndex) {
+        // let selectedDate = dayjs().month(monthIndex || dayjs().month()).date(date).hour(0).minute(0).second(0).millisecond(0)
+        // setSelectDate(selectedDate.toDate())
+        // onChange && onChange(selectedDate.toDate())
+    }
+
+    function isSelectedDate(date, monthIndex) {
+
+        let sDate = dayjs(new Date(selectDate))
+
+        let isSame = monthIndex === sDate.month() && date === sDate.date()
+        console.log(isSame, date, monthIndex)
+
+        return isSame
     }
 
     function isToday2(date) {
@@ -115,7 +141,8 @@ const SmallCalendar = () => {
                     {Array.from({length: prevCalendarEnd().total}).map((_, i) => {
                         let date = prevCalendarEnd().dateStart + i
                         return (
-                            <div className="date inactive py-1">
+                            <div onClick={() => handleSelectDate(date, monthIndex - 1)}
+                                 className={`date inactive py-1 ${isSelectedDate(date, monthIndex - 1) ? "selected-date" : ""} `}>
                                 <span className="date-cell">{date}</span>
                             </div>
                         )
@@ -125,35 +152,41 @@ const SmallCalendar = () => {
                     {Array.from({length: todayDayInCurrentMonth}).map((_, i) => {
                         let date = i + 1
                         return (
-                            <div className={`date py-1 ${isToday2(date) ? "today" : ""}`}>
+                            <div onClick={() => handleSelectDate(date, monthIndex)}
+                                 className={`date py-1 ${isSelectedDate(date, monthIndex) ? "selected-date" : ""} ${isToday2(date) ? "today" : ""}`}>
                                 <span className="date-cell">{date}</span>
                             </div>
                         )
                     })}
 
                     {/**** next month rest date */}
-                    {Array.from({length: nextCalendarStart().total}).map((_, i) => {
+                    {new Array(nextCalendarStart().total).fill(0).map((_, i) => {
                         let date = nextCalendarStart().dateStart + i
-                        return (
-                            <div className="date inactive py-1">
-                                <span className="date-cell">{date}</span>
+                        let isSe  = isSelectedDat(date, monthIndex + 1)
+                        function isSelectedDat(date, monthIndex) {
+
+                            let sDate = dayjs(new Date(selectDate))
+
+                            let isSame = monthIndex === sDate.month() && date === sDate.date()
+                            console.log(isSame, date, monthIndex)
+
+                            return isSame
+                        }
+                        return  (
+                            <div onClick={() => handleSelectDate(date, monthIndex + 1)}
+                                 className={`date inactive py-1 ${isSelectedDat(date, monthIndex + 1) ? "selected-date" : ""} `}>
+                                <span className="date-cell">{date}
+                                    {isSe ? "y" : "n"}
+                                </span>
                             </div>
                         )
                     })}
-
-
                 </div>
-
-                <div>
-
-                </div>
-
-
             </div>
-
 
         </div>
     );
 };
+
 
 export default SmallCalendar;

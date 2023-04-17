@@ -17,9 +17,16 @@ export const CalendarProvider = (props) => {
             meetingLink: "",
             program: "",
             session: "",
+            eventColor: "blue",
             startDateTime: new Date(),
+            date: 0,
             endDateTime: new Date(),
-            invitations: []
+            invitations: [],
+            notifications: [
+                {type: "notification", time: "10 minutes before"},
+                {type: "email", time: "20 minutes before"},
+                {type: "notification", time: "30 minutes before"},
+            ]
         },
     })
 
@@ -47,6 +54,7 @@ export const CalendarProvider = (props) => {
             }))
         },
         setCloseNewEventModal: () => {
+            let now = new Date()
             setState(prev => ({
                 ...prev,
                 newEventData: {
@@ -58,6 +66,7 @@ export const CalendarProvider = (props) => {
                     session: "",
                     startDateTime: new Date(),
                     endDateTime: new Date(),
+                    date: now.getDate(),
                     invitations: []
                 }
             }))

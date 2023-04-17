@@ -28,6 +28,13 @@
             }
         }
 
+        &.selected-date{
+            .date-cell {
+                background: var(--active);
+                color: var(--white);
+            }
+        }
+
         &.inactive {
             .date-cell {
                 color: #a8a8a8;

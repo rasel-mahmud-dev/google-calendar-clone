@@ -51,7 +51,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
     return (
         <div>
-            <Modal isOpen={newEventData.isOpen} onClose={handleClose} className="add-event-modal">
+            <Modal isOpen={newEventData.isOpen} onClose={handleClose} className="add-event-modal custom-scrollbar">
 
                 <div className="close-btn">
                     <TiTimes className="text-gray-500 cursor-pointer hover:text-red-500" onClick={handleClose}/>

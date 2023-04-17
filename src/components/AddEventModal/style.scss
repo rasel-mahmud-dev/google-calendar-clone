@@ -2,6 +2,10 @@
 
 .add-event-modal {
     overflow: hidden;
+    max-height: 900px;
+    width: 500px;
+    overflow-y: auto;
+
 
     .close-btn {
         position: fixed;

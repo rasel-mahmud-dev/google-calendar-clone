@@ -15,22 +15,9 @@ const BigCalendar = () => {
         currentDate,
         newEventData,
         monthIndex,
+        setCloseNewEventModal
 
     } = useContext(CalendarContext)
-
-
-
-
-    const [isOpenChooseEventModal, setOpenChooseEventModal] = useState(false)
-
-    function openAddNewEventModal(eventType) {
-        setNewEventData(prev => ({
-            ...prev,
-            isOpen: true,
-            type: eventType
-        }))
-        setOpenChooseEventModal(false)
-    }
 
 
     let weeks = [
@@ -100,21 +87,18 @@ const BigCalendar = () => {
         setNewEventData(prev=>({
             ...prev,
             isOpen: true,
+            date: date,
             selectedDate: date,
+            startDateTime: dayjs(new Date(dayjs().year(), monthIndex, date)),
             monthIndex: monthIndex
         }))
     }
 
 
-
     function handleClose(){
-        setNewEventData(prev=>({
-            ...prev,
-            isOpen: false,
-            selectedDate: 0,
-            monthIndex: 0
-        }))
+        setCloseNewEventModal()
     }
+
 
     return (
         <div>

@@ -6,9 +6,9 @@ import {CalendarProvider} from "./context/CalendarContext";
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <CalendarProvider>
             <App/>
         </CalendarProvider>
-    </React.StrictMode>,
+    // </React.StrictMode>,
 )

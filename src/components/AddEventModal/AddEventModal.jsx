@@ -3,9 +3,13 @@ import Modal from "../Modal/Modal";
 import {TiTimes} from "react-icons/all";
 import CalendarContext from "../../context/CalendarContext";
 
+import * as yup from "yup"
+
 import "./style.scss"
 import BasicInfo from "./BasicInfo";
 import AddUser from "./AddUser";
+import axios from "axios";
+import {ca} from "date-fns/locale";
 
 
 const AddEventModal = ({isOpenAddEventModal, onClose}) => {
@@ -44,9 +48,50 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
         if (!newEventData.isOpen) {
             setTab("basic")
         }
-
-
     }, [newEventData.isOpen]);
+
+
+    async function handleAddEvent() {
+
+        try {
+            let eventValidator = yup.object({
+                title: yup.string().required(),
+                invitations: yup.array()
+            });
+
+            console.log(newEventData)
+
+            const invitationUsers = newEventData.invitations.map(user => user._id) || []
+
+            let payload = {
+                title: newEventData.title,
+                start: newEventData.startDateTime,
+                end: newEventData.endDateTime,
+                agenda: "",
+                actionItems: "",
+                followUp: "",
+                meetingLink: newEventData.meetingLink,
+                status: "pending",
+                attachments: null,
+                invitations: invitationUsers
+            }
+
+            await eventValidator.validateSync(payload)
+
+
+            axios.post("/api/calendar/create", payload).then(({data, status}) => {
+                console.log(data)
+            }).catch((ex) => {
+                console.log(ex)
+
+            })
+
+
+        } catch (ex) {
+            alert(ex.message)
+
+        }
+    }
 
 
     return (
@@ -60,6 +105,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 <div className="tab-root" style={{transform: `translateX(${tabPosition}px`}}>
                     <div className={`tab tab-one ${tab === "basic" ? "open-tab" : "hide-tab"}`}>
                         <BasicInfo
+                            handleAddEvent={handleAddEvent}
                             handleChange={handleChange}
                             setTab={setTab}
                             newEventData={newEventData}

@@ -1,66 +1,60 @@
-import React, {useEffect, useRef, useState} from 'react';
-import "./input.scss"
-import {createPortal} from "react-dom";
-import Dropdown from "./Dropdown";
+import React, {useState} from 'react';
+import Dropdown from "../Dropdown/Dropdown";
 
-const Select = ({
-                    className = "",
-                    withBg = false,
-                    inputBg = "",
-                    type = "text",
-                    dataList,
-                    value,
-                    selectedDateList,
-                    onClickItem,
-                    renderOptions, onChange,
-                    label,
-                    ...attr
-                }) => {
+const Select = (props) => {
 
-    const [isFocus, setFocus] = useState(false)
+    const {
+        className = "",
+        withBg = false,
+        dropdownOptionCls = "",
+        value,
+        label,
+        render,
+        onChange,
+        dropdownClass = "",
+        renderPlaceholderValue,
+        placeholderClass=""
+    } = props
 
+    const [active, setActive] = useState(false)
 
-    function handleFocus() {
-        setFocus(true)
-    }
-
-    function handleBlur(e, isDiv) {
-        setFocus(false)
-    }
-
-
-
-    function handleValueSelect(val) {
+    function handleOnChangeValue(val) {
         onChange(val)
-        setFocus(false)
+        setActive(false)
     }
+
+    function handleToggle() {
+        if (active) {
+            setActive(false)
+        } else {
+            setActive(true)
+        }
+    }
+
+    function handleBlur() {
+        setActive(false)
+    }
+
+
 
 
     return (
-        <div className={`${className} input-root`}
-             tabIndex={-1} onBlur={(e) => handleBlur(e, true)}
-             onFocus={handleFocus}
+        <li className={`relative cursor-pointer ${withBg ? "with-bg" : ""} mui-select ${className}`} onBlur={handleBlur}
+            tabIndex="-1" aria-hidden={true}>
+            <Dropdown className={dropdownClass + " w-full"} onChange={handleOnChangeValue} isOpen={active} render={(change) => (
 
-        >
+                    render(change)
 
-            <div className={`input-wrapper ${withBg ? "with-bg" : ""}  ${inputBg}`} >
-                <div onClick={handleFocus}
-                    {...attr}
-                    className="input-select"
-                >{label}</div>
+            )}/>
+            <div
+                className={`font-medium ${placeholderClass ? placeholderClass : ""} mui-select-placeholder text-gray-600 hover:bg-gray-100 cursor-pointer py-2 rounded relative w-full `}
+                onClick={handleToggle}>
+                <span>{ value ? (renderPlaceholderValue ? renderPlaceholderValue(value) : value) : label }</span>
+                <div className={`input-border ${active ? "input-border-active" : "input-border-inactive"} `}></div>
             </div>
-            <div className={`input-border ${isFocus ? "input-border-focus" : "input-border-blur"}`}></div>
+        </li>
 
-                {renderOptions && isFocus && (
-                    <div className="suggestion-list">
-                        {renderOptions(handleValueSelect)}
-                    </div>
-                )}
-
-        </div>
     );
 };
 
 export default Select;
-
-

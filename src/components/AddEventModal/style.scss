@@ -1,5 +1,4 @@
 
-
 .add-event-modal {
     overflow: hidden;
     max-height: 900px;
@@ -22,6 +21,7 @@
 
     .tab {
         position: relative;
+
         &.tab-one {
             width: 100%;
         }
@@ -29,6 +29,7 @@
         &.tab-two {
             width: 100%;
         }
+
         //&.open-tab{
         //    background: #81ff89;
         //}
@@ -56,4 +57,19 @@
         }
     }
 
+}
+
+
+.date-chooser {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--hover);
+    }
+}
+
+.react-calendar-update{
+    .small-calendar{
+        width: 250px;
+    }
 }

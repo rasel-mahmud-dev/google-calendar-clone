@@ -3,10 +3,17 @@
     z-index: 1000;
     max-height: 300px;
     overflow: auto;
-    min-width: 100px
+    min-width: 100px;
+    background: white;
+    //font-smooth: auto;
+    //-webkit-font-smoothing: inherit;
+    //-moz-osx-font-smoothing: auto;
+    //font-smooth: always;
+
 }
 .calendar-dropdown{
     min-width: 250px;
+    z-index: 1010;
 }
 
 .shadow-dropdown {
@@ -15,4 +22,8 @@
 
 .card-shadow {
     box-shadow: 0 2px 13px -5px rgb(50 50 50 / 35%)
+}
+
+.calendar-backdrop-overlay{
+    z-index: 1009;
 }

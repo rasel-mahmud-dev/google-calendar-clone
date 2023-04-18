@@ -33,7 +33,6 @@ const Calendar = () => {
         setOpenChooseEventModal(false)
     }
 
-
     return (
         <div className="my-container">
 
@@ -64,12 +63,12 @@ const Calendar = () => {
 
                     </div>
 
-                    <SmallCalendar/>
+                    <SmallCalendar />
                     <br/>
                     <br/>
                     <br/>
 
-                    <SmallCalendarV2/>
+                    {/*<SmallCalendarV2/>*/}
                 </div>
                 <div className="border-l w-full">
                     <BigCalendar/>

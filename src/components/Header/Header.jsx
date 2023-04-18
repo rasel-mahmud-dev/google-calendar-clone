@@ -20,7 +20,6 @@ const Header = () => {
         setMonthIndex(dayjs().month())
     }
 
-    console.log(monthIndex)
 
 
     return (

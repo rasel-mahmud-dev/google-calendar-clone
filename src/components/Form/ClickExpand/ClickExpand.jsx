@@ -11,40 +11,18 @@ const ClickExpand = ({label, children}) => {
     const [contentHeight, setContextHeight] = useState(0)
 
     function onClick() {
-        if (!isExpand) {
-            getContentHeight()
-        }
         setExpand(!isExpand)
-
     }
 
-    function getContentHeight() {
-        console.dir(contentRef.current)
-        if (contentRef.current) {
-            let h = contentRef.current.offsetHeight
-            setContextHeight(h)
-        }
-    }
 
-    useEffect(() => {
-
-        getContentHeight()
-
-
-    }, [contentRef])
-
-    const child =
-
-        console.log(contentHeight, isExpand)
 
     return (
         <div className="w-full">
             <div>
-                {label && label(onClick)}
+                {label && label({onPress: onClick, isOpen: isExpand})}
             </div>
-            <div className={`expand-able ${isExpand ? "expand-content" : "collapse-content"}`}
-                 style={{height: isExpand ? contentHeight : 0 + "px"}}>
-                <div ref={contentRef}>
+            <div className={`expand-able ${isExpand ? "expand-content" : "collapse-content"}`}>
+                <div >
 
                     {children}
                 </div>

@@ -7,6 +7,10 @@
     font-family: 'Poppins', sans-serif;;
 }
 
+li{
+    list-style: none;
+}
+
 
 body {
     margin: 0;
@@ -21,5 +25,6 @@ body {
     --active: rgb(44, 101, 236);
     --white: rgb(243, 243, 243);
     --gray-100: rgb(243 244 246 / 1);
+    --mui-primary: rgb(46, 106, 250);
 }
 

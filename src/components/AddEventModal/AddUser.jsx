@@ -147,40 +147,40 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
 
 
 
-                <Select value={newEventData.program}
-                        onChange={handleChangeProgram}
-                        label={newEventData.program ? newEventData.program : "Select Program"}
-                        className="mt-2"
-                        inputBg="px-1 py-1 rounded"
-                        withBg={true}
-                        renderOptions={(onChange) => (
-                            <>
-                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
-                                <li onClick={() => onChange("All")} className="suggestion-item">All</li>
-                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
-                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
-                                <li onClick={() => onChange("All Program")} className="suggestion-item">All Program</li>
-                            </>
-                        )}>
-
-
+                <Select
+                    value={newEventData.program}
+                    onChange={handleChangeProgram}
+                    label={newEventData.program ? newEventData.program : "Select Program"}
+                    className="mt-2"
+                    inputBg="px-1 py-1 rounded"
+                    withBg={true}
+                    render={(onChange) => (
+                        <>
+                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
+                            <li onClick={() => onChange("All")} className="mui-select-item">All</li>
+                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
+                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
+                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
+                        </>
+                    )}>
                 </Select>
-                <Select value={newEventData.session}
-                        onChange={handleChangeSession}
-                        label={newEventData.session ? newEventData.session : "Select Session"}
-                        className="mt-2"
-                        inputBg="px-1 py-1 rounded"
-                        withBg={true}
-                        renderOptions={(onChange) => (
-                            <>
-                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
-                                <li onClick={() => onChange("All")} className="suggestion-item">All</li>
-                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
-                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
-                                <li onClick={() => onChange("All Sessions")} className="suggestion-item">All Sessions</li>
-                            </>
-                        )}>
 
+                <Select
+                    value={newEventData.session}
+                    onChange={handleChangeSession}
+                    label={newEventData.session ? newEventData.session : "Select Session"}
+                    className="mt-2"
+                    inputBg="px-1 py-1 rounded"
+                    withBg={true}
+                    render={(onChange) => (
+                        <>
+                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
+                            <li onClick={() => onChange("All")} className="mui-select-item">All</li>
+                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
+                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
+                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
+                        </>
+                    )}>
 
                 </Select>
 

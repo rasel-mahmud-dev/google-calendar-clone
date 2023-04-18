@@ -1,0 +1,92 @@
+.mui-btn {
+    padding: 6px 10px;
+    background: var(--mui-gray);
+    color: #3f3f3f;
+    outline: none !important;
+    border: none;
+}
+
+
+.mui-select {
+    user-select: none;
+    border-radius: 4px;
+
+    .mui-select-item{
+        font-size: 14px;
+        font-weight: 400;
+        color: #424242;
+        padding: 4px 5px;
+    }
+
+    .mui-select-placeholder{
+        font-size: 14px;
+        font-weight: 400;
+        color: #626262;
+        padding: 9px 10px;
+        border-radius: 5px;
+    }
+
+
+    &.with-bg {
+        background: var(--mui-gray);
+        .mui-select-placeholder{
+            background: var(--gray-100);
+        }
+    }
+
+    .input-border {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background: var(--mui-primary);
+        transition: transform .1s ease;
+        transform: scaleX(0);
+
+        &-active {
+            transform: scaleX(1);
+        }
+
+        &-inactive {
+            transform: scaleX(0);
+        }
+    }
+
+    .select-input {
+        //font-medium  text-gray-600 hover:bg-gray-100 cursor-pointer py-2 rounded relative
+        font-weight: 500;
+        color: gray;
+        padding: 6px 10px;
+
+        &:hover {
+            background: var(--mui-gray);
+        }
+
+        cursor: pointer;
+        border-radius: 4px;
+        position: relative;
+
+    }
+
+}
+
+.custom-repeat-time-modal{
+    width: 300px;
+}
+
+.day-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    border-radius: 20px;
+    background: rgba(222, 222, 222, 0.3);
+}
+
+.day-active{
+    background: var(--mui-primary);
+    color: white
+}

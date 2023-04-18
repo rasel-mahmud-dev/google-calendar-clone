@@ -19,14 +19,18 @@ export const CalendarProvider = (props) => {
             session: "",
             eventColor: "blue",
             startDateTime: new Date(),
-            date: 0,
             endDateTime: new Date(),
+            date: 0,
             invitations: [],
-            notifications: [
-                {type: "notification", time: "10 minutes before"},
-                {type: "email", time: "20 minutes before"},
-                {type: "notification", time: "30 minutes before"},
-            ]
+
+            notifications: [{type: "notification", time: "10 minutes before"}, {
+                type: "email",
+                time: "20 minutes before"
+            }, {type: "notification", time: "30 minutes before"},],
+
+            timeRange: {
+                disabledEditTimeRange: false, turnOn: false, repeatIteration: 1, repeatPeriod: "week", repeatDays: [],
+            }
         },
     })
 
@@ -44,20 +48,24 @@ export const CalendarProvider = (props) => {
         setMonthIndex: function (val) {
             setState(prev => ({...prev, monthIndex: val}))
         },
-
         newEventData: state.newEventData,
-
         setNewEventData: (cb) => {
             setState(prev => ({
-                ...prev,
-                newEventData: cb(prev.newEventData)
+                ...prev, newEventData: cb(prev.newEventData)
+            }))
+        },
+        setTimeRange: (cb) => {
+            setState(prev => ({
+                ...prev, newEventData: {
+                    ...prev.newEventData, timeRange: cb(prev.newEventData.timeRange)
+
+                }
             }))
         },
         setCloseNewEventModal: () => {
             let now = new Date()
             setState(prev => ({
-                ...prev,
-                newEventData: {
+                ...prev, newEventData: {
                     isOpen: false,
                     type: "event", // or  task
                     title: "",
@@ -67,18 +75,19 @@ export const CalendarProvider = (props) => {
                     startDateTime: new Date(),
                     endDateTime: new Date(),
                     date: now.getDate(),
-                    invitations: []
+                    invitations: [],
+                    timeRange: {
+                        disabledEditTimeRange: false, turnOn: false, repeatIteration: 1, repeatPeriod: "week", repeatDays: [],
+                    }
                 }
             }))
         }
     }
 
 
-    return (
-        <CalendarContext.Provider value={value}>
+    return (<CalendarContext.Provider value={value}>
             {props.children}
-        </CalendarContext.Provider>
-    )
+        </CalendarContext.Provider>)
 
 }
 

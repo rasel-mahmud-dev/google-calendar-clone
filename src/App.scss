@@ -1,4 +1,8 @@
 
+
+
+@import "./sass/shared";
+
 .btn {
     background: white;
     padding: 6px 18px;
@@ -7,6 +11,14 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+}
+.btn-mui{
+    background: white;
+    border: none;
+    padding: 6px 14px;
+    &:hover{
+        background: var(--gray-100);
+    }
 }
 .btn-primary{
     background: var(--active);
@@ -63,20 +75,26 @@
         height: 2px;
         background: var(--gray-100);
     }
-
 }
 
 .mui-select{
-    border-bottom: 2px solid var(--hover); ;
-    width: 100%;
-    outline: none;
-    padding: 3px 2px !important;
-    border-radius: 0 !important;
+    //border-bottom: 2px solid var(--hover); ;
+    //width: 100%;
+    //outline: none;
+    //padding: 3px 2px !important;
+    //border-radius: 0 !important;
+
+
 }
 
 .users-avatar-list{
     margin-left: 15px;
     .user-avatar{
         margin-left: -10px;
+        img{
+            border:4px solid white;
+            width: 40px;
+        }
+
     }
 }

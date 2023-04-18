@@ -14,10 +14,12 @@ const TimeRange = ({disableTimeLoop = false}) => {
         const [editFocus, setEditFocus] = useState("")
 
 
-
-
         const {
-            newEventData: {timeRange},
+            newEventData: {
+                startDateTime,
+                endDateTime,
+                timeRange
+            },
             setTimeRange,
             setNewEventData
 
@@ -74,12 +76,54 @@ const TimeRange = ({disableTimeLoop = false}) => {
             }
         }
 
-        function handleChangeDate(date, isStart = true){
-            console.log(date)
+        function handleChangeDate(date, isStart = true) {
+            if (isStart) {
+                setNewEventData(prev => ({
+                    ...prev,
+                    startDateTime: date
+                }))
+            } else {
+                setNewEventData(prev => ({
+                    ...prev,
+                    endDateTime: date
+                }))
+            }
         }
 
-        function handleChangeTime(time, isStart = true){
-            console.log(time)
+        function handleChangeTime(time, isStart = true) {
+
+
+
+            let cpTime = new Date(startDateTime)
+            cpTime.setHours(time.getHours())
+            cpTime.setMinutes(time.getMinutes())
+            cpTime.setSeconds(time.getSeconds())
+
+
+
+            if (isStart) {
+                setNewEventData(prev => ({
+                    ...prev,
+                    startDateTime: cpTime
+                }))
+            } else {
+                setNewEventData(prev => ({
+                    ...prev,
+                    endDateTime: cpTime
+                }))
+            }
+
+            // if (isStart) {
+            //     setNewEventData(prev => ({
+            //         ...prev,
+            //         startTime: time
+            //     }))
+            // } else {
+            //     setNewEventData(prev => ({
+            //         ...prev,
+            //         startTime: time
+            //     }))
+            // }
         }
 
 
@@ -97,24 +141,24 @@ const TimeRange = ({disableTimeLoop = false}) => {
                             <DatePicker
                                 isOpen={openDropDown === "start"}
                                 tileDisabled={({date}) => date < today}
-                                dateTime={timeRange.startDateTime}
+                                dateTime={startDateTime}
                                 setDateTime={(d) => handleChangeDate(d)}
                                 onOpen={() => setOpenDropDown("start")}
                                 onClose={dropdownClose}
                             />
 
                             {!timeRange.isAllDay &&
-                             <TimeChoose
-                                className=""
-                                name="start"
-                                editFocus={editFocus}
-                                setEditFocus={setEditFocus}
-                                isOpen={openDropDown === "startTime"}
-                                dateTime={timeRange.startDateTime}
-                                setDateTime={(d) => handleChangeTime(d)}
-                                onOpen={() => setOpenDropDown("startTime")}
-                                onClose={dropdownClose}
-                            /> }
+                                <TimeChoose
+                                    className=""
+                                    name="start"
+                                    editFocus={editFocus}
+                                    setEditFocus={setEditFocus}
+                                    isOpen={openDropDown === "startTime"}
+                                    dateTime={startDateTime}
+                                    setDateTime={(d) => handleChangeTime(d)}
+                                    onOpen={() => setOpenDropDown("startTime")}
+                                    onClose={dropdownClose}
+                                />}
                         </div>
 
                         <span className="px-2"><BiMinus/></span>
@@ -124,7 +168,7 @@ const TimeRange = ({disableTimeLoop = false}) => {
                             <DatePicker
                                 isOpen={openDropDown === "end"}
                                 dropdownClass="left-auto -right-20"
-                                dateTime={timeRange.endDateTime}
+                                dateTime={endDateTime}
                                 setDateTime={(d) => handleChangeDate(d, false)}
                                 onOpen={() => setOpenDropDown("end")}
                                 onClose={dropdownClose}
@@ -132,14 +176,14 @@ const TimeRange = ({disableTimeLoop = false}) => {
 
                             {!timeRange.isAllDay && <TimeChoose
                                 isOpen={openDropDown === "endTime"}
-                                dateTime={timeRange.endDateTime}
+                                dateTime={endDateTime}
                                 name="end"
                                 editFocus={editFocus}
                                 setEditFocus={setEditFocus}
                                 setDateTime={(d) => handleChangeTime(d, false)}
                                 onOpen={() => setOpenDropDown("endTime")}
                                 onClose={dropdownClose}
-                            /> }
+                            />}
 
                         </div>
                     </div>

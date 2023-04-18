@@ -79,13 +79,12 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
             await eventValidator.validateSync(payload)
 
 
-            axios.post("/api/calendar/create", payload).then(({data, status}) => {
+            axios.post("http://localhost:4000/api/calendar/create", payload).then(({data, status}) => {
                 console.log(data)
             }).catch((ex) => {
                 console.log(ex)
 
             })
-
 
         } catch (ex) {
             alert(ex.message)

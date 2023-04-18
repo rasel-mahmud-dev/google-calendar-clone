@@ -7,15 +7,26 @@ import BigCalendar from "../components/BigCalendar/BigCalendar";
 import dayjs from "dayjs";
 import Popup from "../components/Popup/Popup";
 import SmallCalendarV2 from "../components/SmallCalendar/SmallCalendarV2";
+import axios from "axios";
 
 
 const Calendar = () => {
 
-    const {selectedDate, setMonthIndex, setNewEventData} = useContext(CalendarContext)
+    const { selectedDate, setMonthIndex, setNewEventData} = useContext(CalendarContext)
+
+
+
+
 
     useEffect(() => {
         let currentMonthIndex = dayjs().month()
         setMonthIndex(currentMonthIndex)
+
+        axios.get("http://localhost:4000/api/events").then(({data})=>{
+            console.log(data)
+        }).catch(ex=>{
+
+        })
 
     }, [])
 

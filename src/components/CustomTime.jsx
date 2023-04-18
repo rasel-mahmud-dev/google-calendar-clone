@@ -68,8 +68,6 @@ const CustomTime = (props) => {
         onClose(false)
     }
 
-    console.log(timeRange)
-
 
     return (
 

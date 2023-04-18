@@ -168,28 +168,21 @@ const BasicInfo = ({handleChange, newEventData, setTab, handleAddEvent}) => {
                     )}>
                         <RichTextEditor/>
                     </ClickExpand>
-
                 </div>
 
                 <div className="event-input-field flex items-start mt-3">
                     <div className="event-label-icon w-10">
                         <BsBell className="text-xl text-gray-600"/>
                     </div>
-
                     <div className="hover:bg-gray-100 p-2 rounded-md">
                         <span className="text-sm text-gray-600">Add Notification</span>
                     </div>
-
-
                 </div>
 
-
-                <div className="mt-20">
+                <div className="mt-4">
                     <button onClick={handleAddEvent} className="btn btn-primary">Add</button>
                 </div>
-
             </div>
-
 
         </div>
     );

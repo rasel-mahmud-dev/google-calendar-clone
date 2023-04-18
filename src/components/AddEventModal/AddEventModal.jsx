@@ -9,13 +9,12 @@ import "./style.scss"
 import BasicInfo from "./BasicInfo";
 import AddUser from "./AddUser";
 import axios from "axios";
-import {ca} from "date-fns/locale";
 
 
 const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
 
-    const {newEventData, setNewEventData, setCloseNewEventModal} = useContext(CalendarContext)
+    const {newEventData, addEvent, setNewEventData, setCloseNewEventModal} = useContext(CalendarContext)
 
     const [tab, setTab] = useState("basic")
     const [tabPosition, setTabPosition] = useState(0)
@@ -59,7 +58,6 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 invitations: yup.array()
             });
 
-            console.log(newEventData)
 
             const invitationUsers = newEventData.invitations.map(user => user._id) || []
 
@@ -78,11 +76,11 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
             await eventValidator.validateSync(payload)
 
-
             axios.post("http://localhost:4000/api/calendar/create", payload).then(({data, status}) => {
-                console.log(data)
+                setCloseNewEventModal()
+                addEvent(data.event)
+
             }).catch((ex) => {
-                console.log(ex)
 
             })
 

@@ -9,6 +9,7 @@ export const CalendarProvider = (props) => {
         selectedDate: new Date(),
         currentDate: new Date(),
         monthIndex: 3,
+        events: [],
         smallCalendarMonth: 0,
         newEventData: {
             isOpen: false,
@@ -38,7 +39,17 @@ export const CalendarProvider = (props) => {
         selectedDate: state.selectedDate,
         currentDate: state.currentDate,
         monthIndex: state.monthIndex,
+        events: state.events,
         smallCalendarMonth: state.smallCalendarMonth,
+
+        setEvents: function (events) {
+            setState(prev => ({...prev, events: events}))
+        },
+
+        addEvent: function (newDate) {
+            setState(prev => ({...prev, events: [...prev.events, newDate]}))
+        },
+
         setSmallCalendarMonth: function (val) {
             setState(prev => ({...prev, smallCalendarMonth: val}))
         },

@@ -12,18 +12,14 @@ import axios from "axios";
 
 const Calendar = () => {
 
-    const { selectedDate, setMonthIndex, setNewEventData} = useContext(CalendarContext)
-
-
-
-
+    const { events, setEvents, selectedDate, setMonthIndex, setNewEventData} = useContext(CalendarContext)
 
     useEffect(() => {
         let currentMonthIndex = dayjs().month()
         setMonthIndex(currentMonthIndex)
 
-        axios.get("http://localhost:4000/api/events").then(({data})=>{
-            console.log(data)
+        axios.get("http://localhost:4000/api/calendar/events").then(({data})=>{
+            setEvents(data)
         }).catch(ex=>{
 
         })
@@ -46,7 +42,6 @@ const Calendar = () => {
 
     return (
         <div className="my-container">
-
 
             <div className="flex ">
                 <div className="sidebar">
@@ -82,7 +77,7 @@ const Calendar = () => {
                     {/*<SmallCalendarV2/>*/}
                 </div>
                 <div className="border-l w-full">
-                    <BigCalendar/>
+                    <BigCalendar events={events}/>
                 </div>
             </div>
 

@@ -7,12 +7,11 @@
     .big-date{
         min-height: 100px;
         background: #f1f1f1;
-        margin: 4px;
+        margin: 1px;
         padding-top: 6px;
-        justify-content: center;
-        display: flex;
         cursor: pointer;
         .big-date-cell{
+            margin: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -36,7 +35,6 @@
                 background: var(--active);
                 color: var(--white);
             }
-
         }
 
         &.inactive {
@@ -44,6 +42,30 @@
                 color: #a8a8a8;
             }
         }
+
+
+        .event-list{
+            display: flex;
+            flex-direction: column;
+            row-gap: 3px;
+            .event-name{
+                transform: scale(1);
+                animation: zoomOut .3s linear forwards;
+                font-size: 10px;
+                color: white;
+                padding: 0px 4px;
+                display: block;
+                height: 16px;
+                border-radius: 5px;
+                white-space: nowrap;
+                overflow-x: clip;
+            }
+        }
+    }
+
+    @keyframes zoomOut {
+        0%{transform: scale(0)}
+        100%{transform: scale(1)}
 
     }
 

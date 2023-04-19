@@ -2,18 +2,20 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import "./style.scss"
 
-const ClickExpand = ({label, children}) => {
+const ClickExpand = ({label, initialOpen = false, children}) => {
 
     const [isExpand, setExpand] = useState(false)
 
-    const contentRef = useRef()
+    useEffect(() => {
+        if (initialOpen) {
+            setExpand(true)
+        }
+    }, [initialOpen])
 
-    const [contentHeight, setContextHeight] = useState(0)
 
     function onClick() {
         setExpand(!isExpand)
     }
-
 
 
     return (
@@ -22,7 +24,7 @@ const ClickExpand = ({label, children}) => {
                 {label && label({onPress: onClick, isOpen: isExpand})}
             </div>
             <div className={`expand-able ${isExpand ? "expand-content" : "collapse-content"}`}>
-                <div >
+                <div>
 
                     {children}
                 </div>

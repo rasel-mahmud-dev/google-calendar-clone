@@ -16,6 +16,9 @@ export const CalendarProvider = (props) => {
             type: "event", // or  task
             title: "",
             meetingLink: "",
+            agenda: "",
+            followUp: "",
+            actionItems: "",
             program: "",
             session: "",
             eventColor: "blue",

@@ -50,6 +50,25 @@
 
 .sidebar {
     width: 260px;
+    --header-height: 140px;
+
+    .sidebar-scroll{
+        height: calc(100vh - var(--header-height));
+        overflow-y: auto;
+        overflow-x: clip;
+
+        &::-webkit-scrollbar{
+            background: red;
+            width: 4px;
+        }
+        &::-webkit-scrollbar-track{
+            background: var(--gray-100);
+        }
+        &::-webkit-scrollbar-thumb{
+            border-radius: 10px;
+            background: rgba(169, 169, 169, 0.35);
+        }
+    }
 }
 
 .add-new-btn {

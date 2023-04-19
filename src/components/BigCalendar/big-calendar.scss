@@ -49,6 +49,7 @@
             flex-direction: column;
             row-gap: 3px;
             .event-name{
+                margin-bottom: 1px;
                 transform: scale(1);
                 animation: zoomOut .3s linear forwards;
                 font-size: 10px;
@@ -59,6 +60,13 @@
                 border-radius: 5px;
                 white-space: nowrap;
                 overflow-x: clip;
+            }
+            .see-more-btn{
+                color: #3d3d3d;
+                font-weight: 500;
+                &:hover{
+                    color: var(--mui-primary);
+                }
             }
         }
     }

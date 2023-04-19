@@ -6,7 +6,17 @@
     z-index: 1000;
 
     &:focus{
+        outline: none;
+    }
 
+    .popup-item{
+        margin: 1px 4px;
+        padding: 0 4px;
+        border-radius: 4px;
+        &:hover{
+            color: white;
+            background: var(--hover);
+        }
     }
 
     &--close {
@@ -24,6 +34,11 @@
     &.auth-menu-popup{
         min-width: 200px;
     }
+}
+
+.all-event-popup-modal{
+    width: 220px;
+
 }
 
 .center-scale-popup {

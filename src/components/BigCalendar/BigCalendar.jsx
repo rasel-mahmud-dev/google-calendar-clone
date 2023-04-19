@@ -5,15 +5,9 @@ import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
 import AddEventModal from "../AddEventModal/AddEventModal";
 import getMonthDayMartix from "../../utils/getMonthDayMartix";
-
-const statusColors = {
-    accepted: "#4dbe33",
-    pending: "#7480a6",
-    rejected: "#ee4444",
-    proposedTime: "#227fb6",
-    denied: "#d4ec57",
-    finished: "#735eff"
-}
+import Popup from "../Popup/Popup";
+import statusColors from "../../utils/statusColors";
+import withPreventDefault from "../../utils/withPreventDefault";
 
 
 const BigCalendar = (props) => {
@@ -45,6 +39,9 @@ const BigCalendar = (props) => {
     const [daysMatrix, setDaysMatrix] = useState(getMonthDayMartix(monthIndex))
 
     const [daySelected, setDaySelected] = useState(dayjs().month(monthIndex))
+
+    const [isShowAllEventDate, setShowAllEventDate] = useState(null)
+
 
     // useEffect(() => {
     //     if(value) {
@@ -90,7 +87,6 @@ const BigCalendar = (props) => {
         console.log("clicked date is ", date)
     }
 
-
     // open create event modal panel
     function clickOnCell(day, monthIndex) {
         let date = day.toDate()
@@ -108,11 +104,46 @@ const BigCalendar = (props) => {
     }
 
 
+    // open update event when click on event name
+    function clickOnEventName(evt, monthIndex) {
+        let updatedEvent = events.find(evt => evt._id === evt._id)
+
+        if (updatedEvent) {
+            setNewEventData(prev => ({
+                ...prev,
+                title: updatedEvent.title,
+                isOpen: true,
+                updateEventId: evt._id,
+                date: new Date(),
+                selectedDate: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
+                startDateTime: updatedEvent.end ? new Date(updatedEvent.end) : new Date(),
+                endDateTime: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
+                monthIndex: monthIndex,
+                status: updatedEvent.status,
+                meetingLink: updatedEvent.meetingLink,
+                agenda: updatedEvent.agenda,
+                followUp: updatedEvent.followUp,
+                actionItems: updatedEvent.actionItems,
+                program: updatedEvent.program,
+                session: updatedEvent.session,
+                invitations: updatedEvent.invitations,
+            }))
+        }
+    }
+
+    console.log(newEventData)
+
     function handleClose() {
         setCloseNewEventModal()
     }
 
-    function renderEvents(day) {
+    function handleShowAllEvent(e, eventDate) {
+        e.stopPropagation();
+
+        setShowAllEventDate(prev => prev === eventDate ? null : eventDate)
+    }
+
+    function renderEvents(day, monthIndex) {
 
         const eventGroupByDate = {}
         events.forEach(event => {
@@ -133,18 +164,57 @@ const BigCalendar = (props) => {
             // }
         })
 
+        return Object.keys(eventGroupByDate).map(eventDate => {
+            let more = 0
+            if (eventGroupByDate[eventDate].length >= 4) {
+                more = (eventGroupByDate[eventDate].length) - 4;
+            }
+            return (
+                eventDate === day.format("DD/MM/YYYY") && (
+                    <div>
+                        {
+                            eventGroupByDate[eventDate].slice(0, 4).map(evt => (
+                                <div
+                                    onClick={(e) => withPreventDefault(e, clickOnEventName(evt, monthIndex))}
+                                    className="event-name"
+                                    style={{background: statusColors[evt.status]}}
+                                >
+                                    {evt.title}
+                                </div>
+                            ))
+                        }
+                        {more > 0 && (
+                            <div>
+                                <div onClick={(e) => handleShowAllEvent(e, eventDate)}
+                                     className="event-name see-more-btn"> {more} more
+                                </div>
 
-        return Object.keys(eventGroupByDate).map(eventDate => (
-            eventDate === day.format("DD/MM/YYYY") && (
-                eventGroupByDate[eventDate].slice(0, 4).map(evt => (
-                    <div className="event-name" style={{background: statusColors[evt.status]}}>
-                        {evt.title}
+                                {isShowAllEventDate && (
+                                    <div>
+                                        <Popup className="popup all-event-popup-modal py-2 px-1"
+                                               onClose={(e) => handleShowAllEvent(e, eventDate)} isWithBackdrop={true}
+                                               isOpen={isShowAllEventDate}>
+                                            <div>
+                                                <div>
+                                                    <div className="ml-2 m-auto text-center text-gray-500">
+                                                        <p className="text-sm  font-normal">{day.format("dddd")}</p>
+                                                        <h4 className="btn-circle m-auto flex items-center justify-center w-12 h-12 text-center text-xl text-gray-700 ">{day.date()}</h4>
+                                                    </div>
+                                                </div>
+                                                {eventGroupByDate[eventDate].map(eachEvt => (
+                                                    <li style={{background: statusColors[eachEvt.status]}}
+                                                        className="py-1 popup-item text-xs text-gray-100">{eachEvt.title}</li>
+                                                ))}
+                                            </div>
+                                        </Popup>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
-                ))
+                )
             )
-        ))
-
-
+        })
     }
 
 
@@ -181,11 +251,7 @@ const BigCalendar = (props) => {
                             ))
                         ))}
                     </div>
-
-
                 </div>
-
-
             </div>
         </div>
     );

@@ -7,19 +7,14 @@ const Popup = ({isOpen, className, isWithBackdrop, children, backdropClass = "",
 
     const popupRef = useRef(null)
 
-    function handleBlur() {
-        onClose()
+    function handleBlur(e) {
+        onClose(e)
     }
 
     useEffect(() => {
-
         if (isOpen) {
             popupRef.current.focus()
-            console.dir(popupRef.current)
-
         }
-
-
     }, [isOpen]);
 
 

@@ -6,21 +6,21 @@ import SmallCalendar from "../components/SmallCalendar/SmallCalendar";
 import BigCalendar from "../components/BigCalendar/BigCalendar";
 import dayjs from "dayjs";
 import Popup from "../components/Popup/Popup";
-import SmallCalendarV2 from "../components/SmallCalendar/SmallCalendarV2";
 import axios from "axios";
+import CalendarSidebar from "../components/CalendarSidebar/CalendarSidebar";
 
 
 const Calendar = () => {
 
-    const { events, setEvents, selectedDate, setMonthIndex, setNewEventData} = useContext(CalendarContext)
+    const {events, setEvents, selectedDate, setMonthIndex, setNewEventData} = useContext(CalendarContext)
 
     useEffect(() => {
         let currentMonthIndex = dayjs().month()
         setMonthIndex(currentMonthIndex)
 
-        axios.get("http://localhost:4000/api/calendar/events").then(({data})=>{
+        axios.get("http://localhost:4000/api/calendar/events").then(({data}) => {
             setEvents(data)
-        }).catch(ex=>{
+        }).catch(ex => {
 
         })
 
@@ -44,38 +44,12 @@ const Calendar = () => {
         <div className="my-container">
 
             <div className="flex ">
-                <div className="sidebar">
-                    <div className="calendar-page relative">
-                        <button className="btn flex items-center rounded-full shadow-lg mt-4 add-new-btn"
-                                onClick={() => setOpenChooseEventModal(true)}>
-                            <div dangerouslySetInnerHTML={{__html: plus}}></div>
-                            <span className="mr-4 font-medium text-sm">Create</span>
-                            <BiCaretDown/>
-
-                        </button>
-
-                        <Popup className="rounded-lg px-0 py-1 absloute w-40 left-0 top-14"
-                               onClose={() => setOpenChooseEventModal(false)}
-                               isOpen={isOpenChooseEventModal}>
-                            <div>
-                                <li onClick={() => openAddNewEventModal("event")}
-                                    className="text-sm cursor-pointer list-none hover:bg-gray-100 py-2 px-2">Event
-                                </li>
-                                <li onClick={() => openAddNewEventModal("task")}
-                                    className="text-sm cursor-pointer list-none hover:bg-gray-100 py-2 px-2">Task
-                                </li>
-                            </div>
-                        </Popup>
-
-                    </div>
-
-                    <SmallCalendar />
-                    <br/>
-                    <br/>
-                    <br/>
-
-                    {/*<SmallCalendarV2/>*/}
-                </div>
+                <CalendarSidebar
+                    events={events}
+                    openAddNewEventModal={openAddNewEventModal}
+                    isOpenChooseEventModal={isOpenChooseEventModal}
+                    setOpenChooseEventModal={setOpenChooseEventModal}
+                />
                 <div className="border-l w-full">
                     <BigCalendar events={events}/>
                 </div>

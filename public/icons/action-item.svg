@@ -1,0 +1,9 @@
+<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 22 22">
+    <path
+        fill-rule="evenodd"
+        d="M11 22c6.075 0 11-4.925 11-11S17.075 0 11 0 0 4.925 0 11s4.925 11 11 11ZM5 10.571l1.414-1.414 3.536 3.535 5.657-5.656L17.02 8.45 9.95 15.52 5 10.572Z"
+        fill="#595bd4"
+        class="color000 svgShape"/>
+</svg>

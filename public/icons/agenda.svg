@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#595bd4"
+
+
+
+
+
+
+
+
+
+
+
+                                                                  d="M19 0H6.5v24H19c1.103 0 2-.897 2-2V2c0-1.103-.897-2-2-2z" class="color039BE5 svgShape"/><path fill="#595bd4" d="M5 0C3.897 0 3 .897 3 2v20c0 1.103.897 2 2 2h1.5V0H5z" class="color0277BD svgShape"/><path d="M19 23.75H5a2 2 0 0 1-2-2V22a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-.25a2 2 0 0 1-2 2z" opacity=".1" fill="#000000" class="color000 svgShape"/><path fill="#f2f2f2" d="M11 0v8l2.5-2L16 8V0z" class="colorF2F2F2 svgShape"/><path d="M11 7.75V8l2.5-2L16 8v-.25l-2.5-2z" opacity=".05" fill="#000000" class="color000 svgShape"/><path fill="#ffffff" d="M19 0H5a2 2 0 0 0-2 2v.25a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2V2a2 2 0 0 0-2-2z" opacity=".2" class="colorFFF svgShape"/><linearGradient id="a" x1="14.235" x2="22.152" y1="2.821" y2="10.738" gradientUnits="userSpaceOnUse"><stop offset="0" stop-opacity=".1" stop-color="#000000" class="stopColor000000 svgShape"/><stop offset="1" stop-opacity="0" stop-color="#000000" class="stopColor000000 svgShape"/></linearGradient><path fill="url(#a)" d="M19 0h-3v8l-2.5-2L11 8l10 7V2c0-1.103-.897-2-2-2z"/><linearGradient id="b" x1=".607" x2="23.392" y1="6.688" y2="17.312" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity=".2" class="stopColorFFF svgShape"/><stop offset="1" stop-color="#ffffff" stop-opacity="0" class="stopColorFFF svgShape"/></linearGradient><path fill="url(#b)" d="M19 0H5C3.897 0 3 .897 3 2v20c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V2c0-1.103-.897-2-2-2z"/></svg>

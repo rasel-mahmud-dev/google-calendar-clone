@@ -9,9 +9,11 @@ function App() {
   return (
     <div className="App">
         <Header />
-      <Calendar />
+        <Calendar />
     </div>
   )
 }
 
 export default App
+
+

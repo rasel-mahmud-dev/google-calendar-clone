@@ -1,18 +1,46 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {plus} from "../icons/plus";
 import CalendarContext from "../context/CalendarContext";
-import {BiCaretDown} from "react-icons/all";
-import SmallCalendar from "../components/SmallCalendar/SmallCalendar";
-import BigCalendar from "../components/BigCalendar/BigCalendar";
 import dayjs from "dayjs";
-import Popup from "../components/Popup/Popup";
 import axios from "axios";
 import CalendarSidebar from "../components/CalendarSidebar/CalendarSidebar";
+import Header from "../components/Header/Header";
+import AddEventModal from "../components/AddEventModal/AddEventModal";
 
 
-const Calendar = () => {
+// open update event when click on event name
+export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
 
-    const {events, setEvents, selectedDate, setMonthIndex, setNewEventData} = useContext(CalendarContext)
+    let updatedEvent = events.find(event => event._id === evt._id)
+
+
+    if (updatedEvent) {
+        setNewEventData(prev => ({
+            ...prev,
+            title: updatedEvent.title,
+            isOpen: true,
+            updateEventId: evt._id,
+            date: new Date(),
+            selectedDate: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
+            startDateTime: updatedEvent.end ? new Date(updatedEvent.end) : new Date(),
+            endDateTime: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
+            monthIndex: monthIndex,
+            status: updatedEvent.status,
+            meetingLink: updatedEvent.meetingLink,
+            agenda: updatedEvent.agenda,
+            followUp: updatedEvent.followUp,
+            actionItems: updatedEvent.actionItems,
+            program: updatedEvent.program,
+            session: updatedEvent.session,
+            invitations: updatedEvent.invitations,
+        }))
+    } else {
+        alert("not found updated event item")
+    }
+}
+
+const Calendar = ({pageContent}) => {
+
+    const {events, newEventData, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
 
     useEffect(() => {
         let currentMonthIndex = dayjs().month()
@@ -23,8 +51,8 @@ const Calendar = () => {
         }).catch(ex => {
 
         })
-
     }, [])
+
 
     const [isOpenChooseEventModal, setOpenChooseEventModal] = useState(false)
 
@@ -40,8 +68,19 @@ const Calendar = () => {
         setOpenChooseEventModal(false)
     }
 
+    function handleClose() {
+        setCloseNewEventModal()
+    }
+    // function handleSetCalendarView(){
+    //
+    // }
+
     return (
         <div className="my-container">
+            <Header/>
+
+
+            <AddEventModal isOpenAddEventModal={newEventData.isOpen} onClose={handleClose}/>
 
             <div className="flex ">
                 <CalendarSidebar
@@ -51,7 +90,7 @@ const Calendar = () => {
                     setOpenChooseEventModal={setOpenChooseEventModal}
                 />
                 <div className="border-l w-full">
-                    <BigCalendar events={events}/>
+                    {pageContent}
                 </div>
             </div>
 

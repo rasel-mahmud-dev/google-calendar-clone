@@ -54,7 +54,8 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
         try {
             let eventValidator = yup.object({
-                title: yup.string().required(),
+                title: yup.string().required("Meeting title required."),
+                agenda: yup.string().required("Meeting agenda required."),
                 invitations: yup.array()
             });
 
@@ -65,9 +66,9 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 title: newEventData.title,
                 start: newEventData.startDateTime,
                 end: newEventData.endDateTime,
-                agenda: "",
-                actionItems: "",
-                followUp: "",
+                agenda: newEventData.agenda,
+                actionItems: newEventData.actionItems,
+                followUp: newEventData.followUp,
                 meetingLink: newEventData.meetingLink,
                 status: "pending",
                 attachments: null,

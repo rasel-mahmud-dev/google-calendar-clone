@@ -2,14 +2,18 @@ import React, {useContext} from 'react';
 import {BiChevronLeft, BiChevronRight, BiInfoCircle, BiSearch, BsGear} from "react-icons/all";
 import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
+import Select from "../Form/Select";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 const Header = () => {
 
-    const {monthIndex, setMonthIndex, setCalendar} = useContext(CalendarContext)
+    const {monthIndex, setMonthIndex, setCalendar, setCalendarView, calendarView} = useContext(CalendarContext)
+
+    const navigate = useNavigate()
 
     function jumpNextMonth() {
-        setMonthIndex(monthIndex  + 1)
+        setMonthIndex(monthIndex + 1)
     }
 
     function jumpPrevMonth() {
@@ -18,6 +22,11 @@ const Header = () => {
 
     function resetDate() {
         setMonthIndex(dayjs().month())
+    }
+
+    function handleChangeCalendarView(componentName){
+        setCalendarView(componentName)
+        navigate("/calendar/" + componentName)
     }
 
 
@@ -75,7 +84,23 @@ const Header = () => {
                         </li>
                     </div>
 
-                    <button className="btn">Month</button>
+                    <Select
+                        withBg={true}
+                        value={calendarView}
+                        dropdownClass=""
+                        onChange={handleChangeCalendarView}
+                        renderPlaceholderValue=""
+                        placeholderClass=""
+                        render={(click) => (
+                            <div>
+                                <li onClick={()=>click("day")} className="mui-select-item">Day</li>
+                                <li onClick={()=>click("week")} className="mui-select-item">Week</li>
+                                <li onClick={()=>click("month")} className="mui-select-item">Month</li>
+                            </div>
+                        )}>
+
+                    </Select>
+
 
                 </div>
 

@@ -36,6 +36,7 @@ export const CalendarProvider = (props) => {
                 disabledEditTimeRange: false, turnOn: false, repeatIteration: 1, repeatPeriod: "week", repeatDays: [],
             }
         },
+        calendarView: "month" // or day
     })
 
     const value = {
@@ -44,6 +45,7 @@ export const CalendarProvider = (props) => {
         monthIndex: state.monthIndex,
         events: state.events,
         smallCalendarMonth: state.smallCalendarMonth,
+        calendarView: state.calendarView,
 
         setEvents: function (events) {
             setState(prev => ({...prev, events: events}))
@@ -72,7 +74,6 @@ export const CalendarProvider = (props) => {
             setState(prev => ({
                 ...prev, newEventData: {
                     ...prev.newEventData, timeRange: cb(prev.newEventData.timeRange)
-
                 }
             }))
         },
@@ -84,6 +85,9 @@ export const CalendarProvider = (props) => {
                     type: "event", // or  task
                     title: "",
                     meetingLink: "",
+                    agenda: "",
+                    followUp: "",
+                    actionItems: "",
                     program: "",
                     session: "",
                     startDateTime: new Date(),
@@ -95,7 +99,18 @@ export const CalendarProvider = (props) => {
                     }
                 }
             }))
+        },
+
+
+
+        setCalendarView(componentName, query){
+            setState(prev => ({
+                ...prev,
+               calendarView: componentName
+            }))
         }
+
+
     }
 
 

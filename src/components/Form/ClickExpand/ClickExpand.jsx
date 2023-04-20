@@ -25,10 +25,8 @@ const ClickExpand = ({label, initialOpen = false, children}) => {
             </div>
             <div className={`expand-able ${isExpand ? "expand-content" : "collapse-content"}`}>
                 <div>
-
                     {children}
                 </div>
-
 
             </div>
         </div>

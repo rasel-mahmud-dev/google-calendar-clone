@@ -7,7 +7,8 @@ import AddEventModal from "../AddEventModal/AddEventModal";
 import getMonthDayMartix from "../../utils/getMonthDayMartix";
 import Popup from "../Popup/Popup";
 import statusColors from "../../utils/statusColors";
-import withPreventDefault from "../../utils/withPreventDefault";
+import withPreventDefault from "../../utils/withStopPropagation";
+import {clickOnEventName} from "../../Calendar/Calendar";
 
 
 const BigCalendar = (props) => {
@@ -41,6 +42,8 @@ const BigCalendar = (props) => {
     const [daySelected, setDaySelected] = useState(dayjs().month(monthIndex))
 
     const [isShowAllEventDate, setShowAllEventDate] = useState(null)
+
+
 
 
     // useEffect(() => {
@@ -87,8 +90,10 @@ const BigCalendar = (props) => {
         console.log("clicked date is ", date)
     }
 
+
     // open create event modal panel
     function clickOnCell(day, monthIndex) {
+        setCloseNewEventModal()
         let date = day.toDate()
         let endDateTime = new Date(date)
         endDateTime.setMinutes(30)
@@ -105,37 +110,12 @@ const BigCalendar = (props) => {
 
 
     // open update event when click on event name
-    function clickOnEventName(evt, monthIndex) {
-        let updatedEvent = events.find(evt => evt._id === evt._id)
-
-        if (updatedEvent) {
-            setNewEventData(prev => ({
-                ...prev,
-                title: updatedEvent.title,
-                isOpen: true,
-                updateEventId: evt._id,
-                date: new Date(),
-                selectedDate: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
-                startDateTime: updatedEvent.end ? new Date(updatedEvent.end) : new Date(),
-                endDateTime: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
-                monthIndex: monthIndex,
-                status: updatedEvent.status,
-                meetingLink: updatedEvent.meetingLink,
-                agenda: updatedEvent.agenda,
-                followUp: updatedEvent.followUp,
-                actionItems: updatedEvent.actionItems,
-                program: updatedEvent.program,
-                session: updatedEvent.session,
-                invitations: updatedEvent.invitations,
-            }))
-        }
+    function handleClickOnEventName(evt, monthIndex) {
+        clickOnEventName(evt, monthIndex, events, setNewEventData)
     }
 
-    console.log(newEventData)
 
-    function handleClose() {
-        setCloseNewEventModal()
-    }
+
 
     function handleShowAllEvent(e, eventDate) {
         e.stopPropagation();
@@ -175,7 +155,7 @@ const BigCalendar = (props) => {
                         {
                             eventGroupByDate[eventDate].slice(0, 4).map(evt => (
                                 <div
-                                    onClick={(e) => withPreventDefault(e, clickOnEventName(evt, monthIndex))}
+                                    onClick={(e) => withPreventDefault(e, handleClickOnEventName(evt, monthIndex))}
                                     className="event-name"
                                     style={{background: statusColors[evt.status]}}
                                 >
@@ -221,7 +201,7 @@ const BigCalendar = (props) => {
     return (
         <div>
 
-            <AddEventModal isOpenAddEventModal={newEventData.isOpen} onClose={handleClose}/>
+
 
             <div className="mt-5 w-full p-2 rounded-xl big-calendar">
 

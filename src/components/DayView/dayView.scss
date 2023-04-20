@@ -1,0 +1,75 @@
+
+.hour-list-wrapper {
+    overflow-y: auto;
+    max-height: calc(100vh - var(--header-height));
+
+
+    &::-webkit-scrollbar{
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: var(--gray-300);
+        border-radius: 20px;
+    }
+}
+
+.hour-list {
+
+    .each-hour {
+        //background: #f8f8f8;
+        //padding: 20px;
+        //margin: 5px;
+        //border-top: 1px solid rgba(128, 128, 128, 0.29);
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        cursor: pointer;
+        //flex-direction: column-reverse;
+
+        position: relative;
+
+        &:before {
+            position: absolute;
+            content: "";
+            width: 1px;
+            left: 80px;
+            height: 100%;
+            background: var(--gray-200);
+            display: block;
+        }
+
+
+        .row {
+            //position: relative;
+            border-top: 1px solid var(--gray-200);;
+            height: 1px;
+            background: var(--hover);
+            width: 100%;
+        }
+
+        .hour-label {
+            text-align: end;
+            display: flex;
+            justify-content: end;
+            width: 50px;
+            font-size: 11px;
+            padding: 15px 0;
+            color: #343434;
+            font-weight: 400;
+        }
+
+    }
+}
+
+.day-events{
+    .day-event{
+        .day-event-item{
+            padding: 4px 10px;
+            font-size: 12px;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    }
+
+}

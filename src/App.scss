@@ -50,11 +50,16 @@
 
 .sidebar {
     width: 260px;
-    --header-height: 140px;
+    --header-height: 120px;
+
 
     .sidebar-scroll{
-        height: calc(100vh - var(--header-height));
+         // max-height: calc(100vh - var(--header-height));
         overflow-y: auto;
+        height: 100%;
+        //position: sticky;
+        //top: var(--header-height);
+        //background: red;
         overflow-x: clip;
 
         &::-webkit-scrollbar{

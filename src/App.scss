@@ -3,6 +3,12 @@
 
 @import "./sass/shared";
 
+.bg-primary{
+    background: var(--mui-primary);
+}
+.text-primary{
+    color: var(--mui-primary);
+}
 .btn {
     background: white;
     padding: 6px 18px;

@@ -65,7 +65,7 @@ const HomePage = () => {
             {
                 params.view === "month"
                     ? <BigCalendar events={events}/>
-                    : <DayView events={events}/>
+                    : <DayView  events={events}/>
             }
 
         </div>

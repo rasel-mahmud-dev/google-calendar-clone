@@ -78,8 +78,7 @@ const Calendar = ({pageContent}) => {
     return (
         <div className="my-container">
             <Header/>
-
-
+            
             <AddEventModal isOpenAddEventModal={newEventData.isOpen} onClose={handleClose}/>
 
             <div className="flex ">
@@ -89,7 +88,7 @@ const Calendar = ({pageContent}) => {
                     isOpenChooseEventModal={isOpenChooseEventModal}
                     setOpenChooseEventModal={setOpenChooseEventModal}
                 />
-                <div className="border-l w-full">
+                <div className="w-full">
                     {pageContent}
                 </div>
             </div>

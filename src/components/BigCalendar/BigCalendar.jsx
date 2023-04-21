@@ -9,6 +9,8 @@ import Popup from "../Popup/Popup";
 import statusColors from "../../utils/statusColors";
 import withPreventDefault from "../../utils/withStopPropagation";
 import {clickOnEventName} from "../../Calendar/Calendar";
+import withStopPropagation from "../../utils/withStopPropagation";
+import {useNavigate} from "react-router-dom";
 
 
 const BigCalendar = (props) => {
@@ -36,6 +38,8 @@ const BigCalendar = (props) => {
         "Fr",
         "Sa"
     ]
+
+    const navigate  = useNavigate()
 
     const [daysMatrix, setDaysMatrix] = useState(getMonthDayMartix(monthIndex))
 
@@ -87,10 +91,11 @@ const BigCalendar = (props) => {
 
     // jump to day view...
     function handleClickOnDate(date) {
-        console.log("clicked date is ", date)
+        let d = date.format("MM-DD-YYYY")
+        navigate(`/calendar/day?date=` + d)
     }
-
-
+ 
+    
     // open create event modal panel
     function clickOnCell(day, monthIndex) {
         setCloseNewEventModal()
@@ -221,7 +226,7 @@ const BigCalendar = (props) => {
                             row.map(day => (
                                 <div key={day.date()} onClick={() => clickOnCell(day, monthIndex)}
                                      className={`big-date py-1 ${getDayClass(day)} `}>
-                                    <span onClick={() => handleClickOnDate(day)}
+                                    <span onClick={(e) => withStopPropagation(e, handleClickOnDate(day))}
                                           className="big-date-cell">{day.format("D")}
                                     </span>
                                     <div className="event-list">

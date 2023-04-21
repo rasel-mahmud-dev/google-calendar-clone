@@ -102,21 +102,25 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
                 <div className="tab-root" style={{transform: `translateX(${tabPosition}px`}}>
                     <div className={`tab tab-one ${tab === "basic" ? "open-tab" : "hide-tab"}`}>
-                        <BasicInfo
-                            handleAddEvent={handleAddEvent}
-                            handleChange={handleChange}
-                            setTab={setTab}
-                            newEventData={newEventData}
-                        />
+                        {tab === "basic" && (
+                            <BasicInfo
+                                handleAddEvent={handleAddEvent}
+                                handleChange={handleChange}
+                                setTab={setTab}
+                                newEventData={newEventData}
+                            />
+                        )}
                     </div>
 
                     <div className={`tab  tab-two ${tab === "addUsers" ? "open-tab" : "hide-tab"}`}>
-                        <AddUser
-                            handleClose={handleClose}
-                            handleChange={handleChange}
-                            newEventData={newEventData}
-                            setTab={setTab}
-                        />
+                        {tab === "addUsers" && (
+                            <AddUser
+                                handleClose={handleClose}
+                                handleChange={handleChange}
+                                newEventData={newEventData}
+                                setTab={setTab}
+                            />
+                        )}
                     </div>
                 </div>
 

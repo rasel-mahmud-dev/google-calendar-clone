@@ -8,6 +8,7 @@ import CalendarContext from "../../context/CalendarContext";
 import dayjs from "dayjs";
 
 import TimeRange from "../TimeRange";
+import {FiUsers} from "react-icons/all";
 
 
 const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
@@ -66,28 +67,29 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                 </div>
 
 
-                {/*<div className="event-input-field flex items-start mt-3">*/}
-                {/*    <div className="event-label-icon w-12">*/}
-                {/*        <FiUsers className="text-gray-600"/>*/}
-                {/*    </div>*/}
+                <div className="event-input-field flex items-start mt-3">
+                    <div className="event-label-icon w-12">
+                        <img className="w-5" src="/icons/users.svg" alt="agenda"/>
+                        {/*<FiUsers className="text-gray-600"/>*/}
+                    </div>
 
-                {/*    <div className="w-full">*/}
-                {/*        <div onClick={() => setTab("addUsers")} className="hover:bg-gray-100 p-2 rounded-md">*/}
-                {/*            <span className="text-sm text-gray-600">Add Invitation</span>*/}
-                {/*        </div>*/}
+                    <div className="w-full">
+                        <div onClick={() => setTab("addUsers")} className="hover:bg-gray-100 p-2 rounded-md">
+                            <span className="text-sm text-gray-600">Add Invitation</span>
+                        </div>
 
-                {/*        /!**** selected users ****!/*/}
-                {/*        <div onClick={() => setTab("addUsers")}*/}
-                {/*             className="flex flex-wrap items-center gap-x-0 users-avatar-list mt-1">*/}
-                {/*            {invitations.map(user => (*/}
-                {/*                <div className="user-avatar">*/}
-                {/*                    <img src={user.image} className="rounded-full" alt=""/>*/}
-                {/*                </div>*/}
-                {/*            ))}*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
+                        {/**** selected users ****/}
+                        <div onClick={() => setTab("addUsers")}
+                             className="flex flex-wrap items-center gap-x-0 users-avatar-list mt-1">
+                            {invitations.map(user => (
+                                <div className="user-avatar">
+                                    <img src={user.image} className="rounded-full" alt=""/>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
-                {/*</div>*/}
+                </div>
 
                 <div className="event-input-field flex items-start mt-3">
                     <div className="event-label-icon w-12">

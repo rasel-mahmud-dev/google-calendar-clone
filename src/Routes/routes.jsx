@@ -14,9 +14,6 @@ const routes = createBrowserRouter([
                 path: "/calendar/:view",
                 element: <HomePage />,
             },
-
-
-
         ]
     }
 ])

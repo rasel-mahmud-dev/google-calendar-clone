@@ -5,11 +5,12 @@ import Popup from "../Popup/Popup";
 import SmallCalendar from "../SmallCalendar/SmallCalendar";
 import Accordion from "../Accordion/Accordion";
 import statusColors from "../../utils/statusColors";
+import {useNavigate} from "react-router-dom";
+import dayjs from "dayjs";
 
 const CalendarSidebar = (props) => {
 
     const MYID = "6422af5d9153de6adce3b085"
-
 
     const {
         openAddNewEventModal,
@@ -18,7 +19,7 @@ const CalendarSidebar = (props) => {
         events,
     } = props
 
-
+    const navigate = useNavigate()
     useEffect(() => {
         if (events.length > 0) {
             setMyCreatedEvent(events.filter(evt => evt.createdBy._id === MYID))
@@ -72,6 +73,14 @@ const CalendarSidebar = (props) => {
     function sortByStatusPending(arr) {
         return arr
     }
+    
+    
+    
+    function handleChangeDateOnSmallCalendar(date){
+        let d = dayjs(date).format("MM-DD-YYYY")
+        navigate(`/calendar/day?date=` + d)
+    }
+    
 
 
     return (
@@ -100,7 +109,7 @@ const CalendarSidebar = (props) => {
 
             <div className="sidebar-scroll">
 
-                <SmallCalendar/>
+                <SmallCalendar onChange={handleChangeDateOnSmallCalendar}/>
 
                 <br/>
                 <br/>

@@ -5,6 +5,7 @@
     width: 500px;
     overflow-y: auto;
     top: 30%;
+    transition: all .4s ease;
 
 
     .close-btn {
@@ -17,7 +18,7 @@
     .tab-root {
         display: flex;
         width: 1000px;
-        transition: transform .2s ease-out;
+        transition: all .2s ease-out;
     }
 
     .tab {

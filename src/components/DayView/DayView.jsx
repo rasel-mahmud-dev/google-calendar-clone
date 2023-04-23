@@ -7,11 +7,12 @@ import statusColors from "../../utils/statusColors";
 import {clickOnEventName} from "../../Calendar/Calendar";
 import withStopPropagation from "../../utils/withStopPropagation";
 import {useParams, useSearchParams} from "react-router-dom";
+import {colors} from "../ColorPicker/ColorPicker.jsx";
 
 
 const DayView = ({events, date = null}) => {
 
-    const {monthIndex, setMonthIndex, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
+    const {monthIndex, auth, setMonthIndex, addEvent, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
 
     const [currentDay, setCurrentDay] = useState(
         dayjs(new Date(dayjs().year(), monthIndex))
@@ -28,6 +29,7 @@ const DayView = ({events, date = null}) => {
         if (events && events.length > 0) {
             let currentEvts = events.filter(event => {
                 let startDate = new Date(event.start)
+                // console.log(startDate.getDate(), currentDay.date())
                 if (startDate.getDate() === currentDay.date()) {
                     return event;
                 }
@@ -56,9 +58,41 @@ const DayView = ({events, date = null}) => {
         clickOnEventName(evt, monthIndex, events, setNewEventData)
     }
 
-    // create meeting with time
+    // create meeting with time && date
     function createMeetingWithTime(hour) {
-        console.log(currentDay, hour, monthIndex)
+        // console.log(currentDay, hour, monthIndex)
+        setCloseNewEventModal()
+        let date = currentDay.toDate()
+        let startDateTime = new Date(date)
+        startDateTime.setHours(hour)
+        startDateTime.setMinutes(0)
+        let endDateTime = new Date(date)
+        endDateTime.setMinutes(30)
+        endDateTime.setHours(hour)
+
+        setNewEventData(prev => {
+            let newEvent = {
+                ...prev,
+                isOpen: true,
+                isEventCreateInitialize: true,
+                startDateTime: startDateTime,
+                start: new Date(startDateTime).toISOString(), // for instant preview
+                end: new Date(endDateTime).toISOString(), // for instant preview
+                endDateTime: endDateTime,
+                monthIndex: monthIndex
+            }
+
+            // add new event entry
+            addEvent({
+                _id: "000000000000000000000000", // fake mongo db id for client side render,
+                createdBy: {
+                    ...auth
+                },
+                ...newEvent
+            })
+
+            return newEvent
+        })
     }
 
 
@@ -96,12 +130,12 @@ const DayView = ({events, date = null}) => {
         return currentDayEvents.map(event => {
             const startDateTime = new Date(event.start)
             return (
-                <div className="day-events">
+                <div className={`day-events ${event.isEventCreateInitialize ? "focus": ""}`}>
                     {startDateTime.getHours() === hour && (
                         <div className="px-2 day-event ">
                             <div onClick={(e) => withStopPropagation(e, handleClickOnEventName(event, monthIndex))}
-                                 className="ml-6 day-event-item " style={{background: statusColors[event.status]}}>
-                                <h4>{event.title}</h4>
+                                 className="ml-6 day-event-item " style={{background:  colors[event.eventColor]|| statusColors[event.status]}}>
+                                <h4>{event.title || "Untitled"}</h4>
                             </div>
                         </div>
                     )}

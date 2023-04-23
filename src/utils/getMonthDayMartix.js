@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-function getMonthDayMartix(month = dayjs().month()) {
+function getMonthDayMartix(currentDate = new Date()) {
 
     /*
     Month index = 3
@@ -14,13 +14,9 @@ function getMonthDayMartix(month = dayjs().month()) {
 
     * */
 
-    month = Math.floor(month)
-
-    const year = dayjs().year();
-
 
     // start on day index 0 - 6
-    const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
+    const firstDayOfTheMonth = currentDate.getDay();
 
 
     let currentMonthCount = 0 - firstDayOfTheMonth;
@@ -52,7 +48,9 @@ function getMonthDayMartix(month = dayjs().month()) {
     const daysMatrix = new Array(6).fill([]).map(() => {
         return new Array(7).fill(null).map(() => {
             currentMonthCount++;
-            return dayjs(new Date(year, month, currentMonthCount));
+            let ccDate = new Date(currentDate)
+            ccDate.setDate(currentMonthCount)
+            return dayjs(ccDate)
         });
     });
     return daysMatrix

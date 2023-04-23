@@ -13,11 +13,12 @@ const Accordion = ({openIds=[], className = "", children, ...attr}) => {
     // props children manipulation
     return (
         <div className={`accordion ${className}`} {...attr}>
-            {children.map(accordionItem => React.cloneElement(accordionItem,
+            {children.map((accordionItem, index) => React.cloneElement(accordionItem,
                 {
                     ...accordionItem.props.children,
+                    key: index,
                     isOpen: isOpen(accordionItem.props.dataId),
-                    className: `accordion-item ${accordionItem.props.className}`
+                    className: `accordion-item ${accordionItem.props.className || ""}`
                 })
             )}
         </div>

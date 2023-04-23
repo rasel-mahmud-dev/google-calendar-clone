@@ -14,7 +14,7 @@ import axios from "axios";
 const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
 
-    const {newEventData, addEvent, setNewEventData, setCloseNewEventModal} = useContext(CalendarContext)
+    const {newEventData, setEvents, addEvent, setNewEventData, setCloseNewEventModal} = useContext(CalendarContext)
 
     const [tab, setTab] = useState("basic")
     const [tabPosition, setTabPosition] = useState(0)
@@ -49,6 +49,25 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
         }
     }, [newEventData.isOpen]);
 
+    useEffect(()=>{
+        if(newEventData.isEventCreateInitialize){
+            // console.log(newEventData)
+            setEvents(prev=>{
+                let updateEvents = [...prev]
+                let updateEventIndex = updateEvents.findIndex(evt=>evt.isEventCreateInitialize)
+                if(updateEventIndex !== -1){
+                    updateEvents[updateEventIndex] = {
+                        ...updateEvents[updateEventIndex],
+                        ...newEventData
+                    }
+                    return updateEvents
+                } else {
+                    return prev
+                }
+            })
+        }
+    }, [newEventData.isEventCreateInitialize, newEventData.title, newEventData.eventColor])
+
 
     async function handleAddEvent() {
 
@@ -71,19 +90,42 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 followUp: newEventData.followUp,
                 meetingLink: newEventData.meetingLink,
                 status: "pending",
+                eventColor: newEventData.eventColor,
                 attachments: null,
                 invitations: invitationUsers
             }
 
             await eventValidator.validateSync(payload)
 
-            axios.post("http://localhost:4000/api/calendar/create", payload).then(({data, status}) => {
-                setCloseNewEventModal()
-                addEvent(data.event)
+            if(newEventData.updateEventId){
+                axios.put("http://localhost:4000/api/calendar/update/"+newEventData.updateEventId, payload).then(({data, status}) => {
+                    setCloseNewEventModal()
+                   // addEvent(data.event)
+                    setEvents(prev=>{
+                        let updateEvents = [...prev]
+                        let updateEventIndex = updateEvents.findIndex(evt=> evt._id === newEventData.updateEventId)
+                        if(updateEventIndex !== -1){
+                            updateEvents[updateEventIndex] = {
+                                ...updateEvents[updateEventIndex],
+                                ...data.event
+                            }
+                            return updateEvents
+                        } else {
+                            return prev
+                        }
+                    })
 
-            }).catch((ex) => {
+                }).catch((ex) => {})
 
-            })
+            } else {
+                axios.post("http://localhost:4000/api/calendar/create", payload).then(({data, status}) => {
+                    setCloseNewEventModal()
+                    addEvent(data.event)
+
+                }).catch((ex) => {})
+            }
+
+
 
         } catch (ex) {
             alert(ex.message)
@@ -94,7 +136,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
     return (
         <div>
-            <Modal isOpen={newEventData.isOpen} onClose={handleClose} className="add-event-modal custom-scrollbar">
+            <Modal isOpen={newEventData.isOpen} onClose={handleClose} className="add-event-modal">
 
                 <div className="close-btn">
                     <TiTimes className="text-gray-500 cursor-pointer hover:text-red-500" onClick={handleClose}/>

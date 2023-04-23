@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import Input from "../Form/Input";
 
 import ClickExpand from "../Form/ClickExpand/ClickExpand";
@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 
 import TimeRange from "../TimeRange";
 import {FiUsers} from "react-icons/all";
+import ColorPicker from "../ColorPicker/ColorPicker.jsx";
 
 
 const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
@@ -22,6 +23,7 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
             followUp,
             meetingLink,
             actionItems,
+            eventColor,
             startDate,
             endDate,
             updateEventId
@@ -31,13 +33,17 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
 
     let date = dayjs(new Date(dayjs().year(), monthIndex, eventDate))
 
+    const eventNameRef = useRef()
+
 
     let t = new Date()
     t.setDate(5)
     t.setMonth(4)
 
+    useEffect(()=>{
+        eventNameRef?.current?.focus()
+    }, [])
 
-    console.log(followUp)
 
     return (
         <div className="">
@@ -47,7 +53,7 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
 
             <div className="p-4">
                 <div className="ml-12">
-                    <Input className="" label="Add meeting title"
+                    <Input ref={eventNameRef} className="" label="Add meeting title"
                            onChange={(e) => handleChange(e.target.value, "title")}
                            value={title}/>
                 </div>
@@ -64,6 +70,13 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                         <TimeRange/>
                     </div>
 
+                </div>
+
+                <div className="event-input-field flex items-start mt-3">
+                    <div className="event-label-icon w-12">
+                        <img className="w-5" src="/icons/bell.svg" alt="bell"/>
+                    </div>
+                    <ColorPicker value={eventColor} onChange={(colorName)=>handleChange(colorName, "eventColor")} />
                 </div>
 
 
@@ -187,21 +200,15 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                 {/*</div>*/}
 
                 <div className="event-input-field flex items-start mt-3">
-                    {/*<div className="event-label-icon w-10">*/}
-                    {/*    <BsBell className="text-xl text-gray-600"/>*/}
-                    {/*</div>*/}
-
                     <div className="event-label-icon w-12">
-
                         <img className="w-5" src="/icons/bell.svg" alt="bell"/>
-
-                        {/*<FiClock className="text-gray-600"/>*/}
                     </div>
-
                     <div className="hover:bg-gray-100 p-2 rounded-md">
                         <span className="text-sm text-gray-600">Add Notification</span>
                     </div>
                 </div>
+                
+
 
                 <div className="mt-4">
                     <button onClick={handleAddEvent} className="btn btn-primary">Add</button>

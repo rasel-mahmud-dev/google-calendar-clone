@@ -5,10 +5,11 @@
     overflow: auto;
     min-width: 100px;
     background: white;
-    //font-smooth: auto;
-    //-webkit-font-smoothing: inherit;
-    //-moz-osx-font-smoothing: auto;
-    //font-smooth: always;
+}
+.color-picker-dropdown{
+    min-width: 10px !important;
+    padding: 8px;
+    top: 5px !important
 
 }
 .calendar-dropdown{

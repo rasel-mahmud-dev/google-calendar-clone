@@ -1,11 +1,24 @@
 
 .add-event-modal {
     overflow: hidden;
-    max-height: 900px;
+    max-height: 90vh;
     width: 500px;
     overflow-y: auto;
     top: 30%;
     transition: all .4s ease;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar{
+        background: transparent;
+        width: 10px;
+        border-radius: 100px;
+    }
+    //&::-webkit-scrollbar-thumb{
+    //    background: var(--hover);
+    //    width: 10px;
+    //    padding: 30px;
+    //    margin: 50px;
+    //    border-radius: 30px;
+    //}
 
 
     .close-btn {

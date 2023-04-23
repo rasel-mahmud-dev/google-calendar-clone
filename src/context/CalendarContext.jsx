@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import dayjs from "dayjs";
 
 const CalendarContext = React.createContext({})
 
@@ -9,10 +10,12 @@ export const CalendarProvider = (props) => {
         selectedDate: new Date(),
         currentDate: new Date(),
         monthIndex: 3,
+        date: new Date().getDate(),
         events: [],
         smallCalendarMonth: 0,
         newEventData: {
             isOpen: false,
+            isEventCreateInitialize: false,
             type: "event", // or  task
             title: "",
             meetingLink: "",
@@ -21,17 +24,16 @@ export const CalendarProvider = (props) => {
             actionItems: "",
             program: "",
             session: "",
-            eventColor: "blue",
+            eventColor: "gray",
             startDateTime: new Date(),
             endDateTime: new Date(),
             date: 0,
             invitations: [],
-
-            notifications: [{type: "notification", time: "10 minutes before"}, {
-                type: "email",
-                time: "20 minutes before"
-            }, {type: "notification", time: "30 minutes before"},],
-
+            notifications: [
+                {type: "notification", time: "10 minutes before"},
+                {type: "email", time: "20 minutes before"},
+                {type: "notification", time: "30 minutes before"},
+            ],
             timeRange: {
                 disabledEditTimeRange: false, turnOn: false, repeatIteration: 1, repeatPeriod: "week", repeatDays: [],
             }
@@ -44,15 +46,26 @@ export const CalendarProvider = (props) => {
         currentDate: state.currentDate,
         monthIndex: state.monthIndex,
         events: state.events,
+        date: state.date,
         smallCalendarMonth: state.smallCalendarMonth,
         calendarView: state.calendarView,
-
-        setEvents: function (events) {
-            setState(prev => ({...prev, events: events}))
+        auth: {
+            username: "Rasel Mahmud",
+            firstName: "Rasel",
+            email: "rasel.mahmud.dev@gmail.com",
+            _id: "6422af5d9153de6adce3b085"
+        },
+        setEvents: function (cb) {
+            setState(prev => ({
+                ...prev,
+                events: typeof cb === "function"
+                    ? cb(prev.events)
+                    : cb
+            }))
         },
 
-        addEvent: function (newDate) {
-            setState(prev => ({...prev, events: [...prev.events, newDate]}))
+        addEvent: function (newEvent) {
+            setState(prev => ({...prev, events: [...prev.events, newEvent]}))
         },
 
         setSmallCalendarMonth: function (val) {
@@ -79,13 +92,19 @@ export const CalendarProvider = (props) => {
         },
         setCloseNewEventModal: () => {
             let now = new Date()
+            setState(prev=>({
+                ...prev,
+                events: prev.events.filter(evt=> !evt.isEventCreateInitialize)
+            }))
             setState(prev => ({
                 ...prev, newEventData: {
                     isOpen: false,
                     type: "event", // or  task
                     title: "",
                     meetingLink: "",
+                    eventColor: "gray",
                     agenda: "",
+                    isEventCreateInitialize: false,
                     followUp: "",
                     actionItems: "",
                     program: "",

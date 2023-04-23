@@ -14,6 +14,7 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
 
 
     if (updatedEvent) {
+
         setNewEventData(prev => ({
             ...prev,
             title: updatedEvent.title,
@@ -25,6 +26,7 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
             endDateTime: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
             monthIndex: monthIndex,
             status: updatedEvent.status,
+            eventColor: updatedEvent.eventColor,
             meetingLink: updatedEvent.meetingLink,
             agenda: updatedEvent.agenda,
             followUp: updatedEvent.followUp,
@@ -40,7 +42,7 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
 
 const Calendar = ({pageContent}) => {
 
-    const {events, newEventData, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
+    const {events, newEventData, auth, setCalendar, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
 
     useEffect(() => {
         let currentMonthIndex = dayjs().month()
@@ -83,7 +85,9 @@ const Calendar = ({pageContent}) => {
 
             <div className="flex ">
                 <CalendarSidebar
+                    setCalendar={setCalendar}
                     events={events}
+                    auth={auth}
                     openAddNewEventModal={openAddNewEventModal}
                     isOpenChooseEventModal={isOpenChooseEventModal}
                     setOpenChooseEventModal={setOpenChooseEventModal}

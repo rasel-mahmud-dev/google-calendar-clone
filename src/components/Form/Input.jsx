@@ -4,7 +4,9 @@ import {createPortal} from "react-dom";
 import Dropdown from "./Dropdown";
 import {is, tr} from "date-fns/locale";
 
-const Input = ({className = "", withBg = false, inputBg = "", type = "text", dataList, selectedDateList, onClickItem, showSuggestion, label, ...attr}) => {
+const Input = React.forwardRef((props, ref) => {
+
+const {className = "", withBg = false, inputBg = "", type = "text", dataList, selectedDateList, onClickItem, showSuggestion, label, ...attr} = props
 
     const [isFocus, setFocus] = useState(false)
 
@@ -34,6 +36,7 @@ const Input = ({className = "", withBg = false, inputBg = "", type = "text", dat
 
             <div className={`input-wrapper ${withBg ? "with-bg" : ""}  ${inputBg}`}>
                 <input
+                    ref={ref}
                     onBlur={(e) => handleBlur(e)}
                     onClick={()=>handleFocus()}
                     placeholder={label}
@@ -52,7 +55,7 @@ const Input = ({className = "", withBg = false, inputBg = "", type = "text", dat
 
         </div>
     );
-};
+})
 
 export default Input;
 

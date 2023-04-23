@@ -9,6 +9,7 @@ const eventSchema = new mongoose.Schema({
 	start: {type: Date, required: true},
 	end: {type: Date, required: true},
 	meetingLink: {type: String, default: ""},
+	eventColor: {type: String, default: ""},
 	actionItems: {type: String, default: ""},
 	agenda: {type: String, default: ""},
 	followUp: {type: String, default: ""},

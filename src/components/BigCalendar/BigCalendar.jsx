@@ -41,13 +41,11 @@ const BigCalendar = (props) => {
 
     const navigate  = useNavigate()
 
-    const [daysMatrix, setDaysMatrix] = useState(getMonthDayMartix(monthIndex))
+    const [daysMatrix, setDaysMatrix] = useState(getMonthDayMartix(currentDate))
 
     const [daySelected, setDaySelected] = useState(dayjs().month(monthIndex))
 
     const [isShowAllEventDate, setShowAllEventDate] = useState(null)
-
-
 
 
     // useEffect(() => {
@@ -60,7 +58,7 @@ const BigCalendar = (props) => {
 
 
     useEffect(() => {
-        setDaysMatrix(getMonthDayMartix(monthIndex))
+        setDaysMatrix(getMonthDayMartix(selectedDate))
     }, [monthIndex]);
 
 
@@ -70,22 +68,23 @@ const BigCalendar = (props) => {
     }
 
     function getDayClass(day) {
-        const format = "DD-MM-YY";
-
-        const nowDay = dayjs().format(format);
-        const nowDate = dayjs().month(monthIndex)
-
-        const currDay = day.format(format);
-        const slcDay = daySelected && daySelected.format(format);
-        if (nowDay === currDay) {
-            return "today";
-        } else if (currDay === slcDay) {
-            return "selected-date";
-        } else if (nowDate.month() !== day.month()) {
-            return "inactive";
-        } else {
-            return ""
-        }
+        console.log(day)
+        // const format = "DD-MM-YY";
+        //
+        // const nowDay = dayjs().format(format);
+        // const nowDate = dayjs().month(monthIndex)
+        //
+        // const currDay = day.format(format);
+        // const slcDay = daySelected && daySelected.format(format);
+        // if (nowDay === currDay) {
+        //     return "today";
+        // } else if (currDay === slcDay) {
+        //     return "selected-date";
+        // } else if (nowDate.month() !== day.month()) {
+        //     return "inactive";
+        // } else {
+        //     return ""
+        // }
     }
 
 
@@ -105,8 +104,10 @@ const BigCalendar = (props) => {
         setNewEventData(prev => ({
             ...prev,
             isOpen: true,
-            date: date,
-            selectedDate: date,
+            // date: date,
+            // selectedDate: date,
+            isEventCreateInitialize: true,
+
             startDateTime: date,
             endDateTime: endDateTime,
             monthIndex: monthIndex

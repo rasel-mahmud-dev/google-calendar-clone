@@ -45,8 +45,6 @@ const Dropdown = ({isOpen = false, render, onChange, className=""}) => {
             </div>
         </div>
     ) : null
-
-
 };
 
 export default Dropdown;

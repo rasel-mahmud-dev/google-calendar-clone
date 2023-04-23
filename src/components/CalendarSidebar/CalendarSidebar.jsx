@@ -10,20 +10,21 @@ import dayjs from "dayjs";
 
 const CalendarSidebar = (props) => {
 
-    const MYID = "6422af5d9153de6adce3b085"
-
     const {
         openAddNewEventModal,
         isOpenChooseEventModal,
         setOpenChooseEventModal,
         events,
+        setCalendar,
+        auth,
     } = props
 
     const navigate = useNavigate()
+
     useEffect(() => {
         if (events.length > 0) {
-            setMyCreatedEvent(events.filter(evt => evt.createdBy._id === MYID))
-            setInvitedMe(events.filter(evt => evt.invitations.includes(MYID)))
+            setMyCreatedEvent(events.filter(evt => evt.createdBy._id === auth._id))
+            setInvitedMe(events.filter(evt => evt.invitations.includes(auth._id)))
         }
     }, [events])
 
@@ -77,8 +78,11 @@ const CalendarSidebar = (props) => {
     
     
     function handleChangeDateOnSmallCalendar(date){
-        let d = dayjs(date).format("MM-DD-YYYY")
-        navigate(`/calendar/day?date=` + d)
+        let d = dayjs(date)
+        setCalendar({
+            selectedDate: d
+        })
+        navigate(`/calendar/day?date=` + d.format("MM-DD-YYYY"))
     }
     
 
@@ -150,8 +154,9 @@ const CalendarSidebar = (props) => {
 
 
                             {/*** Toggle expand / Collapse button ****/}
-                            {myCreatedEvent.length > 0 && <div className="accordion-li  hover:bg-blue-100 p-1 rounded"
-                                                               onClick={(e) => handleExpandAccContent(e, 1, myCreatedEvent.length)}>
+                            {myCreatedEvent.length > 0 && <div
+                                className="accordion-li  hover:bg-blue-100 p-1 rounded"
+                                onClick={(e) => handleExpandAccContent(e, 1, myCreatedEvent.length)}>
                                 <div className="ml-4 flex items-center justify-between">
                                     <label htmlFor=""
                                            className="font-medium">

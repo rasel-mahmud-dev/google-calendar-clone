@@ -63,6 +63,14 @@
 
 .day-events{
     margin: 2px 0;
+    &.focus{
+        .day-event{
+            .day-event-item{
+            box-shadow: 0 2px 6px 0px #2d2d2d8c}
+    }
+    }
+
+
     .day-event{
         .day-event-item{
             padding: 4px 5px;

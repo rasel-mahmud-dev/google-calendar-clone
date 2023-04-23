@@ -201,10 +201,9 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                 {/*<button onClick={findUsers} className="btn btn-primary mt-2">Search User</button>*/}
 
 
-                {/*<div className="mt-20">*/}
-                {/*    <button className="btn btn-primary">Add</button>*/}
-                {/*</div>*/}
-
+                <div className="mt-20">
+                    <button className="btn btn-primary" onClick={() => setTab("basic")}>Continue</button>
+                </div>
 
             </div>
         </div>

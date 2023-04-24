@@ -7,6 +7,10 @@ const AddNotification = ({onPress, onChange, values}) => {
 	const [notifications, setNotifications] = useState([])
 	
 	const options = [
+		{value: 1, label: "1 minutes before"},
+		{value: 2, label: "2 minutes before"},
+		{value: 3, label: "3 minutes before"},
+		{value: 4, label: "4 minutes before"},
 		{value: 20, label: "20 minutes before"},
 		{value: 30, label: "30 minutes before"},
 		{value: 15, label: "15 minutes before"},
@@ -47,7 +51,8 @@ const AddNotification = ({onPress, onChange, values}) => {
 		if(updatedIndex !== -1){
 			updatedNotifications[updatedIndex] = {
 				...updatedNotifications[updatedIndex],
-				label: val.label
+				label: val.label,
+				value: val.value
 			}
 		}
 		onChange(updatedNotifications)

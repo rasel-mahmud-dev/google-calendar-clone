@@ -128,3 +128,15 @@
 
     }
 }
+.notification-popup{
+    padding: 10px;
+    box-shadow: 0 3px 10px 0px rgba(52, 52, 52, 0.41);
+    border-radius: 10px;
+    max-width: 400px;
+    position: fixed;
+    right: 50px;
+    top: 40px;
+}
+.notification-popup-backdrop{
+    background: rgba(49, 49, 49, 0.65) !important;
+}

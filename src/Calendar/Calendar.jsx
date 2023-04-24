@@ -100,6 +100,8 @@ const Calendar = ({pageContent}) => {
             <Header/>
             
             <AddEventModal isOpenAddEventModal={newEventData.isOpen} onClose={handleClose}/>
+            
+            
 
             <div className="flex ">
                 <CalendarSidebar

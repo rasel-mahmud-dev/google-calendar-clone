@@ -172,10 +172,11 @@ const BigCalendar = (props) => {
             }
             return (
                 eventDate === day.format("DD/MM/YYYY") && (
-                    <div>
+                    <div key={eventDate}>
                         {
                             eventGroupByDate[eventDate].slice(0, 4).map(evt => (
                                 <div
+                                    key={evt._id}
                                     onClick={(e) => withPreventDefault(e, handleClickOnEventName(evt, monthIndex))}
                                     className="event-name"
                                     style={{background:  colors[evt.eventColor]|| statusColors[evt.status]}}
@@ -205,8 +206,8 @@ const BigCalendar = (props) => {
                                                         <h4 className="btn-circle m-auto flex items-center justify-center w-12 h-12 text-center text-xl text-gray-700 ">{day.date()}</h4>
                                                     </div>
                                                 </div>
-                                                {eventGroupByDate[eventDate].map(eachEvt => (
-                                                    <li style={{background: statusColors[eachEvt.status]}}
+                                                {eventGroupByDate[eventDate].map((eachEvt, i) => (
+                                                    <li key={i} style={{background: statusColors[eachEvt.status]}}
                                                         className="py-1 popup-item text-xs text-gray-100">{eachEvt.title}</li>
                                                 ))}
                                             </div>
@@ -233,7 +234,7 @@ const BigCalendar = (props) => {
                 <div>
                     <div className="grid grid-cols-7 day-row">
                         {weeks.map((week, weekIndex) => (
-                            <div style={{background: weekDay[weekIndex]}} className="big-date">
+                            <div key={weekIndex} style={{background: weekDay[weekIndex]}} className="big-date">
                                 <span className="big-date-cell">{week}</span>
                             </div>
                         ))}

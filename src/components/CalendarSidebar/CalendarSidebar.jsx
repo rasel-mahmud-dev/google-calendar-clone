@@ -137,7 +137,7 @@ const CalendarSidebar = (props) => {
 
                         <div className="accordion-content">
                             {sortByStatusPending(myCreatedEvent.slice(0, accItemShowContentLen[1])).map(evt => (
-                                <div className="accordion-li">
+                                <div className="accordion-li" key={evt._id}>
                                     <h4 className="flex items-center">
                                         <div className="col-span-1">
                                             <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}
@@ -180,7 +180,7 @@ const CalendarSidebar = (props) => {
 
                         <div className="accordion-content">
                             {invitedMe.slice(0, accItemShowContentLen[2]).map(evt => (
-                                <div className="accordion-li">
+                                <div className="accordion-li" key={evt._id}>
                                     <h4 className="flex items-center">
                                         <div className="col-span-1">
                                             <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}

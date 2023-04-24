@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 const AppHome = () => {
 	return (
-		<div>
+		<div className="px-6">
 			
+
 		</div>
 	);
 };

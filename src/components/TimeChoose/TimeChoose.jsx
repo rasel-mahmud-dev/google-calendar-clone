@@ -170,17 +170,17 @@ const TimeChoose = (props) => {
 
 
     function handleChangeType(type, dateTime) {
-
+        let backupDate = dateTime.getDate()
         let h = dateTime.getHours()
         if (type === "PM") {
             setStatus("PM")
             dateTime.setHours(h + 12)
-
         } else {
             setStatus("AM")
             dateTime.setHours(h - 12)
         }
-
+        
+        dateTime.setDate(backupDate)
         setDateTime(dateTime)
     }
 

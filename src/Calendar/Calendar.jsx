@@ -29,7 +29,8 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
         {
             isAllDay = true
         }
-
+        
+        console.log(updatedEvent)
         setNewEventData(prev => ({
             ...prev,
             title: updatedEvent.title,
@@ -41,6 +42,7 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
             startDateTime: updatedEvent.start ? new Date(updatedEvent.start) : new Date(),
             endDateTime: updatedEvent.end ? new Date(updatedEvent.end) : new Date(),
             monthIndex: monthIndex,
+            notifications: updatedEvent.notifications || [],
             status: updatedEvent.status,
             eventColor: updatedEvent.eventColor,
             meetingLink: updatedEvent.meetingLink,

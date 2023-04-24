@@ -7,7 +7,7 @@ exports.createEvent = async (req, res) => {
 	if (req.user?.parent) {
 		return res.status(400).json({ error: "Access denied" })
 	}
-	const { title, start, end, agenda, actionItems, eventColor, meetingLink, followUp, attachments, invitations } = req.body
+	const { title, start, end, agenda, notifications=[], actionItems, eventColor, meetingLink, followUp, attachments, invitations } = req.body
 	if (!start) {
 		return res.status(400).json({ error: "Start time is required" })
 	}
@@ -18,6 +18,7 @@ exports.createEvent = async (req, res) => {
 		end,
 		agenda,
 		actionItems,
+		notifications,
 		eventColor,
 		followUp,
 		meetingLink,
@@ -50,17 +51,19 @@ exports.updateEvent = async (req, res) => {
 	if (req.user?.parent) {
 		return res.status(400).json({ error: "Access denied" })
 	}
-	const { title, start, end, createdBy, agenda, status, actionItems, eventColor, meetingLink, followUp, attachments, invitations } = req.body
+	const { title, start, end, notifications, agenda, status, actionItems, eventColor, meetingLink, followUp, attachments, invitations } = req.body
+	
 	if (!start) {
 		return res.status(400).json({ error: "Start time is required" })
 	}
-
+	
 	let data = {
 		title,
 		start,
 		end,
 		agenda,
 		actionItems,
+		notifications,
 		eventColor,
 		followUp,
 		meetingLink,

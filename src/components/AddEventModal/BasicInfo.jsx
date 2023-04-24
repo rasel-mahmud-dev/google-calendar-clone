@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import TimeRange from "../TimeRange";
 import {FiUsers} from "react-icons/all";
 import ColorPicker from "../ColorPicker/ColorPicker.jsx";
+import AddNotification from "./AddNotification";
 
 
 const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
@@ -20,6 +21,7 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
             title,
             monthIndex,
             date: eventDate,
+            notifications,
             followUp,
             meetingLink,
             actionItems,
@@ -203,9 +205,19 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                     <div className="event-label-icon w-12">
                         <img className="w-5" src="/icons/bell.svg" alt="bell"/>
                     </div>
-                    <div className="hover:bg-gray-100 p-2 rounded-md">
-                        <span className="text-sm text-gray-600">Add Notification</span>
-                    </div>
+                    
+                    <ClickExpand initialOpen={!!meetingLink} label={({onPress}) => (
+                        <AddNotification values={notifications}  onChange={(val)=>handleChange(val, "notifications")} onPress={onPress} />
+                        
+                    )}>
+                    
+                    
+                    </ClickExpand>
+                    
+                    
+                    {/*<div className="hover:bg-gray-100 p-2 rounded-md">*/}
+                    {/*    <span className="text-sm text-gray-600">Add Notification</span>*/}
+                    {/*</div>*/}
                 </div>
                 
 

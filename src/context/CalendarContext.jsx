@@ -31,9 +31,9 @@ export const CalendarProvider = (props) => {
             date: 0,
             invitations: [],
             notifications: [
-                {type: "notification", time: "10 minutes before"},
-                {type: "email", time: "20 minutes before"},
-                {type: "notification", time: "30 minutes before"},
+                // {type: "notification", label: "10 minutes before", value: 30},
+                // {type: "email", label: "20 minutes before", value: 30},
+                // {type: "notification", label: "30 minutes before", value: 30},
             ],
             timeRange: {
                 disabledEditTimeRange: false,
@@ -102,7 +102,8 @@ export const CalendarProvider = (props) => {
                 events: prev.events.filter(evt=> !evt.isEventCreateInitialize)
             }))
             setState(prev => ({
-                ...prev, newEventData: {
+                ...prev,
+                newEventData: {
                     isOpen: false,
                     type: "event", // or  task
                     title: "",
@@ -115,6 +116,7 @@ export const CalendarProvider = (props) => {
                     actionItems: "",
                     program: "",
                     session: "",
+                    notifications: [],
                     startDateTime: new Date(),
                     endDateTime: new Date(),
                     date: now.getDate(),

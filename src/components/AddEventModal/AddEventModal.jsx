@@ -108,6 +108,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 agenda: newEventData.agenda,
                 actionItems: newEventData.actionItems,
                 followUp: newEventData.followUp,
+                notifications: newEventData.notifications,
                 meetingLink: newEventData.meetingLink,
                 status: "pending",
                 eventColor: newEventData.eventColor,
@@ -136,6 +137,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 }).catch((ex) => {})
 
             } else {
+                
                 axios.post("http://localhost:4000/api/calendar/create", payload)
                     .then(({data, status}) => {
                     setCloseNewEventModal()

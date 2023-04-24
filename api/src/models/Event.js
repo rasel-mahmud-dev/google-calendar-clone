@@ -13,6 +13,7 @@ const eventSchema = new mongoose.Schema({
 	actionItems: {type: String, default: ""},
 	agenda: {type: String, default: ""},
 	followUp: {type: String, default: ""},
+	notifications: [{_id: false, type: {type: String, enum: ["notification", "email"]}, label: String, value: String}],
 	attachments: [String],
 	invitations: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}]
 	

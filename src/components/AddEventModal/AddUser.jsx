@@ -7,7 +7,7 @@ import Input from "../Form/Input";
 
 const AddUser = ({handleClose, handleChange, setTab}) => {
 
-    const {newEventData, setNewEventData} = useContext(CalendarContext)
+    const {newEventData, auth, setNewEventData} = useContext(CalendarContext)
 
     const usersList = [
         {
@@ -107,6 +107,17 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                 <h4 className="text-base font-normal text-gray-600">Invitations</h4>
 
                 <div className="users-list custom-scrollbar py-2">
+                    
+                    {/**** Creator user ****/}
+                    <div>
+                        <li className="flex items-center justify-between">
+                            <p className="flex items-center ">
+                                <img className="w-6  rounded-full mr-1" src={auth.image} alt=""/>
+                                <span> {auth.email} (Organizer) </span>
+                            </p>
+                        </li>
+                    </div>
+                    
                     {newEventData.invitations.map(user => (
                         <div>
                             <li className="flex items-center justify-between">

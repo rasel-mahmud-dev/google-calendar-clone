@@ -73,6 +73,16 @@
         }
     }
 
+
+    .notifications{
+        &:hover >  .notification-close{
+            display: block;
+        }
+        .notification-close{
+            display: none;
+        }
+    }
+
 }
 
 

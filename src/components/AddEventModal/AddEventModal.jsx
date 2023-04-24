@@ -81,10 +81,30 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
             const invitationUsers = newEventData.invitations.map(user => user._id) || []
 
+            await eventValidator.validateSync({
+                title: newEventData.title,
+                agenda: newEventData.agenda,
+                invitations: invitationUsers
+            })
+
+
+            let startDateTime = new Date(newEventData.startDateTime)
+            let endDateTime = new Date(newEventData.endDateTime)
+
+            if(newEventData.isAllDay){
+                startDateTime.setHours(0)
+                startDateTime.setMinutes(0)
+                startDateTime.setSeconds(0)
+
+                endDateTime.setHours(23)
+                endDateTime.setMinutes(59)
+                endDateTime.setSeconds(59)
+            }
+
             let payload = {
                 title: newEventData.title,
-                start: newEventData.startDateTime,
-                end: newEventData.endDateTime,
+                start: startDateTime,
+                end: endDateTime,
                 agenda: newEventData.agenda,
                 actionItems: newEventData.actionItems,
                 followUp: newEventData.followUp,
@@ -94,8 +114,6 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 attachments: null,
                 invitations: invitationUsers
             }
-
-            await eventValidator.validateSync(payload)
 
             if(newEventData.updateEventId){
                 axios.put("http://localhost:4000/api/calendar/update/"+newEventData.updateEventId, payload).then(({data, status}) => {
@@ -118,14 +136,13 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 }).catch((ex) => {})
 
             } else {
-                axios.post("http://localhost:4000/api/calendar/create", payload).then(({data, status}) => {
+                axios.post("http://localhost:4000/api/calendar/create", payload)
+                    .then(({data, status}) => {
                     setCloseNewEventModal()
                     addEvent(data.event)
 
                 }).catch((ex) => {})
             }
-
-
 
         } catch (ex) {
             alert(ex.message)

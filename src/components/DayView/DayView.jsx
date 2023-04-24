@@ -12,11 +12,10 @@ import {colors} from "../ColorPicker/ColorPicker.jsx";
 
 const DayView = ({events, date = null}) => {
 
-    const {monthIndex, auth, setMonthIndex, addEvent, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
+    const {monthIndex, currentDate, auth, addEvent, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
 
-    const [currentDay, setCurrentDay] = useState(
-        dayjs(new Date(dayjs().year(), monthIndex))
-    )
+    const [selectedDate, setSelectedDate] = useState(new Date(currentDate))
+
 
     const [currentDayEvents, setCurrentDayEvents] = useState([])
 
@@ -29,27 +28,28 @@ const DayView = ({events, date = null}) => {
         if (events && events.length > 0) {
             let currentEvts = events.filter(event => {
                 let startDate = new Date(event.start)
-                // console.log(startDate.getDate(), currentDay.date())
-                if (startDate.getDate() === currentDay.date()) {
+                // console.log(startDate.getDate(), selectedDate.date())
+                if (startDate.toDateString() === selectedDate.toDateString()) {
                     return event;
                 }
             })
             setCurrentDayEvents(currentEvts)
         }
-    }, [events, currentDay])
+    }, [events, selectedDate])
 
 
     useEffect(() => {
         let isValidDate = dayjs(dateParams).isValid()
         if(isValidDate && dateParams){
-            let d = dayjs(dateParams)
-            setCurrentDay(d)
+            let d = new Date(dateParams)
+            console.log(d)
+            setSelectedDate(d)
         } else {
-            let now = dayjs()
-            let currentDate = date || now.date()
-            setCurrentDay(dayjs(new Date(now.year(), monthIndex, currentDate)))
+            // let now = dayjs()
+            // let currentDate = date || now.date()
+            // setSelectedDate(dayjs(new Date(now.year(), monthIndex, currentDate)))
         }
-    }, [monthIndex, dateParams])
+    }, [ dateParams])
     
 
     // open update event when click on event name
@@ -60,9 +60,9 @@ const DayView = ({events, date = null}) => {
 
     // create meeting with time && date
     function createMeetingWithTime(hour) {
-        // console.log(currentDay, hour, monthIndex)
+        // console.log(selectedDate, hour, monthIndex)
         setCloseNewEventModal()
-        let date = currentDay.toDate()
+        let date = selectedDate
         let startDateTime = new Date(date)
         startDateTime.setHours(hour)
         startDateTime.setMinutes(0)
@@ -106,22 +106,13 @@ const DayView = ({events, date = null}) => {
         }
     }
 
+    function isCurrentDate(){
+        return (currentDate?.toDateString() === selectedDate?.toDateString())
+    }
+
 
     function renderHour(hour) {
         return hour > 12 ? Math.floor(hour - 12) : hour
-    }
-
-
-    function jumpNextMonth() {
-        setMonthIndex(monthIndex + 1)
-    }
-
-    function jumpPrevMonth() {
-        setMonthIndex(monthIndex - 1)
-    }
-
-    function resetDate() {
-        setMonthIndex(dayjs().month())
     }
 
 
@@ -153,35 +144,17 @@ const DayView = ({events, date = null}) => {
                 {/***** selected date *****/}
                 <div className="ml-12 relative top-0 my-4 flex flex-col items-center ">
                     <span className="font-normal text-sm text-primary">
-                        {currentDay.format(
+                        {dayjs(selectedDate).format(
                             "dddd"
                         )}
                     </span>
-                    <h4 className="font-medium text-xl p-6 text-white rounded-full day-circle bg-primary">
-                        {currentDay.format(
+                    <h4 className={`font-medium text-xl p-2 ${isCurrentDate() ? "p-6 text-white rounded-full day-circle bg-primary" : ""} `}>
+                        { dayjs(selectedDate).format(
                             "DD"
                         )}
                     </h4>
                 </div>
             </div>
-
-
-            {/*<div className="each-hour">*/}
-            {/*    <h4 className="hour-label">000</h4>*/}
-            {/*    <div className="row">GMT</div>*/}
-            {/*</div>*/}
-
-            {/*<div className="hour-list">*/}
-            
-            {/*    <div className="each-hour">*/}
-            {/*        <h4 className="hour-label"> GMT+ 0</h4>*/}
-            {/*        <div className="row">*/}
-            {/*            <div>*/}
-            {/*                {renderEvent(0)}*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
 
             <div className="hour-list-wrapper">
                 <div className="hour-list">
@@ -195,27 +168,24 @@ const DayView = ({events, date = null}) => {
 
                                 {hour >= 0 && (
                                     <>
-                                        <h4 className="hour-label">{renderHour(hour)}
+                                        <h4 className="hour-label">{hour > 0
+                                            ? renderHour(hour)
+                                            : "12"
+                                        }
                                             <span className=" ml-1">{getStatus(hour)}</span>
                                         </h4>
                                         <div className="row ">
                                             <div>
                                                 {renderEvent(hour)}
                                             </div>
-
                                         </div>
                                     </>
                                 )}
-
                             </div>
                         )
-
                     })}
                 </div>
-
             </div>
-
-
         </div>
     );
 };

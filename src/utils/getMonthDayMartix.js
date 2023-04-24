@@ -14,15 +14,18 @@ function getMonthDayMartix(currentDate = new Date()) {
 
     * */
 
+    let cc = new Date(currentDate)
+    cc.setDate(1)
 
     // start on day index 0 - 6
-    const firstDayOfTheMonth = currentDate.getDay();
+    const firstDayOfTheMonth = cc.getDay();
 
 
     let currentMonthCount = 0 - firstDayOfTheMonth;
     // 0 = sunday
     // 6 = sat
-
+    
+ 
     // first week.
     // [Su] 1st loop pull date previous that -6 date from now ==> 26-3-2023
     // [Mo] 2nd loop pull date previous that -5 date from now ==> 27-3-2023
@@ -46,6 +49,11 @@ function getMonthDayMartix(currentDate = new Date()) {
 
 
     const daysMatrix = new Array(6).fill([]).map(() => {
+        // currentMonthCount++;
+        // let ccDate = new Date(currentDate)
+        // ccDate.setDate(currentMonthCount)
+        // return ccDate.getDate()
+        
         return new Array(7).fill(null).map(() => {
             currentMonthCount++;
             let ccDate = new Date(currentDate)
@@ -53,6 +61,7 @@ function getMonthDayMartix(currentDate = new Date()) {
             return dayjs(ccDate)
         });
     });
+    // console.log(daysMatrix)
     return daysMatrix
 }
 

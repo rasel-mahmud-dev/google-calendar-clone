@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {plus} from "../../icons/plus";
-import {BiCaretDown, BiChevronDown, BiChevronRight, TfiAngleDown, TfiAngleRight} from "react-icons/all";
+import {BiCaretDown, BiChevronDown, BiChevronRight} from "react-icons/all";
 import Popup from "../Popup/Popup";
 import SmallCalendar from "../SmallCalendar/SmallCalendar";
 import Accordion from "../Accordion/Accordion";
 import statusColors from "../../utils/statusColors";
 import {useNavigate} from "react-router-dom";
 import dayjs from "dayjs";
+import {colors} from "../ColorPicker/ColorPicker";
 
 const CalendarSidebar = (props) => {
 
@@ -76,16 +77,14 @@ const CalendarSidebar = (props) => {
     }
     
     
-    
     function handleChangeDateOnSmallCalendar(date){
         let d = dayjs(date)
         setCalendar({
-            selectedDate: d
+            selectedDate: date
         })
         navigate(`/calendar/day?date=` + d.format("MM-DD-YYYY"))
     }
     
-
 
     return (
         <div className="sidebar">
@@ -118,8 +117,7 @@ const CalendarSidebar = (props) => {
                 <br/>
                 <br/>
                 <br/>
-
-
+                
                 <Accordion openIds={expandItems}>
                     <Accordion.Item
                         dataId={1}
@@ -142,7 +140,7 @@ const CalendarSidebar = (props) => {
                                 <div className="accordion-li">
                                     <h4 className="flex items-center">
                                         <div className="col-span-1">
-                                            <div style={{background: statusColors[evt.status]}}
+                                            <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}
                                                  className="w-3 h-3 rounded-full block"></div>
                                         </div>
                                         <div className="ml-2">
@@ -164,32 +162,28 @@ const CalendarSidebar = (props) => {
                                     <BiChevronDown/>
                                 </div>
                             </div>}
-
-
                         </div>
-
                     </Accordion.Item>
 
 
                     <Accordion.Item dataId={2} onClick={() => handleToggle(2)}
-                                    header={(isOpen) => (
-                                        <div className="accordion-header flex items-center justify-between">
-                                            <h4 className="">My Invitations</h4>
-                                            {isOpen
-                                                ? <BiChevronDown className="text-xs text-gray-500"/>
-                                                : <BiChevronRight className="text-xs text-gray-500"/>
-                                            }
-                                        </div>
-                                    )}>
+                        header={(isOpen) => (
+                            <div className="accordion-header flex items-center justify-between">
+                                <h4 className="">My Invitations</h4>
+                                {isOpen
+                                    ? <BiChevronDown className="text-xs text-gray-500"/>
+                                    : <BiChevronRight className="text-xs text-gray-500"/>
+                                }
+                            </div>
+                        )}>
 
 
                         <div className="accordion-content">
-
                             {invitedMe.slice(0, accItemShowContentLen[2]).map(evt => (
                                 <div className="accordion-li">
                                     <h4 className="flex items-center">
                                         <div className="col-span-1">
-                                            <div style={{background: statusColors[evt.status]}}
+                                            <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}
                                                  className="w-3 h-3 rounded-full block"></div>
                                         </div>
                                         <div className="ml-2">
@@ -198,29 +192,24 @@ const CalendarSidebar = (props) => {
                                     </h4>
                                 </div>
                             ))}
-
-
+                            
                             {/*** Toggle expand / Collapse button ****/}
-                            {invitedMe.length > 0 && <div className="accordion-li  hover:bg-blue-100 p-1 rounded"
-                                                          onClick={(e) => handleExpandAccContent(e, 2, invitedMe.length)}>
-                                <div className="ml-4 flex items-center justify-between">
-                                    <label htmlFor=""
-                                           className="font-medium">
-                                        {accItemShowContentLen[2] === 5 ? "Show more" : "Show less"}</label>
-                                    <BiChevronDown/>
+                            {invitedMe.length > 0 && (
+                                <div className="accordion-li  hover:bg-blue-100 p-1 rounded"
+                                     onClick={(e) => handleExpandAccContent(e, 2, invitedMe.length)}>
+                                    <div className="ml-4 flex items-center justify-between">
+                                        <label htmlFor=""
+                                               className="font-medium">
+                                            Show {accItemShowContentLen[2] === 5 ? " more" : " less"}</label>
+                                        <BiChevronDown/>
+                                    </div>
                                 </div>
-                            </div>}
-
-
+                            )}
                         </div>
                     </Accordion.Item>
-
                 </Accordion>
             </div>
-
-            {/*<SmallCalendarV2/>*/}
         </div>
-
     );
 };
 

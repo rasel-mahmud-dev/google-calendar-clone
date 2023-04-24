@@ -18,7 +18,8 @@ const TimeRange = ({disableTimeLoop = false}) => {
             newEventData: {
                 startDateTime,
                 endDateTime,
-                timeRange
+                timeRange,
+                isAllDay
             },
             setTimeRange,
             setNewEventData
@@ -33,7 +34,7 @@ const TimeRange = ({disableTimeLoop = false}) => {
         const [whereTimeEditAble, setWhereTimeEditAble] = useState("")
 
         function handleSetAllDay(checked) {
-            setTimeRange(prev => ({...prev, isAllDay: checked}))
+            setNewEventData(prev => ({...prev, isAllDay: checked}))
 
         }
 
@@ -147,7 +148,7 @@ const TimeRange = ({disableTimeLoop = false}) => {
                                 onClose={dropdownClose}
                             />
 
-                            {!timeRange.isAllDay &&
+                            {!isAllDay &&
                                 <TimeChoose
                                     className=""
                                     name="start"
@@ -174,7 +175,7 @@ const TimeRange = ({disableTimeLoop = false}) => {
                                 onClose={dropdownClose}
                             />
 
-                            {!timeRange.isAllDay && <TimeChoose
+                            {!isAllDay && <TimeChoose
                                 isOpen={openDropDown === "endTime"}
                                 dateTime={endDateTime}
                                 name="end"
@@ -196,7 +197,7 @@ const TimeRange = ({disableTimeLoop = false}) => {
                         <div className="flex flex-row w-max gap-x-2 ml-2  ">
 
                             <input
-                                checked={timeRange.isAllDay}
+                                checked={isAllDay}
                                 onChange={(e) => handleSetAllDay(e.target.checked)}
                                 type="checkbox" className="cursor-pointer" name="allDay" id="allDay"/>
                             <label className="text-sm text-gray-500 cursor-pointer w-12" htmlFor="allDay">All

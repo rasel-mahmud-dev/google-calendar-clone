@@ -38,6 +38,9 @@
 
 .all-event-popup-modal{
     width: 220px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
 
 }
 

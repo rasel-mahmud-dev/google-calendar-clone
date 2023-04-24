@@ -12,18 +12,34 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
 
     let updatedEvent = events.find(event => event._id === evt._id)
 
-
     if (updatedEvent) {
+
+        let isAllDay = false
+
+
+        let startDateTime = new Date(updatedEvent.start)
+        let endDateTime = new Date(updatedEvent.end)
+
+       // console.log(startDateTime.getMinutes(),  endDateTime.getMinutes())
+        
+        if(startDateTime.getDate() === endDateTime.getDate()
+            && ((endDateTime.getHours() - startDateTime.getHours()) === 23)
+            && ((endDateTime.getMinutes() - startDateTime.getMinutes()) === 59)
+            && (endDateTime.getMinutes() - startDateTime.getMinutes()) === 59)
+        {
+            isAllDay = true
+        }
 
         setNewEventData(prev => ({
             ...prev,
             title: updatedEvent.title,
             isOpen: true,
+            isAllDay,
             updateEventId: evt._id,
             date: new Date(),
             selectedDate: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
-            startDateTime: updatedEvent.end ? new Date(updatedEvent.end) : new Date(),
-            endDateTime: updatedEvent.date ? new Date(updatedEvent.date) : new Date(),
+            startDateTime: updatedEvent.start ? new Date(updatedEvent.start) : new Date(),
+            endDateTime: updatedEvent.end ? new Date(updatedEvent.end) : new Date(),
             monthIndex: monthIndex,
             status: updatedEvent.status,
             eventColor: updatedEvent.eventColor,

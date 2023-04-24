@@ -16,6 +16,7 @@ export const CalendarProvider = (props) => {
         newEventData: {
             isOpen: false,
             isEventCreateInitialize: false,
+            isAllDay: false,
             type: "event", // or  task
             title: "",
             meetingLink: "",
@@ -35,7 +36,11 @@ export const CalendarProvider = (props) => {
                 {type: "notification", time: "30 minutes before"},
             ],
             timeRange: {
-                disabledEditTimeRange: false, turnOn: false, repeatIteration: 1, repeatPeriod: "week", repeatDays: [],
+                disabledEditTimeRange: false,
+                turnOn: false,
+                repeatIteration: 1,
+                repeatPeriod: "week",
+                repeatDays: [],
             }
         },
         calendarView: "month" // or day
@@ -102,6 +107,7 @@ export const CalendarProvider = (props) => {
                     type: "event", // or  task
                     title: "",
                     meetingLink: "",
+                    isAllDay: false,
                     eventColor: "gray",
                     agenda: "",
                     isEventCreateInitialize: false,

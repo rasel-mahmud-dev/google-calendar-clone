@@ -115,8 +115,9 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                                     <span> {user.email}</span>
                                 </p>
 
-                                <BsFillTrash2Fill onClick={() => handleRemoveUser(user)}
-                                                  className="text-base mr-2 hover:text-red-400"/>
+                                <BsFillTrash2Fill
+                                    onClick={() => handleRemoveUser(user)}
+                                    className="text-base mr-2 hover:text-red-400"/>
 
                             </li>
                         </div>
@@ -143,10 +144,7 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                     label="Email"
                     type="email"
                 />
-
-
-
-
+                
                 <Select
                     value={newEventData.program}
                     onChange={handleChangeProgram}

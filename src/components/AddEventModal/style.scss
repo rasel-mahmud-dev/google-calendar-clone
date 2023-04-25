@@ -23,7 +23,7 @@
 
     .close-btn {
         position: fixed;
-        right: 16px;
+        right: 8px;
         top: 14px;
         z-index: 1003;
     }
@@ -83,6 +83,16 @@
         }
     }
 
+}
+
+.event-detail-modal{
+    padding: 20px;
+    .close-btn {
+        position: fixed;
+        right: 16px;
+        top: 14px;
+        z-index: 1003;
+    }
 }
 
 

@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import dayjs from "dayjs";
 import {colors} from "../ColorPicker/ColorPicker";
 
+
 const CalendarSidebar = (props) => {
 
     const {
@@ -17,6 +18,8 @@ const CalendarSidebar = (props) => {
         setOpenChooseEventModal,
         events,
         setCalendar,
+        setFilterEvent,
+        filterEvents,
         auth,
     } = props
 
@@ -28,17 +31,17 @@ const CalendarSidebar = (props) => {
             setInvitedMe(events.filter(evt => evt.invitations.includes(auth._id)))
         }
     }, [events])
+    
+    
 
-
-    const [expandItems, setExpandItems] = useState([1])
-
-
+    const [expandItems, setExpandItems] = useState([1, 2])
+    
     const [invitedMe, setInvitedMe] = useState([])
     const [myCreatedEvent, setMyCreatedEvent] = useState([])
 
     const [accItemShowContentLen, setAccItemShowContentLen] = useState({
         1: 5,
-        2: 5
+        2: 10
     })
 
 
@@ -51,7 +54,7 @@ const CalendarSidebar = (props) => {
 
         setAccItemShowContentLen(prev => ({
             ...prev,
-            [id]: 5
+            [id]: accItemShowContentLen[id]
         }))
 
     }
@@ -59,7 +62,7 @@ const CalendarSidebar = (props) => {
     function handleExpandAccContent(e, id, len) {
         e.stopPropagation();
 
-        if (accItemShowContentLen[id] === 5) {
+        if (accItemShowContentLen[id] !== len) {
             setAccItemShowContentLen(prev => ({
                 ...prev,
                 [id]: len
@@ -67,12 +70,28 @@ const CalendarSidebar = (props) => {
         } else {
             setAccItemShowContentLen(prev => ({
                 ...prev,
-                [id]: 5
+                [id]: 10
             }))
         }
     }
 
     function sortByStatusPending(arr) {
+        return arr
+    }
+    
+    function sortByDate(arr) {
+        arr.sort((a, b)=>{
+            let aDate = new Date(a.start)
+            let bDate = new Date(b.start)
+            return bDate - aDate
+            if(aDate < bDate) {
+                return 1
+            } else if(aDate > bDate) {
+                return  -1
+            } else {
+                return 0
+            }
+        })
         return arr
     }
     
@@ -84,6 +103,20 @@ const CalendarSidebar = (props) => {
         })
         navigate(`/calendar/day?date=` + d.format("MM-DD-YYYY"))
     }
+    
+    function handleChangeFilterEvent(status){
+        setFilterEvent(status)
+    }
+    
+    function handleOpenEventDetailRoute(eventId){
+        let to = "/calendar/month?detail="
+        if(eventId){
+            to += eventId
+        }
+        navigate(to)
+    }
+    
+    
     
 
     return (
@@ -136,40 +169,50 @@ const CalendarSidebar = (props) => {
                     >
 
                         <div className="accordion-content">
-                            {sortByStatusPending(myCreatedEvent.slice(0, accItemShowContentLen[1])).map(evt => (
-                                <div className="accordion-li" key={evt._id}>
-                                    <h4 className="flex items-center">
-                                        <div className="col-span-1">
-                                            <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}
-                                                 className="w-3 h-3 rounded-full block"></div>
-                                        </div>
-                                        <div className="ml-2">
-                                            <span className="accordion-content-title">{evt.title}</span>
-                                        </div>
-                                    </h4>
+                            {/*{sortByStatusPending(myCreatedEvent.slice(0, accItemShowContentLen[1])).map(evt => (*/}
+                            {/*    <div className="accordion-li" key={evt._id}>*/}
+                            {/*        <h4 className="flex items-center">*/}
+                            {/*            <div className="col-span-1">*/}
+                            {/*                <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}*/}
+                            {/*                     className="w-3 h-3 rounded-full block"></div>*/}
+                            {/*            </div>*/}
+                            {/*            <div className="ml-2">*/}
+                            {/*                <span className="accordion-content-title">{evt.title}</span>*/}
+                            {/*            </div>*/}
+                            {/*        </h4>*/}
+                            {/*    </div>*/}
+                            {/*))}*/}
+                            
+                            
+                            {/*/!*** Toggle expand / Collapse button ****!/*/}
+                            {/*{myCreatedEvent.length > 0 && <div*/}
+                            {/*    className="accordion-li  hover:bg-blue-100 p-1 rounded"*/}
+                            {/*    onClick={(e) => handleExpandAccContent(e, 1, myCreatedEvent.length)}>*/}
+                            {/*    <div className="ml-4 flex items-center justify-between">*/}
+                            {/*        <label htmlFor=""*/}
+                            {/*               className="font-medium">*/}
+                            {/*            {accItemShowContentLen[1] === 5 ? "Show more" : "Show less"}</label>*/}
+                            {/*        <BiChevronDown/>*/}
+                            {/*    </div>*/}
+                            {/*</div>}*/}
+                            
+                            
+                            {Object.keys(statusColors).map(status=>(
+                                <div className="flex items-center gap-x-1 mb-1">
+                                    <input onChange={()=>handleChangeFilterEvent(status)} checked={filterEvents.includes(status)} type="checkbox" id={status} name={status}/>
+                                    <label className="text-sm font-normal px-2 rounded py-px text-gray-900 hover:bg-gray-100 " style={{color : statusColors[status]}} htmlFor={status}>{status.toUpperCase()}</label>
+                                    {/*<label className="text-sm font-normal px-2 rounded py-px text-gray-100 " style={{background: statusColors[status]}} htmlFor={status}>{status}</label>*/}
                                 </div>
                             ))}
-
-
-                            {/*** Toggle expand / Collapse button ****/}
-                            {myCreatedEvent.length > 0 && <div
-                                className="accordion-li  hover:bg-blue-100 p-1 rounded"
-                                onClick={(e) => handleExpandAccContent(e, 1, myCreatedEvent.length)}>
-                                <div className="ml-4 flex items-center justify-between">
-                                    <label htmlFor=""
-                                           className="font-medium">
-                                        {accItemShowContentLen[1] === 5 ? "Show more" : "Show less"}</label>
-                                    <BiChevronDown/>
-                                </div>
-                            </div>}
+                            
                         </div>
                     </Accordion.Item>
 
 
-                    <Accordion.Item dataId={2} onClick={() => handleToggle(2)}
+                    <Accordion.Item dataId={2}
                         header={(isOpen) => (
-                            <div className="accordion-header flex items-center justify-between">
-                                <h4 className="">My Invitations</h4>
+                            <div onClick={() => handleToggle(2)} className="accordion-header flex items-center justify-between">
+                                <h4 className="">My Events</h4>
                                 {isOpen
                                     ? <BiChevronDown className="text-xs text-gray-500"/>
                                     : <BiChevronRight className="text-xs text-gray-500"/>
@@ -179,8 +222,8 @@ const CalendarSidebar = (props) => {
 
 
                         <div className="accordion-content">
-                            {invitedMe.slice(0, accItemShowContentLen[2]).map(evt => (
-                                <div className="accordion-li" key={evt._id}>
+                            {sortByDate(events).slice(0, accItemShowContentLen[2]).map(evt => (
+                                <div className="accordion-li mt-1 hover:bg-gray-100" key={evt._id} onClick={()=>handleOpenEventDetailRoute(evt._id)} >
                                     <h4 className="flex items-center">
                                         <div className="col-span-1">
                                             <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}
@@ -194,13 +237,13 @@ const CalendarSidebar = (props) => {
                             ))}
                             
                             {/*** Toggle expand / Collapse button ****/}
-                            {invitedMe.length > 0 && (
+                            {events.length > 0 && (
                                 <div className="accordion-li  hover:bg-blue-100 p-1 rounded"
-                                     onClick={(e) => handleExpandAccContent(e, 2, invitedMe.length)}>
+                                     onClick={(e) => handleExpandAccContent(e, 2, events.length)}>
                                     <div className="ml-4 flex items-center justify-between">
                                         <label htmlFor=""
                                                className="font-medium">
-                                            Show {accItemShowContentLen[2] === 5 ? " more" : " less"}</label>
+                                            Show {accItemShowContentLen[2] !== events.length ? " more" : " less"}</label>
                                         <BiChevronDown/>
                                     </div>
                                 </div>

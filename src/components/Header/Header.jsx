@@ -126,8 +126,9 @@ const Header = () => {
                     value={calendarView}
                     dropdownClass=""
                     onChange={handleChangeCalendarView}
-                    renderPlaceholderValue=""
-                    placeholderClass=""
+                    renderPlaceholderValue={(v)=>(
+                        <span>{v.toUpperCase()}</span>
+                    )}
                     render={(click) => (
                         <div>
                             <li onClick={()=>click("day")} className="mui-select-item">Day</li>

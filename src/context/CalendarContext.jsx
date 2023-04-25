@@ -43,7 +43,15 @@ export const CalendarProvider = (props) => {
                 repeatDays: [],
             }
         },
-        calendarView: "month" // or day
+        calendarView: "month", // or day
+        filterEvents: [
+            "accepted",
+            "pending",
+            "rejected",
+            "proposedTime",
+            "denied",
+            "finished",
+        ]
     })
 
     const value = {
@@ -57,9 +65,11 @@ export const CalendarProvider = (props) => {
         auth: {
             username: "Rasel Mahmud",
             firstName: "Rasel",
+            image: "https://randomuser.me/api/portraits/men/84.jpg",
             email: "rasel.mahmud.dev@gmail.com",
             _id: "6422af5d9153de6adce3b085"
         },
+        filterEvents: state.filterEvents,
         setEvents: function (cb) {
             setState(prev => ({
                 ...prev,
@@ -67,6 +77,21 @@ export const CalendarProvider = (props) => {
                     ? cb(prev.events)
                     : cb
             }))
+        },
+        setFilterEvent: function (eventStatusName) {
+            setState(prev=>{
+                let updatedFilterEvents = [...prev.filterEvents]
+                if(updatedFilterEvents.includes(eventStatusName)){
+                    updatedFilterEvents = updatedFilterEvents.filter(s=>s !== eventStatusName)
+                } else {
+                    updatedFilterEvents.push(eventStatusName)
+                }
+                return {
+                    ...prev,
+                    filterEvents: updatedFilterEvents
+                }
+                
+            })
         },
 
         addEvent: function (newEvent) {

@@ -92,7 +92,7 @@ exports.getAllEvents = async (req, res)=>{
 
 		let events = await Event.find({}).
 		populate("createdBy", "username email")
-		.populate("invitations", "username email")
+		.populate("invitations", "username email image")
 		res.send(events)
 
 	}catch(ex){

@@ -5,6 +5,8 @@ import axios from "axios";
 import CalendarSidebar from "../components/CalendarSidebar/CalendarSidebar";
 import Header from "../components/Header/Header";
 import AddEventModal from "../components/AddEventModal/AddEventModal";
+import EventDetail from "../components/EventDetail/EventDetail";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 
 // open update event when click on event name
@@ -60,8 +62,17 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
 
 const Calendar = ({pageContent}) => {
 
-    const {events, newEventData, auth, setCalendar, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
+    const {events,
+        setFilterEvent,
+        filterEvents,
+        newEventData, auth, setCalendar, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
 
+    
+    const  [urlSearchParams] = useSearchParams()
+    let eventId = urlSearchParams.get("detail")
+    
+    const navigate = useNavigate()
+    
     useEffect(() => {
         let currentMonthIndex = dayjs().month()
         setMonthIndex(currentMonthIndex)
@@ -73,6 +84,16 @@ const Calendar = ({pageContent}) => {
         })
     }, [])
 
+    const [eventDetail, setEventDetail] = useState(null)
+    
+    useEffect(()=>{
+        if(events.length > 0 && eventId){
+            let eventDetail = events.find(evt=>evt._id === eventId)
+            setEventDetail(eventDetail)
+        }
+    
+    }, [events, eventId])
+    
 
     const [isOpenChooseEventModal, setOpenChooseEventModal] = useState(false)
 
@@ -91,9 +112,16 @@ const Calendar = ({pageContent}) => {
     function handleClose() {
         setCloseNewEventModal()
     }
+    
     // function handleSetCalendarView(){
     //
     // }
+    
+    function handleCloseEventDetail(){
+        setEventDetail(null)
+        navigate("/calendar/month")
+        // urlSearchParams.delete("detail")
+    }
 
     return (
         <div className="my-container">
@@ -101,6 +129,7 @@ const Calendar = ({pageContent}) => {
             
             <AddEventModal isOpenAddEventModal={newEventData.isOpen} onClose={handleClose}/>
             
+            <EventDetail auth={auth} onClose={handleCloseEventDetail} event={eventDetail} />
             
 
             <div className="flex ">
@@ -111,6 +140,8 @@ const Calendar = ({pageContent}) => {
                     openAddNewEventModal={openAddNewEventModal}
                     isOpenChooseEventModal={isOpenChooseEventModal}
                     setOpenChooseEventModal={setOpenChooseEventModal}
+                    setFilterEvent={setFilterEvent}
+                    filterEvents={filterEvents}
                 />
                 <div className="w-full">
                     {pageContent}

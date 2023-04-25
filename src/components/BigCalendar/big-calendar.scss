@@ -43,11 +43,11 @@
             }
         }
 
-
         .event-list{
             display: flex;
             flex-direction: column;
             row-gap: 3px;
+            margin-top: 6px;
             .event-name{
                 margin-bottom: 1px;
                 transform: scale(1);

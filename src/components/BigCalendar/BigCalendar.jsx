@@ -23,11 +23,10 @@ const BigCalendar = (props) => {
         setNewEventData,
         currentDate,
         monthIndex,
-        setMonthIndex,
-        newEventData,
         setCloseNewEventModal,
         addEvent,
         auth,
+        filterEvents
     } = useContext(CalendarContext)
 
 
@@ -119,7 +118,7 @@ const BigCalendar = (props) => {
             
             // add new event entry
             addEvent({
-                _id: "000000000000000000000000", // fake mongo db id for client side render,
+                _id: "000000000000000000000000", // fake mongodb id for client side render,
                 createdBy: {
                     ...auth
                 },
@@ -136,10 +135,20 @@ const BigCalendar = (props) => {
     function handleClickOnEventName(evt, monthIndex) {
         clickOnEventName(evt, monthIndex, events, setNewEventData)
     }
-
-
-
-
+    
+    
+    function handleOpenEventDetailRoute(eventId){
+        let to = "/calendar/month?detail="
+        if(eventId){
+            to += eventId
+            setShowAllEventDate(null)
+        }
+        navigate(to)
+    }
+    
+    
+    
+    
     function handleShowAllEvent(e, eventDate) {
         e.stopPropagation();
         setShowAllEventDate(prev => prev === eventDate ? null : eventDate)
@@ -148,7 +157,7 @@ const BigCalendar = (props) => {
     function renderEvents(day, monthIndex) {
 
         const eventGroupByDate = {}
-        events.forEach(event => {
+        events.filter(e=>filterEvents.includes(e.status)).forEach(event => {
             let eventDate = dayjs(new Date(event.start)).format("DD/MM/YYYY")
             if (eventGroupByDate[eventDate]) {
                 eventGroupByDate[eventDate].push(event)
@@ -207,7 +216,7 @@ const BigCalendar = (props) => {
                                                     </div>
                                                 </div>
                                                 {eventGroupByDate[eventDate].map((eachEvt, i) => (
-                                                    <li key={i} style={{background: statusColors[eachEvt.status]}}
+                                                    <li onClick={e=>withStopPropagation(e, handleOpenEventDetailRoute(eachEvt._id))} key={i} style={{background: statusColors[eachEvt.status]}}
                                                         className="py-1 popup-item text-xs text-gray-100">{eachEvt.title}</li>
                                                 ))}
                                             </div>

@@ -3,6 +3,19 @@ const User = require("../models/User");
 
 
 
+exports.getUsers = async (req, res, next)=>{
+    try{
+
+        let users = await User.find({})
+        res.status(200).json(users)
+
+    } catch(ex){
+        next(ex)
+    }
+}
+
+
+
 exports.verifyAuth = async (req, res, next)=>{
 
      let token = req.headers["authorization"] || ""

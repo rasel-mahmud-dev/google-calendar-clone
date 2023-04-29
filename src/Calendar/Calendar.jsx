@@ -77,7 +77,7 @@ const Calendar = ({pageContent}) => {
         let currentMonthIndex = dayjs().month()
         setMonthIndex(currentMonthIndex)
 
-        axios.get("http://localhost:4000/api/calendar/events").then(({data}) => {
+        axios.get("/api/calendar/events").then(({data}) => {
             setEvents(data)
         }).catch(ex => {
 

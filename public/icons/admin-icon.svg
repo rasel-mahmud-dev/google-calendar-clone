@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <linearGradient id="a" x1="52.053" x2="459.947" y1="256" y2="256" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#595bd4" class="stopColor4387fd svgShape"/>
+        <stop offset="1" stop-color="#595bd4" class="stopColor4683ea svgShape"/>
+    </linearGradient>
+    <path fill="#595bd4" fill-rule="evenodd"
+          d="M256 6 52.05 101.39V256C73.98 396.35 141.96 479.68 256 506c114.04-26.32 182.02-109.65 203.95-250V101.39L256 6zm0 98.68c36.33 0 65.79 29.46 65.79 65.79s-29.46 65.79-65.79 65.79-65.79-29.46-65.79-65.79 29.46-65.79 65.79-65.79zm125 273.03c-49.34 55.92-55.92 65.79-125 88.82-65.79-23.03-72.37-29.61-125-88.82v-42.76c26.32-52.63 65.79-65.79 125-72.37 59.21 6.58 95.39 19.74 125 72.37v42.76z" clip-rule="evenodd"/></svg>

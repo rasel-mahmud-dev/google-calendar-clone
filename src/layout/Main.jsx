@@ -21,7 +21,7 @@ const Main = () => {
     
     
     useEffect(() => {
-        axios.get("http://localhost:4000/api/calendar/events").then(({data}) => {
+        axios.get("/api/calendar/events").then(({data}) => {
             setEvents(data)
             
             let updatedActiveEvents = []
@@ -166,7 +166,7 @@ const Main = () => {
           <Outlet />
             
             
-            <button className='btn mui-btn' onClick={playAudio}>Play</button>
+            {/*<button className='btn mui-btn' onClick={playAudio}>Play</button>*/}
             
             
             <ToastContainer

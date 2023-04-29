@@ -4,55 +4,66 @@ import EventModalTitle from "./EventModalTitle";
 import Select from "../Form/Select";
 import CalendarContext from "../../context/CalendarContext";
 import Input from "../Form/Input";
+import axios from "axios";
 
 const AddUser = ({handleClose, handleChange, setTab}) => {
 
     const {newEventData, auth, setNewEventData} = useContext(CalendarContext)
 
-    const usersList = [
-        {
-            email: "rasel.mahmud.dev@gmail.com",
-            _id: "6422af5d9153de6adce3b085",
-            username: "Rasel Mahmud",
-            image: "https://randomuser.me/api/portraits/men/85.jpg"
-        },
-        {
-            email: "test.mail@gmail.com",
-            _id: "6446d317cd4d96843b1f6031",
-            username: "Test",
-            image: "https://randomuser.me/api/portraits/women/32.jpg"
-        },{
-            email: "karim.mail@gmail.com",
-            _id: "6422b274931c811dcb9badad",
-            username: "Karim",
-            image: "https://randomuser.me/api/portraits/women/32.jpg"
-        },
-        {email: "alex@gmail.com", _id: "6423099de8e946e0a13064d0", username: "Alex", image: "https://randomuser.me/api/portraits/men/32.jpg"},
-        {
-            email: "mahmud.dev@gmail.com",
-            _id: "6446d299d10b2a45ec0b7710",
-            username: "Mahmud",
-            image: "https://randomuser.me/api/portraits/women/32.jpg"
-        },
-        {
-            email: "simul.dev@gmail.com",
-            _id: "6446d2bbd10b2a45ec0b7711",
-            username: "Simul",
-            image: "https://randomuser.me/api/portraits/men/32.jpg"
-        },
-        {
-            email: "khan.dev@gmail.com",
-            _id: "6446d2cdd10b2a45ec0b7712",
-            username: "Khan",
-            image: "https://randomuser.me/api/portraits/women/32.jpg"
-        },
-    ]
+    const [usersList, setUsers] = useState([])
+
+    // const usersList = [
+    //     {
+    //         email: "rasel.mahmud.dev@gmail.com",
+    //         _id: "6422af5d9153de6adce3b085",
+    //         username: "Rasel Mahmud",
+    //         image: "https://randomuser.me/api/portraits/men/85.jpg"
+    //     },
+    //     {
+    //         email: "test.mail@gmail.com",
+    //         _id: "6446d317cd4d96843b1f6031",
+    //         username: "Test",
+    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
+    //     },{
+    //         email: "karim.mail@gmail.com",
+    //         _id: "6422b274931c811dcb9badad",
+    //         username: "Karim",
+    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
+    //     },
+    //     {email: "alex@gmail.com", _id: "6423099de8e946e0a13064d0", username: "Alex", image: "https://randomuser.me/api/portraits/men/32.jpg"},
+    //     {
+    //         email: "mahmud.dev@gmail.com",
+    //         _id: "6446d299d10b2a45ec0b7710",
+    //         username: "Mahmud",
+    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
+    //     },
+    //     {
+    //         email: "simul.dev@gmail.com",
+    //         _id: "6446d2bbd10b2a45ec0b7711",
+    //         username: "Simul",
+    //         image: "https://randomuser.me/api/portraits/men/32.jpg"
+    //     },
+    //     {
+    //         email: "khan.dev@gmail.com",
+    //         _id: "6446d2cdd10b2a45ec0b7712",
+    //         username: "Khan",
+    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
+    //     },
+    // ]
 
     const [userPayload, setUserPayload] = useState({
         email: "",
     })
 
     let [searchUsersList, setSearchUsersList] = useState([])
+
+    useEffect(() => {
+        axios.get("/api/auth/users").then(({data}) => {
+            setUsers(data)
+        }).catch(ex => {
+
+        })
+    }, [])
 
     useEffect(() => {
         findUsers(userPayload.email)

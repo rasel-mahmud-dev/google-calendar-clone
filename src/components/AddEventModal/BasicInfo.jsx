@@ -76,7 +76,7 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
 
                 <div className="event-input-field flex items-start mt-3">
                     <div className="event-label-icon w-12">
-                        <img className="w-5" src="/icons/bell.svg" alt="bell"/>
+                        <img className="w-5" src="/icons/admin-icon.svg" alt="bell"/>
                     </div>
                     <ColorPicker value={eventColor} onChange={(colorName)=>handleChange(colorName, "eventColor")} />
                 </div>

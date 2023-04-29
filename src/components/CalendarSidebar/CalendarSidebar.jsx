@@ -200,7 +200,12 @@ const CalendarSidebar = (props) => {
                             {Object.keys(statusColors).map(status=>(
                                 <div className="flex items-center gap-x-1 mb-1">
                                     <input onChange={()=>handleChangeFilterEvent(status)} checked={filterEvents.includes(status)} type="checkbox" id={status} name={status}/>
-                                    <label className="text-sm font-normal px-2 rounded py-px text-gray-900 hover:bg-gray-100 " style={{color : statusColors[status]}} htmlFor={status}>{status.toUpperCase()}</label>
+                                    <label className="text-sm font-normal px-2 rounded py-px text-gray-900 hover:bg-gray-100 capitalize "
+                                           style={{color : statusColors[status]}}
+                                           htmlFor={status}>
+                                        {status === "proposedTime" ? "Proposed New Time" : status}
+                                    </label>
+
                                     {/*<label className="text-sm font-normal px-2 rounded py-px text-gray-100 " style={{background: statusColors[status]}} htmlFor={status}>{status}</label>*/}
                                 </div>
                             ))}

@@ -2,6 +2,8 @@
     //background: #f6f6f6;
 
     position: relative;
+    border-radius: 6px;
+    overflow: hidden;
 
     &.input-focus {
         //border-bottom: 2px solid red;
@@ -12,6 +14,7 @@
         //background: #ff92b2;
         border-bottom: 1px solid rgba(184, 197, 197, 0.34);
         width: 100%;
+        padding: 10px 10px 0 10px;
 
         &.with-bg {
             background: var(--gray-100);
@@ -23,12 +26,11 @@
             border: none;
             outline: none;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 300;
             cursor: pointer;
             color: #5d5d5d;
             padding: 4px 2px;
             background: transparent;
-
         }
 
         input, textarea, select {
@@ -41,6 +43,11 @@
             color: #5d5d5d;
             padding: 4px 2px;
             background: transparent;
+            &::placeholder{
+                color: currentColor;
+                font-weight: 300;
+                //font-size: 14px;
+            }
         }
 
     }

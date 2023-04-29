@@ -122,7 +122,8 @@ const BigCalendar = (props) => {
                 createdBy: {
                     ...auth
                 },
-                ...newEvent
+                ...newEvent,
+                status: "pending"
             })
             
             return newEvent
@@ -212,11 +213,13 @@ const BigCalendar = (props) => {
                                                 <div>
                                                     <div className="ml-2 m-auto text-center text-gray-500">
                                                         <p className="text-sm  font-normal">{day.format("dddd")}</p>
-                                                        <h4 className="btn-circle m-auto flex items-center justify-center w-12 h-12 text-center text-xl text-gray-700 ">{day.date()}</h4>
+                                                        <h4 onClick={(e) => withStopPropagation(e, handleClickOnDate(day))}
+                                                            className="btn-circle m-auto flex items-center justify-center w-10 h-10 text-center text-xl text-gray-700 ">{day.date()}</h4>
                                                     </div>
                                                 </div>
                                                 {eventGroupByDate[eventDate].map((eachEvt, i) => (
-                                                    <li onClick={e=>withStopPropagation(e, handleOpenEventDetailRoute(eachEvt._id))} key={i} style={{background: statusColors[eachEvt.status]}}
+                                                    <li onClick={e=>withStopPropagation(e, handleOpenEventDetailRoute(eachEvt._id))} key={i}
+                                                        style={{background: statusColors[eachEvt.status]}}
                                                         className="py-1 popup-item text-xs text-gray-100">{eachEvt.title}</li>
                                                 ))}
                                             </div>

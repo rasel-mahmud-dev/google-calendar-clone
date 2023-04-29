@@ -11,11 +11,8 @@ const {className = "", withBg = false, inputBg = "", type = "text", dataList, se
     const [isFocus, setFocus] = useState(false)
 
     function handleFocus(e) {
-
         setFocus(true)
-
     }
-
 
 
     function handleBlur(e) {

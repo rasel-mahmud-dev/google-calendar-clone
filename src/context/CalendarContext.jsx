@@ -93,7 +93,12 @@ export const CalendarProvider = (props) => {
                 
             })
         },
-
+        setSelectedDate: function (val){
+            setState(prev => ({
+                ...prev,
+                selectedDate: val
+            }))
+        },
         addEvent: function (newEvent) {
             setState(prev => ({...prev, events: [...prev.events, newEvent]}))
         },

@@ -13,7 +13,7 @@ const TextArea = ({className="",  label, ...attr}) => {
     }
 
     return (
-        <div>
+
             <div className={`textarea ${className} input-root`}>
 
                 <div className="input-wrapper">
@@ -21,7 +21,7 @@ const TextArea = ({className="",  label, ...attr}) => {
                 </div>
                 <div className={`input-border ${isFocus ? "input-border-focus" : "input-border-blur"}`}></div>
             </div>
-        </div>
+
     );
 };
 

@@ -26,25 +26,12 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
             meetingLink,
             actionItems,
             eventColor,
-            startDate,
-            endDate,
             updateEventId
         },
         setNewEventData
     } = useContext(CalendarContext)
 
-    let date = dayjs(new Date(dayjs().year(), monthIndex, eventDate))
 
-    const eventNameRef = useRef()
-
-
-    let t = new Date()
-    t.setDate(5)
-    t.setMonth(4)
-
-    useEffect(()=>{
-        eventNameRef?.current?.focus()
-    }, [])
 
 
     return (
@@ -55,7 +42,7 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
 
             <div className="p-4">
                 <div className="ml-12">
-                    <Input ref={eventNameRef} className="" label="Add meeting title"
+                    <Input className="" label="Add meeting title"
                            onChange={(e) => handleChange(e.target.value, "title")}
                            value={title}/>
                 </div>
@@ -112,16 +99,12 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                     </div>
 
 
-                    <ClickExpand initialOpen={!!agenda} label={({onPress}) => (
-                        <div onClick={onPress} className="hover:bg-gray-100 p-2 rounded-md">
-                            <span className="text-sm text-gray-600">Agenda</span>
-                        </div>
-                    )}>
-                        <TextArea
-                            onChange={(e) => handleChange(e.target.value, "agenda")}
-                            value={agenda}/>
-                    </ClickExpand>
-
+                    <TextArea
+                        className="w-full agenda-textarea"
+                        label="Agenda"
+                        onChange={(e) => handleChange(e.target.value, "agenda")}
+                        value={agenda}
+                    />
                 </div>
 
                 <div className="event-input-field flex items-start mt-3">
@@ -136,16 +119,13 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                     </div>
 
 
-                    <ClickExpand initialOpen={!!followUp} label={({onPress}) => (
-                        <div onClick={onPress} className="hover:bg-gray-100 p-2 rounded-md">
-                            <span className="text-sm text-gray-600">Follow Up message</span>
-                        </div>
-                    )}>
-                        <TextArea
-                            onChange={(e) => handleChange(e.target.value, "followUp")}
-                            value={followUp}
-                        />
-                    </ClickExpand>
+                    <TextArea
+                        className="w-full"
+                        label="Follow Up message"
+                        onChange={(e) => handleChange(e.target.value, "followUp")}
+                        value={followUp}
+                    />
+
 
                 </div>
 
@@ -155,15 +135,13 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                     </div>
 
 
-                    <ClickExpand initialOpen={!!actionItems} label={({onPress}) => (
-                        <div onClick={onPress} className="hover:bg-gray-100 p-2 rounded-md">
-                            <span className="text-sm text-gray-600">Action Item</span>
-                        </div>
-                    )}>
-                        <TextArea
-                            onChange={(e) => handleChange(e.target.value, "actionItems")}
-                            value={actionItems}/>
-                    </ClickExpand>
+                    <TextArea
+                        className="w-full"
+                        label="Action Item"
+                        onChange={(e) => handleChange(e.target.value, "actionItems")}
+                        value={actionItems}
+                    />
+
 
                 </div>
 
@@ -174,16 +152,18 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                     </div>
 
 
-                    <ClickExpand initialOpen={!!meetingLink} label={({onPress}) => (
-                        <div onClick={onPress} className="hover:bg-gray-100 p-2 rounded-md">
-                            <span className="text-sm text-gray-600">Meeting link</span>
-                        </div>
-                    )}>
-                        <TextArea
-                            onChange={(e) => handleChange(e.target.value, "meetingLink")}
-                            value={meetingLink}
-                        />
-                    </ClickExpand>
+                    {/*<ClickExpand initialOpen={!!meetingLink} label={({onPress}) => (*/}
+                    {/*    <div onClick={onPress} className="hover:bg-gray-100 p-2 rounded-md">*/}
+                    {/*        <span className="text-sm text-gray-600">Meeting link</span>*/}
+                    {/*    </div>*/}
+                    {/*)}>*/}
+                    <TextArea
+                        className="w-full"
+                        label="Meeting link"
+                        onChange={(e) => handleChange(e.target.value, "meetingLink")}
+                        value={meetingLink}
+                    />
+                    {/*</ClickExpand>*/}
 
                 </div>
 
@@ -191,7 +171,6 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                 {/*    <div className="event-label-icon w-12">*/}
                 {/*        <HiBars3BottomLeft className="text-xl text-gray-600"/>*/}
                 {/*    </div>*/}
-
                 {/*    <ClickExpand label={({onPress}) => (*/}
                 {/*        <div onClick={onPress} className="hover:bg-gray-100 p-2 rounded-md">*/}
                 {/*            <span className="text-sm text-gray-600">Description</span>*/}
@@ -206,24 +185,23 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                         <img className="w-5" src="/icons/bell.svg" alt="bell"/>
                     </div>
                     
-                    <ClickExpand initialOpen={!!meetingLink} label={({onPress}) => (
-                        <AddNotification values={notifications}  onChange={(val)=>handleChange(val, "notifications")} onPress={onPress} />
-                        
-                    )}>
-                    
-                    
-                    </ClickExpand>
+                   <div className="-mt-2">
+                       <ClickExpand initialOpen={!!meetingLink} label={({onPress}) => (
+                           <AddNotification
+                               values={notifications}
+                               onChange={(val)=>handleChange(val, "notifications")}
+                               onPress={onPress} />
+                       )}>
+                       </ClickExpand>
+                   </div>
                     
                     
                     {/*<div className="hover:bg-gray-100 p-2 rounded-md">*/}
                     {/*    <span className="text-sm text-gray-600">Add Notification</span>*/}
                     {/*</div>*/}
                 </div>
-                
-
-
                 <div className="mt-4">
-                    <button onClick={handleAddEvent} className="btn btn-primary">Add</button>
+                    <button onClick={handleAddEvent} className="btn btn-primary">{updateEventId ? "Update" : "Add"}</button>
                 </div>
             </div>
 

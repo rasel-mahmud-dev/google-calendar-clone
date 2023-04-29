@@ -12,7 +12,9 @@ import {colors} from "../ColorPicker/ColorPicker.jsx";
 
 const DayView = ({events, date = null}) => {
 
-    const {monthIndex, filterEvents, currentDate, auth, addEvent, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
+    const {monthIndex,
+        setSelectedDate: setSelectedDateFromParams,
+        filterEvents, currentDate, auth, addEvent, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
 
     const [selectedDate, setSelectedDate] = useState(new Date(currentDate))
 
@@ -47,10 +49,7 @@ const DayView = ({events, date = null}) => {
         if(isValidDate && dateParams){
             let d = new Date(dateParams)
             setSelectedDate(d)
-        } else {
-            // let now = dayjs()
-            // let currentDate = date || now.date()
-            // setSelectedDate(dayjs(new Date(now.year(), monthIndex, currentDate)))
+            setSelectedDateFromParams(d)
         }
     }, [ dateParams])
     

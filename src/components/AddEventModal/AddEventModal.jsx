@@ -117,7 +117,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
             }
 
             if(newEventData.updateEventId){
-                axios.put("http://localhost:4000/api/calendar/update/"+newEventData.updateEventId, payload).then(({data, status}) => {
+                axios.put("/api/calendar/update/"+newEventData.updateEventId, payload).then(({data, status}) => {
                     setCloseNewEventModal()
                    // addEvent(data.event)
                     setEvents(prev=>{
@@ -138,7 +138,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
 
             } else {
                 
-                axios.post("http://localhost:4000/api/calendar/create", payload)
+                axios.post("/api/calendar/create", payload)
                     .then(({data, status}) => {
                     setCloseNewEventModal()
                     addEvent(data.event)
@@ -184,7 +184,6 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                         )}
                     </div>
                 </div>
-
             </Modal>
         </div>
     );

@@ -132,7 +132,7 @@ const Header = () => {
                     render={(click) => (
                         <div>
                             <li onClick={()=>click("day")} className="mui-select-item">Day</li>
-                            <li onClick={()=>click("week")} className="mui-select-item">Week</li>
+                            <li onClick={()=>click("month")} className="mui-select-item">Week</li>
                             <li onClick={()=>click("month")} className="mui-select-item">Month</li>
                         </div>
                     )}>

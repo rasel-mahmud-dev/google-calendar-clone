@@ -91,7 +91,8 @@ const DayView = ({events, date = null}) => {
                 createdBy: {
                     ...auth
                 },
-                ...newEvent
+                ...newEvent,
+                status: "pending"
             })
 
             return newEvent

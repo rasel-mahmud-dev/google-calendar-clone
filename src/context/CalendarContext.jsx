@@ -161,15 +161,13 @@ export const CalendarProvider = (props) => {
                calendarView: componentName
             }))
         }
-
-
     }
 
-
-    return (<CalendarContext.Provider value={value}>
+    return (
+        <CalendarContext.Provider value={value}>
             {props.children}
-        </CalendarContext.Provider>)
-
+        </CalendarContext.Provider>
+    )
 }
 
 export default CalendarContext

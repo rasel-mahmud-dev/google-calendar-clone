@@ -1,7 +1,7 @@
 {
   "name": "google-calendar-clone",
   "private": true,
-  "version": "1.0.0",
+  "version": "3.0.0",
   "type": "module",
   "author": {
     "email": "rasel.mahmud.dev@gmail.com",

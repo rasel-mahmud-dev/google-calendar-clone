@@ -19,7 +19,20 @@ function App() {
 
     return (
         <div className="App">
-            <RouterProvider router={routes}/>
+
+                    <div className="text-gray-50 bg-gray-50"></div>
+                    <div className="text-gray-100 bg-gray-100"></div>
+                    <div className="text-gray-200 bg-gray-200"></div>
+                    <div className="text-gray-300 bg-gray-300"></div>
+                    <div className="text-gray-400 bg-gray-400"></div>
+                    <div className="text-gray-500 bg-gray-500"></div>
+                    <div className="text-gray-600 bg-gray-600"></div>
+                    <div className="text-gray-700 bg-gray-700"></div>
+                    <div className="text-gray-800 bg-gray-800"></div>
+                    <div className="text-gray-900 bg-gray-900"></div>
+
+
+            {/*<RouterProvider router={routes}/>*/}
         </div>
     )
 }

@@ -3,10 +3,16 @@
 
     position: relative;
     border-radius: 6px;
-    overflow: hidden;
+    //overflow: hidden;
 
     &.input-focus {
         //border-bottom: 2px solid red;
+    }
+
+    &.textarea{
+        .input-wrapper{
+            padding: 10px 10px 0 10px;
+        }
     }
 
     .input-wrapper {
@@ -14,7 +20,7 @@
         //background: #ff92b2;
         border-bottom: 1px solid rgba(184, 197, 197, 0.34);
         width: 100%;
-        padding: 10px 10px 0 10px;
+
 
         &.with-bg {
             background: var(--gray-100);
@@ -45,11 +51,14 @@
             background: transparent;
             &::placeholder{
                 color: currentColor;
-                font-weight: 300;
-                //font-size: 14px;
+                font-weight: 400
             }
         }
-
+        textarea{
+            &::placeholder{
+                font-weight: 300;
+            }
+        }
     }
 
     .input-border {
@@ -86,10 +95,10 @@
 
     .suggestion-item {
         @apply text-sm font-normal text-gray-600 py-1 px-2 rounded cursor-pointer ;
-        &:hover {
-            background: var(--hover);
-            color: var(--white);
-        }
+        //&:hover {
+        //    background: var(--hover);
+        //    color: var(--white);
+        //}
     }
 }
 

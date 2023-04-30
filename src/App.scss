@@ -34,8 +34,12 @@
     box-shadow: 0 2px 7px -3px rgb(40 40 40 / 60%);
     transition: box-shadow .4s ease;
     &:hover{
+        background: var(--active);
         box-shadow: 0 2px 7px 0px rgb(40 40 40 / 61%)
     }
+}
+.btn-sm{
+    font-size: 12px;
 }
 
 .btn-circle {

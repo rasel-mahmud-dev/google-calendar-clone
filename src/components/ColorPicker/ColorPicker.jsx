@@ -15,11 +15,12 @@ export const colors = {
     primary: "#8a6fff",
 }
 
-const ColorPicker = ({onChange, value}) => {
+
+const ColorPicker = ({onChange, value, auth}) => {
 
     const [color, setColor] = useState("gray")
 
-    function handleChangecolor(color){
+    function handleChangeColor(color){
         setColor(color)
         onChange(color)
     }
@@ -33,11 +34,13 @@ const ColorPicker = ({onChange, value}) => {
     return (
         <div className="flex items-center">
             
-            <h4 className="mr-2 text-gray-600 text-sm ">Rasel Mahmud</h4>
+            <h4 className="mr-2 text-gray-600 text-sm ">
+                {auth.username} (organizer)
+            </h4>
 
             <Select
                 value={color}
-                onChange={handleChangecolor}
+                onChange={handleChangeColor}
                 className="mt-0"
                 inputBg="py-1 rounded"
                 dropdownClass={"color-picker-dropdown"}
@@ -46,16 +49,17 @@ const ColorPicker = ({onChange, value}) => {
                 render={(onChange) => (
                     <div className="grid grid-cols-2 justify-between gap-2">
                         {Object.keys(colors).map(colorKey=>(
-                            <span onClick={()=>onChange(colorKey)} className="w-4 h-4 block rounded-full" style={{background: colors[colorKey]}}>  </span>
+                            <span onClick={()=>onChange(colorKey)}
+                                  className="w-4 h-4 block rounded-full"
+                                  style={{background: colors[colorKey]}}>
+                            </span>
                         ))}
                     </div>
                 )}
-                label={()=>(
-                    <div>Rasel Mahmud</div>
-                )}
                 renderPlaceholderValue={(val)=>(
                     <div className="flex items-center">
-                        <span className="w-4 h-4 block rounded-full mr-1" style={{background: colors[val]}}>  </span>
+                        <span className="w-4 h-4 block rounded-full mr-1" style={{background: colors[val]}}>
+                        </span>
                         <BiChevronDown />
                     </div>
                 )}
@@ -64,5 +68,6 @@ const ColorPicker = ({onChange, value}) => {
         </div>
     );
 };
+
 
 export default ColorPicker;

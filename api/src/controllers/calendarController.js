@@ -1,7 +1,6 @@
 const Event = require('../models/Event')
 
 
-
 // add meetingLinks and remove description
 exports.createEvent = async (req, res) => {
 	if (req.user?.parent) {

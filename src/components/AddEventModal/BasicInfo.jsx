@@ -15,11 +15,11 @@ import AddNotification from "./AddNotification";
 
 const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
     const {
+        auth,
         newEventData: {
             invitations,
             agenda,
             title,
-            monthIndex,
             date: eventDate,
             notifications,
             followUp,
@@ -30,8 +30,6 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
         },
         setNewEventData
     } = useContext(CalendarContext)
-
-
 
 
     return (
@@ -65,7 +63,7 @@ const BasicInfo = ({handleChange, setTab, handleAddEvent}) => {
                     <div className="event-label-icon w-12">
                         <img className="w-5" src="/icons/admin-icon.svg" alt="bell"/>
                     </div>
-                    <ColorPicker value={eventColor} onChange={(colorName)=>handleChange(colorName, "eventColor")} />
+                    <ColorPicker auth={auth} value={eventColor} onChange={(colorName)=>handleChange(colorName, "eventColor")} />
                 </div>
 
 

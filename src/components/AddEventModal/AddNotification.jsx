@@ -69,7 +69,7 @@ const AddNotification = ({onPress, onChange, values}) => {
 	return (
 		<div>
 			
-			<div className="mt-2">
+			<div className="">
 				{notifications.map(notification=>(
 					<div className="flex items-center gap-x-2 notifications relative">
 						

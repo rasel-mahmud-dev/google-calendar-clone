@@ -1,6 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Modal from "../Modal/Modal";
-import {TiTimes} from "react-icons/all";
 import CalendarContext from "../../context/CalendarContext";
 
 import * as yup from "yup"
@@ -9,19 +7,45 @@ import "./style.scss"
 import BasicInfo from "./BasicInfo";
 import AddUser from "./AddUser";
 import axios from "axios";
+import MultiStepModal from "../MultiStepModal/MultiStepModal.jsx";
+import {CSSTransition} from "react-transition-group"
+import {toast} from "react-toastify";
+import useAuthContext from "../../context/useAuthContext.js";
 
 
-const AddEventModal = ({isOpenAddEventModal, onClose}) => {
+export function handleAddUserInvitation(setNewEventData, user) {
+    setNewEventData(prev => {
+        let unique = [...prev.invitations]
+        let index = unique.findIndex(un => un._id === user._id)
+        if (index === -1) {
+            unique.push(user)
+        } else {
+            unique.splice(index, 1)
+        }
 
+        return {
+            ...prev,
+            invitations: unique
+        }
+    })
+}
+
+
+const AddEventModal = () => {
 
     const {newEventData, setEvents, addEvent, setNewEventData, setCloseNewEventModal} = useContext(CalendarContext)
 
     const [tab, setTab] = useState("basic")
-    const [tabPosition, setTabPosition] = useState(0)
+
+    const [{auth}] = useAuthContext()
+
+
+    const [modalId, setModalId] = useState(1)
 
 
     function handleClose() {
         setCloseNewEventModal()
+        setModalId(1)
     }
 
 
@@ -33,13 +57,13 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
         }))
     }
 
-    useEffect(() => {
-        if (tab === "basic") {
-            setTabPosition(0)
-        } else if (tab === "addUsers") {
-            setTabPosition(-500)
-        }
-    }, [tab])
+    // useEffect(() => {
+    //     if (tab === "basic") {
+    //         setTabPosition(0)
+    //     } else if (tab === "addUsers") {
+    //         setTabPosition(-600)
+    //     }
+    // }, [tab])
 
 
     // reset first tab when user close modal window
@@ -49,13 +73,13 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
         }
     }, [newEventData.isOpen]);
 
-    useEffect(()=>{
-        if(newEventData.isEventCreateInitialize){
+    useEffect(() => {
+        if (newEventData.isEventCreateInitialize) {
             // console.log(newEventData)
-            setEvents(prev=>{
+            setEvents(prev => {
                 let updateEvents = [...prev]
-                let updateEventIndex = updateEvents.findIndex(evt=>evt.isEventCreateInitialize)
-                if(updateEventIndex !== -1){
+                let updateEventIndex = updateEvents.findIndex(evt => evt.isEventCreateInitialize)
+                if (updateEventIndex !== -1) {
                     updateEvents[updateEventIndex] = {
                         ...updateEvents[updateEventIndex],
                         ...newEventData
@@ -69,16 +93,42 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
     }, [newEventData.isEventCreateInitialize, newEventData.title, newEventData.eventColor])
 
 
-    async function handleAddEvent() {
+    // not implemented.
+    const handleUpload = (files) => {
+        // if (files) {
+        //     setIsFileUploading(true)
+        //     let formData = new FormData()
+        //     formData.append("file", files)
+        //     axios.post('/document/userdocumentfile', formData)
+        //         .then(res => {
+        //             setAttachments(prev => ([...prev, res.data.fileUrl]))
+        //             setIsFileUploading(false)
+        //             attachmentRef.current.value = null
+        //         })
+        //         .catch(err => {
+        //             attachmentRef.current.value = null
+        //             setIsFileUploading(false)
+        //             console.log(err);
+        //             message.error("Upload failed/Invalid file type")
+        //         })
+        // }
+    }
+
+    async function handleAddEvent(cb) {
+
+        if(!auth){
+            cb()
+            return toast.error("To create meeting, you need to login first.")
+        }
+
+        let eventValidator = yup.object({
+            title: yup.string().required("Meeting title required."),
+            agenda: yup.string().required("Meeting agenda required."),
+            invitations: yup.array()
+        });
+
 
         try {
-            let eventValidator = yup.object({
-                title: yup.string().required("Meeting title required."),
-                agenda: yup.string().required("Meeting agenda required."),
-                invitations: yup.array()
-            });
-
-
             const invitationUsers = newEventData.invitations.map(user => user._id) || []
 
             await eventValidator.validateSync({
@@ -91,7 +141,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
             let startDateTime = new Date(newEventData.startDateTime)
             let endDateTime = new Date(newEventData.endDateTime)
 
-            if(newEventData.isAllDay){
+            if (newEventData.isAllDay) {
                 startDateTime.setHours(0)
                 startDateTime.setMinutes(0)
                 startDateTime.setSeconds(0)
@@ -106,6 +156,7 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 start: startDateTime,
                 end: endDateTime,
                 agenda: newEventData.agenda,
+                description: newEventData.agenda,
                 actionItems: newEventData.actionItems,
                 followUp: newEventData.followUp,
                 notifications: newEventData.notifications,
@@ -116,14 +167,29 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                 invitations: invitationUsers
             }
 
-            if(newEventData.updateEventId){
-                axios.put("/api/calendar/update/"+newEventData.updateEventId, payload).then(({data, status}) => {
+            if (payload.start > payload.end) {
+                cb()
+                return toast.error("End time should be greater than Start time")
+            }
+
+            // if (payload.start < new Date()) {
+            //     cb()
+            //     return toast.error("Event start date only allow for current and future date")
+            // }
+
+
+            if (newEventData.updateEventId) {
+                // devApi.put("/calendar/update/"+newEventData.updateEventId, payload).then(({data, status}) => {
+                axios.patch("/api/calendar/edit/" + newEventData.updateEventId, payload).then(({data, status}) => {
+
+                    toast.success("Event is successfully updated")
+
                     setCloseNewEventModal()
-                   // addEvent(data.event)
-                    setEvents(prev=>{
+                    // addEvent(data.event)
+                    setEvents(prev => {
                         let updateEvents = [...prev]
-                        let updateEventIndex = updateEvents.findIndex(evt=> evt._id === newEventData.updateEventId)
-                        if(updateEventIndex !== -1){
+                        let updateEventIndex = updateEvents.findIndex(evt => evt._id === newEventData.updateEventId)
+                        if (updateEventIndex !== -1) {
                             updateEvents[updateEventIndex] = {
                                 ...updateEvents[updateEventIndex],
                                 ...data.event
@@ -134,57 +200,83 @@ const AddEventModal = ({isOpenAddEventModal, onClose}) => {
                         }
                     })
 
-                }).catch((ex) => {})
+                }).catch((ex) => {
+                    toast.error(ex?.response?.data?.error)
+                }).finally(() => {
+                    cb()
+                })
 
             } else {
-                
+
+                // devApi.post("/calendar/create", payload)
                 axios.post("/api/calendar/create", payload)
                     .then(({data, status}) => {
-                    setCloseNewEventModal()
-                    addEvent(data.event)
+                        setCloseNewEventModal()
+                        toast.success("Event successfully created")
+                        addEvent(data.event)
 
-                }).catch((ex) => {})
+                    }).catch((ex) => {
+
+                    toast.success(ex?.response?.data?.error)
+
+                }).finally(() => {
+                    cb()
+                })
             }
 
         } catch (ex) {
-            alert(ex.message)
-
+            cb()
+            return toast.error(ex.message)
         }
     }
 
 
     return (
         <div>
-            <Modal isOpen={newEventData.isOpen} onClose={handleClose} className="add-event-modal">
+            <MultiStepModal isOpen={newEventData.isOpen} onClose={handleClose} className="add-event-multi-modal">
+                <CSSTransition unmountOnExit={true} in={modalId === 1} timeout={400} classNames="modal-content">
+                    <div className="modal-inner">
+                        <BasicInfo
+                            onClose={handleClose}
+                            setModalId={setModalId}
+                            handleAddEvent={handleAddEvent}
+                            handleChange={handleChange}
+                            setTab={setTab}
+                            newEventData={newEventData}
+                        />
+                    </div>
+                </CSSTransition>
 
-                <div className="close-btn">
-                    <TiTimes className="text-gray-500 cursor-pointer hover:text-red-500" onClick={handleClose}/>
-                </div>
-
-                <div className="tab-root" style={{transform: `translateX(${tabPosition}px`}}>
-                    <div className={`tab tab-one ${tab === "basic" ? "open-tab" : "hide-tab"}`}>
-                        {tab === "basic" && (
-                            <BasicInfo
-                                handleAddEvent={handleAddEvent}
-                                handleChange={handleChange}
-                                setTab={setTab}
-                                newEventData={newEventData}
-                            />
-                        )}
+                <CSSTransition unmountOnExit={true} in={modalId === 2} timeout={400} classNames="modal-content">
+                    <div className="modal-inner">
+                        <AddUser
+                            setModalId={setModalId}
+                            handleClose={handleClose}
+                            handleChange={handleChange}
+                            // setUserIdForTimeCheck={setUserIdForTimeCheck}
+                            newEventData={newEventData}
+                            setTab={setTab}
+                        />
                     </div>
 
-                    <div className={`tab  tab-two ${tab === "addUsers" ? "open-tab" : "hide-tab"}`}>
-                        {tab === "addUsers" && (
-                            <AddUser
-                                handleClose={handleClose}
-                                handleChange={handleChange}
-                                newEventData={newEventData}
-                                setTab={setTab}
-                            />
-                        )}
+                </CSSTransition>
+
+
+                <CSSTransition unmountOnExit={true} in={modalId === 3} timeout={400} classNames="modal-content">
+                    <div className="modal-inner">
+                        {/*<FindUserTime*/}
+                        {/*    onClose={handleClose}*/}
+                        {/*    setModalId={setModalId}*/}
+                        {/*    handleClose={handleClose}*/}
+                        {/*    handleChange={handleChange}*/}
+                        {/*    newEventData={newEventData}*/}
+                        {/*    userIdForTimeCheck={userIdForTimeCheck}*/}
+                        {/*    // onChooseTimeRange={handleChooseTimeRange}*/}
+                        {/*/>*/}
                     </div>
-                </div>
-            </Modal>
+                </CSSTransition>
+
+            </MultiStepModal>
         </div>
     );
 };

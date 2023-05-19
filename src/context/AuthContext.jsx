@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useReducer} from "react";
 
 
 // auth context
@@ -12,16 +12,35 @@ const initialState = {
 }
 
 // auth reducer.
-function authReducer(state, action){
-    switch (action.type){
+function authReducer(state, action) {
+    switch (action.type) {
+
         case "LOGIN": {
-            console.log(action.payload)
+            if (action.payload && action.payload["token"]) {
+                localStorage.setItem("token", action.payload["token"])
+            }
             return {
                 ...state,
                 auth: action.payload,
                 isAuthLoaded: true
             }
         }
+
+        case "UPDATE_USER":
+            return {
+                ...state,
+                auth: {
+                    ...state.auth,
+                    ...action.payload
+                },
+            }
+
+        case "LOGOUT":
+            localStorage.removeItem("token")
+            return {
+                ...state,
+                auth: null,
+            }
 
         default : {
             return state
@@ -36,7 +55,7 @@ export let dispatch;
 // auth context provider
 export const AuthProvider = (props) => {
 
-    let [state, authDispatch] = useReducer(authReducer, initialState, initialState)
+    let [state, authDispatch] = useReducer(authReducer, initialState)
 
     dispatch = authDispatch
 

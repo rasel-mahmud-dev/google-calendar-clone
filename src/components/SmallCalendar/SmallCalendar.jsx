@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {BiChevronLeft, BiChevronRight} from "react-icons/all";
+import {BiChevronLeft, BiChevronRight} from "react-icons/bi";
 import dayjs from "dayjs";
+import getMonthDayMartix from "../../utils/getMonthDayMartix.js";
+import getDayClass from "../../utils/getDayClass.js";
+
 import "./smallCalendar.scss"
-import {compareAsc, isToday} from "date-fns";
-import getMonthDayMartix from "../../utils/getMonthDayMartix";
+
 
 const SmallCalendar = ({className = "", onChange, value}) => {
 
@@ -58,29 +60,12 @@ const SmallCalendar = ({className = "", onChange, value}) => {
         setDaySelected(day)
     }
 
-    function getDayClass(day) {
-        const format = "DD-MM-YY";
 
-        const nowDay = dayjs().format(format);
-        const nowDate = dayjs().month(1)
-
-        const currDay = day.format(format);
-        const slcDay = daySelected && dayjs(daySelected).format(format);
-        if (nowDay === currDay) {
-            return "today";
-        } else if (currDay === slcDay) {
-            return "selected-date";
-        } else if (nowDate.month() !== day.month()) {
-            return "inactive";
-        } else {
-            return ""
-        }
-    }
 
     return (
         <div className={`${className} small-calendar`}>
 
-            <div className="flex justify-between px-1">
+            <div className="flex justify-between px-1 mb-2 mt-3">
                 <p className="text-sm text-gray-700 font-medium">{
                     dayjs(new Date(currentDate)).format(
                         "MMMM YYYY"
@@ -118,7 +103,7 @@ const SmallCalendar = ({className = "", onChange, value}) => {
                     {daysMatrix.map((row) => (
                         row.map(day => (
                             <div key={day.date()} onClick={() => handleSelectDate(day)}
-                                 className={`date py-1 ${getDayClass(day)} `}>
+                                 className={`date py-1 ${getDayClass(day, daySelected)} `}>
                                 <span className="date-cell">{day.format("D")}</span>
                             </div>
                         ))

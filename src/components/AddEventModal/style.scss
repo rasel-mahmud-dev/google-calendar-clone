@@ -1,5 +1,5 @@
 
-.add-event-modal {
+.add-event-multi-modal {
     overflow: hidden;
     max-height: 90vh;
     width: 500px;
@@ -7,6 +7,7 @@
     top: 30%;
     transition: all .4s ease;
     scroll-behavior: smooth;
+
     &::-webkit-scrollbar{
         background: transparent;
         width: 10px;
@@ -34,32 +35,32 @@
         transition: all .2s ease-out;
     }
 
-    .tab {
-        position: relative;
-
-        &.tab-one {
-            width: 100%;
-        }
-
-        &.tab-two {
-            width: 100%;
-        }
-
-        //&.open-tab{
-        //    background: #81ff89;
-        //}
-        //&.hide-tab{
-        //    background: #ffa65f;
-        //}
-    }
-
-
     .event-input-field {
+        margin-top: 12px;
         .event-label-icon {
+            margin-top: 1px;
             padding-top: 10px;
+        }
+
+        textarea{
+            padding-left: 10px !important;
+        }
+    }
+
+    .new-scrollbar{
+        &::-webkit-scrollbar{
+            width: 4px;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb{
+            background: rgba(159, 188, 255, 0.18);
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-track{
 
         }
     }
+
 
     .users-list {
         max-height: 300px;
@@ -108,4 +109,11 @@
     .small-calendar{
         width: 250px;
     }
+}
+
+
+
+.basic-title{
+    margin-left: 10px;
+    margin-right: 10px;
 }

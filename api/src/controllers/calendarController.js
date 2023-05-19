@@ -24,7 +24,7 @@ exports.createEvent = async (req, res) => {
 		meetingLink,
 		status: "pending",
 		attachments,
-		createdBy: "6422af5d9153de6adce3b085",
+		createdBy: req.user._id,
 		invitations: invitations || []
 	}
 	
@@ -51,7 +51,7 @@ exports.updateEvent = async (req, res) => {
 	if (req.user?.parent) {
 		return res.status(400).json({ error: "Access denied" })
 	}
-	const { title, start, end, notifications, agenda, status, actionItems, eventColor, meetingLink, followUp, attachments, invitations } = req.body
+	const { title, start, end, notifications, agenda, status, eventColor, meetingLink, attachments, invitations } = req.body
 	
 	if (!start) {
 		return res.status(400).json({ error: "Start time is required" })
@@ -62,10 +62,8 @@ exports.updateEvent = async (req, res) => {
 		start,
 		end,
 		agenda,
-		actionItems,
 		notifications,
 		eventColor,
-		followUp,
 		meetingLink,
 		status,
 		attachments,
@@ -81,7 +79,7 @@ exports.updateEvent = async (req, res) => {
 		res.json({event: data})
 
 	} catch(ex){
-		console.log(err);
+
 		res.status(400).json({ error: "Something went wrong" })
 	}
 }
@@ -91,8 +89,8 @@ exports.getAllEvents = async (req, res)=>{
 	try{
 
 		let events = await Event.find({}).
-		populate("createdBy", "username email")
-		.populate("invitations", "username email image")
+		populate("createdBy", "firstName lastName email")
+		.populate("invitations", "firstName lastName email avatar")
 		res.send(events)
 
 	}catch(ex){

@@ -6,13 +6,13 @@ import Modal from "../components/Modal/Modal";
 import {TiTimes} from "react-icons/all";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
+import {sendAuthApiRequest} from "../context/actions.js";
+import {dispatch} from "../context/AuthContext.jsx";
 
 const Main = () => {
     
     const sound=  useRef(new Audio("/short-success-sound-glockenspiel-treasure-video-game-6346.mp3"))
-    
-  
-    
+
     
     const {events, newEventData, auth, setCalendar, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
     
@@ -21,6 +21,23 @@ const Main = () => {
     
     
     useEffect(() => {
+
+
+        (async function(){
+           try{
+               let a = await sendAuthApiRequest("", "/api/auth/verify")
+               if(a[0]) {
+                   dispatch({
+                       type: "LOGIN",
+                       payload: a[1]
+                   })
+               }
+           } catch (ex){
+
+           }
+
+        }())
+
         axios.get("/api/calendar/events").then(({data}) => {
             setEvents(data)
             
@@ -60,8 +77,7 @@ const Main = () => {
         }).catch(ex => {
         
         })
-        
-        
+
         
     }, [])
     

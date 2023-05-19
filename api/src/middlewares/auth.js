@@ -9,7 +9,7 @@ function auth(req, res, next) {
 			return res.status(409).json({message: "Please login first"})
 		}
 		req.user = {
-            _id: data.userId
+            _id: data._id,
         }
 		next()
 		

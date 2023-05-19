@@ -3,7 +3,8 @@ import {createBrowserRouter} from "react-router-dom"
 import Main from "../layout/Main";
 
 import HomePage from "../pages/HomePage";
-import AppHome from "../pages/AppHome";
+import AuthPage from "../pages/AuthPage.jsx";
+import Profile from "../pages/Profile.jsx";
 
 
 const routes = createBrowserRouter([
@@ -13,10 +14,23 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <AppHome />,
+                element: <HomePage />,
             },
             {
-                path: "/calendar/:view",
+                path: "/profile",
+                element: <Profile />,
+            },
+            {
+                path: "/join/:page",
+                element: <AuthPage />,
+            },
+            {
+                path: "/join",
+                element: <AuthPage />,
+            },
+
+            {
+                path: "/:view",
                 element: <HomePage />,
             },
         ]

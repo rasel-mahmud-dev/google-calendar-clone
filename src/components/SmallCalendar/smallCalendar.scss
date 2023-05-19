@@ -15,7 +15,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #3d3d3d;
+            color: #a8a8a8;
+
             font-weight: 500;
             cursor: pointer;
             border-radius: 20px;
@@ -41,9 +42,9 @@
             }
         }
 
-        &.inactive {
+        &.current-month {
             .date-cell {
-                color: #a8a8a8;
+                color: #626262;
             }
         }
     }

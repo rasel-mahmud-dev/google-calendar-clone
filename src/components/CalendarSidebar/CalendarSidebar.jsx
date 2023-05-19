@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {plus} from "../../icons/plus";
-import {BiCaretDown, BiChevronDown, BiChevronRight} from "react-icons/all";
+import {BiCaretDown, BiChevronDown, BiChevronRight, BiPlus} from "react-icons/all";
 import Popup from "../Popup/Popup";
 import SmallCalendar from "../SmallCalendar/SmallCalendar";
 import Accordion from "../Accordion/Accordion";
@@ -8,6 +8,7 @@ import statusColors from "../../utils/statusColors";
 import {useNavigate} from "react-router-dom";
 import dayjs from "dayjs";
 import {colors} from "../ColorPicker/ColorPicker";
+import useAuthContext from "../../context/useAuthContext.js";
 
 
 const CalendarSidebar = (props) => {
@@ -20,15 +21,17 @@ const CalendarSidebar = (props) => {
         setCalendar,
         setFilterEvent,
         filterEvents,
-        auth,
     } = props
 
     const navigate = useNavigate()
 
+    const [authState ] = useAuthContext()
+
+
     useEffect(() => {
         if (events.length > 0) {
-            setMyCreatedEvent(events.filter(evt => evt.createdBy._id === auth._id))
-            setInvitedMe(events.filter(evt => evt.invitations.includes(auth._id)))
+            setMyCreatedEvent(events.filter(evt => evt.createdBy._id === authState?.auth?._id))
+            setInvitedMe(events.filter(evt => evt.invitations.includes(authState?.auth?._id)))
         }
     }, [events])
     
@@ -101,7 +104,7 @@ const CalendarSidebar = (props) => {
         setCalendar({
             selectedDate: date
         })
-        navigate(`/calendar/day?date=` + d.format("MM-DD-YYYY"))
+        navigate(`/day?date=` + d.format("MM-DD-YYYY"))
     }
     
     function handleChangeFilterEvent(status){
@@ -109,7 +112,7 @@ const CalendarSidebar = (props) => {
     }
     
     function handleOpenEventDetailRoute(eventId){
-        let to = "/calendar/month?detail="
+        let to = "/month?detail="
         if(eventId){
             to += eventId
         }
@@ -122,12 +125,12 @@ const CalendarSidebar = (props) => {
     return (
         <div className="sidebar">
             <div className="calendar-page relative">
-                <button className="btn flex items-center rounded-full shadow-lg mt-4 add-new-btn"
-                        onClick={() => setOpenChooseEventModal(true)}>
-                    <div dangerouslySetInnerHTML={{__html: plus}}></div>
-                    <span className="mr-4 font-medium text-sm">Create</span>
-                    <BiCaretDown/>
+                <button className="btn flex items-center  mt-4 add-new-btn"
+                        onClick={() => openAddNewEventModal("event")}>
+                    <BiPlus className="text-xl text-primary" />
+                    <span className="mr-4 font-medium text-sm">New Event</span>
                 </button>
+
 
                 <Popup className="rounded-lg px-0 py-1 absloute w-40 left-0 top-14"
                        onClose={() => setOpenChooseEventModal(false)}
@@ -228,21 +231,23 @@ const CalendarSidebar = (props) => {
 
                         <div className="accordion-content">
                             {sortByDate(events).slice(0, accItemShowContentLen[2]).map(evt => (
-                                <div className="accordion-li mt-1 hover:bg-gray-100" key={evt._id} onClick={()=>handleOpenEventDetailRoute(evt._id)} >
+                                <div className="accordion-li mt-1 " key={evt._id} onClick={()=>handleOpenEventDetailRoute(evt._id)} >
                                     <h4 className="flex items-center">
                                         <div className="col-span-1">
                                             <div style={{background:  colors[evt.eventColor] || statusColors[evt.status]}}
                                                  className="w-3 h-3 rounded-full block"></div>
                                         </div>
-                                        <div className="ml-2">
-                                            <span className="accordion-content-title">{evt.title}</span>
+                                        <div className="ml-1">
+                                            <span className="accordion-content-title text-sm  px-1 rounded py-px text-gray-700 hover:bg-gray-100">
+                                                {evt.title}
+                                            </span>
                                         </div>
                                     </h4>
                                 </div>
                             ))}
-                            
+
                             {/*** Toggle expand / Collapse button ****/}
-                            {events.length > 0 && (
+                            { events.length > 10 && (
                                 <div className="accordion-li  hover:bg-blue-100 p-1 rounded"
                                      onClick={(e) => handleExpandAccContent(e, 2, events.length)}>
                                     <div className="ml-4 flex items-center justify-between">

@@ -5,55 +5,16 @@ import Select from "../Form/Select";
 import CalendarContext from "../../context/CalendarContext";
 import Input from "../Form/Input";
 import axios from "axios";
+import fullName from "../../utils/fullName.js";
+import Avatar from "../Avatar/Avatar.jsx";
 
-const AddUser = ({handleClose, handleChange, setTab}) => {
+const AddUser = ({handleClose, handleChange, setModalId}) => {
 
     const {newEventData, auth, setNewEventData} = useContext(CalendarContext)
 
     const [usersList, setUsers] = useState([])
 
-    // const usersList = [
-    //     {
-    //         email: "rasel.mahmud.dev@gmail.com",
-    //         _id: "6422af5d9153de6adce3b085",
-    //         username: "Rasel Mahmud",
-    //         image: "https://randomuser.me/api/portraits/men/85.jpg"
-    //     },
-    //     {
-    //         email: "test.mail@gmail.com",
-    //         _id: "6446d317cd4d96843b1f6031",
-    //         username: "Test",
-    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
-    //     },{
-    //         email: "karim.mail@gmail.com",
-    //         _id: "6422b274931c811dcb9badad",
-    //         username: "Karim",
-    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
-    //     },
-    //     {email: "alex@gmail.com", _id: "6423099de8e946e0a13064d0", username: "Alex", image: "https://randomuser.me/api/portraits/men/32.jpg"},
-    //     {
-    //         email: "mahmud.dev@gmail.com",
-    //         _id: "6446d299d10b2a45ec0b7710",
-    //         username: "Mahmud",
-    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
-    //     },
-    //     {
-    //         email: "simul.dev@gmail.com",
-    //         _id: "6446d2bbd10b2a45ec0b7711",
-    //         username: "Simul",
-    //         image: "https://randomuser.me/api/portraits/men/32.jpg"
-    //     },
-    //     {
-    //         email: "khan.dev@gmail.com",
-    //         _id: "6446d2cdd10b2a45ec0b7712",
-    //         username: "Khan",
-    //         image: "https://randomuser.me/api/portraits/women/32.jpg"
-    //     },
-    // ]
-
-    const [userPayload, setUserPayload] = useState({
-        email: "",
-    })
+    const [userPayload, setUserPayload] = useState("")
 
     let [searchUsersList, setSearchUsersList] = useState([])
 
@@ -66,11 +27,11 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
     }, [])
 
     useEffect(() => {
-        findUsers(userPayload.email)
-    }, [userPayload.email])
+        findUsers(userPayload)
+    }, [userPayload])
 
     function findUsers(email) {
-        let users = usersList.filter(u => u.email.includes(email) || u.username.includes(email))
+        let users = usersList.filter(u => u.email.includes(email) || fullName(u).includes(email))
         setSearchUsersList(users)
     }
 
@@ -114,11 +75,11 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
         <div>
 
             <EventModalTitle onClose={handleClose} title="Add Users Invitation" backElement={() => (
-                <div className="cursor-pointer" onClick={() => setTab("basic")}>
-                    <FaAngleLeft className="text-gray-700 mr-2"/>
+                <div className="cursor-pointer" onClick={() => setModalId(1)}>
+                    <FaAngleLeft className="text-gray-700"/>
                 </div>
             )}/>
-            <div className="p-5">
+            <div className="p-2">
 
                 <h4 className="text-base font-normal text-gray-600">Invitations</h4>
 
@@ -137,9 +98,9 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                     {newEventData.invitations.map(user => (
                         <div>
                             <li className="flex items-center justify-between">
-                                <p className="flex items-center ">
-                                    <img className="w-6  rounded-full mr-1" src={user.image} alt=""/>
-                                    <span> {user.email}</span>
+                                <p className="flex items-center gap-x-2">
+                                    <Avatar username={fullName(user)} className="w-6 h-6 rounded-full" imgClass="w-6 h-6 rounded-full" src={user?.avatar} />
+                                    <span>{user.email}</span>
                                 </p>
 
                                 <BsFillTrash2Fill
@@ -153,17 +114,17 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
 
 
                 <Input
-                    onChange={(e) => setUserPayload(prev => ({...prev, email: e.target.value}))}
+                    onChange={(e) => setUserPayload(e.target.value)}
                     withBg={true}
                     dataList={usersList}
                     selectedDateList={newEventData.invitations}
                     inputBg="px-1 py-1 rounded"
                     onClickItem={handleAddUser}
                     showSuggestion={(onClick) => (
-                        <div>
+                        <div style={{maxHeight: "300px", overflowX: "auto"}} className="new-scrollbar">
                             {searchUsersList.map(user => (
                                 <div>
-                                    <p onClick={() => onClick(user)} className="suggestion-item">{user.username}</p>
+                                    <p onClick={() => onClick(user)} className="suggestion-item">{user.email}</p>
                                 </div>
                             ))}
                         </div>
@@ -172,42 +133,42 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
                     type="email"
                 />
                 
-                <Select
-                    value={newEventData.program}
-                    onChange={handleChangeProgram}
-                    label={newEventData.program ? newEventData.program : "Select Program"}
-                    className="mt-2"
-                    inputBg="px-1 py-1 rounded"
-                    withBg={true}
-                    render={(onChange) => (
-                        <>
-                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
-                            <li onClick={() => onChange("All")} className="mui-select-item">All</li>
-                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
-                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
-                            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>
-                        </>
-                    )}>
-                </Select>
+                {/*<Select*/}
+                {/*    value={newEventData.program}*/}
+                {/*    onChange={handleChangeProgram}*/}
+                {/*    label={newEventData.program ? newEventData.program : "Select Program"}*/}
+                {/*    className="mt-2"*/}
+                {/*    inputBg="px-1 py-1 rounded"*/}
+                {/*    withBg={true}*/}
+                {/*    render={(onChange) => (*/}
+                {/*        <>*/}
+                {/*            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>*/}
+                {/*            <li onClick={() => onChange("All")} className="mui-select-item">All</li>*/}
+                {/*            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>*/}
+                {/*            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>*/}
+                {/*            <li onClick={() => onChange("All Program")} className="mui-select-item">All Program</li>*/}
+                {/*        </>*/}
+                {/*    )}>*/}
+                {/*</Select>*/}
 
-                <Select
-                    value={newEventData.session}
-                    onChange={handleChangeSession}
-                    label={newEventData.session ? newEventData.session : "Select Session"}
-                    className="mt-2"
-                    inputBg="px-1 py-1 rounded"
-                    withBg={true}
-                    render={(onChange) => (
-                        <>
-                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
-                            <li onClick={() => onChange("All")} className="mui-select-item">All</li>
-                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
-                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
-                            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>
-                        </>
-                    )}>
+                {/*<Select*/}
+                {/*    value={newEventData.session}*/}
+                {/*    onChange={handleChangeSession}*/}
+                {/*    label={newEventData.session ? newEventData.session : "Select Session"}*/}
+                {/*    className="mt-2"*/}
+                {/*    inputBg="px-1 py-1 rounded"*/}
+                {/*    withBg={true}*/}
+                {/*    render={(onChange) => (*/}
+                {/*        <>*/}
+                {/*            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>*/}
+                {/*            <li onClick={() => onChange("All")} className="mui-select-item">All</li>*/}
+                {/*            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>*/}
+                {/*            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>*/}
+                {/*            <li onClick={() => onChange("All Sessions")} className="mui-select-item">All Sessions</li>*/}
+                {/*        </>*/}
+                {/*    )}>*/}
 
-                </Select>
+                {/*</Select>*/}
 
                 {/*<Select className="mt-2" inputBg="px-1 py-1 rounded" withBg={true} render={() => (*/}
                 {/*    <>*/}
@@ -227,7 +188,7 @@ const AddUser = ({handleClose, handleChange, setTab}) => {
 
 
                 <div className="mt-20">
-                    <button className="btn btn-primary" onClick={() => setTab("basic")}>Continue</button>
+                    <button className="btn btn-primary" onClick={() => setModalId(1)}>Continue</button>
                 </div>
 
             </div>

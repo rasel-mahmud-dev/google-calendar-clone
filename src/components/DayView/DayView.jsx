@@ -8,11 +8,14 @@ import {clickOnEventName} from "../../Calendar/Calendar";
 import withStopPropagation from "../../utils/withStopPropagation";
 import {useParams, useSearchParams} from "react-router-dom";
 import {colors} from "../ColorPicker/ColorPicker.jsx";
+import useAuthContext from "../../context/useAuthContext.js";
 
 
 const DayView = ({events, date = null}) => {
 
-    const {monthIndex, filterEvents, currentDate, auth, addEvent, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
+    const {monthIndex, filterEvents, currentDate, addEvent, setCloseNewEventModal, setNewEventData} = useContext(CalendarContext)
+
+    const {auth}  = useAuthContext()
 
     const [selectedDate, setSelectedDate] = useState(new Date(currentDate))
 
@@ -25,7 +28,7 @@ const DayView = ({events, date = null}) => {
 
 
     useEffect(() => {
-        if (events && events.length > 0) {
+        if (events) {
             let currentEvts = events.filter(event => {
                 if(filterEvents.includes(event.status)){
                     let startDate = new Date(event.start)
@@ -39,7 +42,9 @@ const DayView = ({events, date = null}) => {
             })
             setCurrentDayEvents(currentEvts)
         }
+
     }, [events, selectedDate, filterEvents])
+
 
 
     useEffect(() => {
@@ -139,7 +144,6 @@ const DayView = ({events, date = null}) => {
         })
     }
 
-
     return (
         <div>
 
@@ -176,7 +180,7 @@ const DayView = ({events, date = null}) => {
                                             ? renderHour(hour)
                                             : "12"
                                         }
-                                            <span className=" ml-1">{getStatus(hour)}</span>
+                                            <span className="ml-1">{getStatus(hour)}</span>
                                         </h4>
                                         <div className="row ">
                                             <div>

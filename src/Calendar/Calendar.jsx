@@ -7,7 +7,8 @@ import Header from "../components/Header/Header";
 import AddEventModal from "../components/AddEventModal/AddEventModal";
 import EventDetail from "../components/EventDetail/EventDetail";
 import {useNavigate, useSearchParams} from "react-router-dom";
-
+import {toast} from "react-toastify";
+import useAuthContext from "../context/useAuthContext.js";
 
 // open update event when click on event name
 export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
@@ -22,8 +23,7 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
         let startDateTime = new Date(updatedEvent.start)
         let endDateTime = new Date(updatedEvent.end)
 
-       // console.log(startDateTime.getMinutes(),  endDateTime.getMinutes())
-        
+
         if(startDateTime.getDate() === endDateTime.getDate()
             && ((endDateTime.getHours() - startDateTime.getHours()) === 23)
             && ((endDateTime.getMinutes() - startDateTime.getMinutes()) === 59)
@@ -31,8 +31,7 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
         {
             isAllDay = true
         }
-        
-        console.log(updatedEvent)
+
         setNewEventData(prev => ({
             ...prev,
             title: updatedEvent.title,
@@ -47,26 +46,26 @@ export function clickOnEventName(evt, monthIndex, events, setNewEventData) {
             notifications: updatedEvent.notifications || [],
             status: updatedEvent.status,
             eventColor: updatedEvent.eventColor,
-            meetingLink: updatedEvent.meetingLink,
-            agenda: updatedEvent.agenda,
-            followUp: updatedEvent.followUp,
-            actionItems: updatedEvent.actionItems,
-            program: updatedEvent.program,
-            session: updatedEvent.session,
-            invitations: updatedEvent.invitations,
+            createdBy: updatedEvent?.createdBy || null,
+            meetingLink: updatedEvent.meetingLink || "",
+            agenda: updatedEvent.agenda || updatedEvent.description || "",
+            followUp: updatedEvent.followUp || "",
+            invitations: updatedEvent.invitations || [],
         }))
     } else {
         alert("not found updated event item")
     }
 }
 
+
 const Calendar = ({pageContent}) => {
 
     const {events,
         setFilterEvent,
         filterEvents,
-        newEventData, auth, setCalendar, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
+        newEventData, setCalendar, setCloseNewEventModal, setEvents, setMonthIndex, setNewEventData} = useContext(CalendarContext)
 
+    const {auth} = useAuthContext()
     
     const  [urlSearchParams] = useSearchParams()
     let eventId = urlSearchParams.get("detail")
@@ -119,8 +118,7 @@ const Calendar = ({pageContent}) => {
     
     function handleCloseEventDetail(){
         setEventDetail(null)
-        navigate("/calendar/month")
-        // urlSearchParams.delete("detail")
+        navigate("/month")
     }
 
     return (

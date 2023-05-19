@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import dayjs from "dayjs";
+
 
 const CalendarContext = React.createContext({})
 
@@ -12,6 +12,9 @@ export const CalendarProvider = (props) => {
         monthIndex: 3,
         date: new Date().getDate(),
         events: [],
+        users: [],
+        programs: [],
+        sessions: [],
         smallCalendarMonth: 0,
         newEventData: {
             isOpen: false,
@@ -59,6 +62,8 @@ export const CalendarProvider = (props) => {
         currentDate: state.currentDate,
         monthIndex: state.monthIndex,
         events: state.events,
+        programs: state.programs,
+        sessions: state.sessions,
         date: state.date,
         smallCalendarMonth: state.smallCalendarMonth,
         calendarView: state.calendarView,
@@ -70,6 +75,13 @@ export const CalendarProvider = (props) => {
             _id: "6422af5d9153de6adce3b085"
         },
         filterEvents: state.filterEvents,
+        users: state.users,
+        setState: function(newState){
+            setState(prev => ({
+                ...prev,
+                ...newState
+            }))
+        },
         setEvents: function (cb) {
             setState(prev => ({
                 ...prev,
@@ -90,14 +102,18 @@ export const CalendarProvider = (props) => {
                     ...prev,
                     filterEvents: updatedFilterEvents
                 }
-                
+
             })
         },
-
+        setSelectedDate: function (val){
+            setState(prev => ({
+                ...prev,
+                selectedDate: val
+            }))
+        },
         addEvent: function (newEvent) {
             setState(prev => ({...prev, events: [...prev.events, newEvent]}))
         },
-
         setSmallCalendarMonth: function (val) {
             setState(prev => ({...prev, smallCalendarMonth: val}))
         },
@@ -110,24 +126,24 @@ export const CalendarProvider = (props) => {
         newEventData: state.newEventData,
         setNewEventData: (cb) => {
             setState(prev => ({
-                ...prev, newEventData: cb(prev.newEventData)
+                ...prev,
+                newEventData: cb(prev.newEventData)
             }))
         },
         setTimeRange: (cb) => {
             setState(prev => ({
-                ...prev, newEventData: {
-                    ...prev.newEventData, timeRange: cb(prev.newEventData.timeRange)
+                ...prev,
+                newEventData: {
+                    ...prev.newEventData,
+                    timeRange: cb(prev.newEventData.timeRange)
                 }
             }))
         },
         setCloseNewEventModal: () => {
             let now = new Date()
-            setState(prev=>({
-                ...prev,
-                events: prev.events.filter(evt=> !evt.isEventCreateInitialize)
-            }))
             setState(prev => ({
                 ...prev,
+                events: prev.events.filter(evt=> !evt.isEventCreateInitialize),
                 newEventData: {
                     isOpen: false,
                     type: "event", // or  task
@@ -152,13 +168,10 @@ export const CalendarProvider = (props) => {
                 }
             }))
         },
-
-
-
         setCalendarView(componentName, query){
             setState(prev => ({
                 ...prev,
-               calendarView: componentName
+                calendarView: componentName
             }))
         }
     }

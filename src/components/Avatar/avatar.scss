@@ -1,0 +1,22 @@
+.avatar {
+  background: var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.users-avatar-list {
+  margin-left: 15px;
+
+  .user-avatar {
+    margin-left: -10px;
+
+    .avatar{
+      border-radius: 100%;
+      border: 4px solid white;
+      width: 40px;
+      height: 40px;
+    }
+
+  }
+}

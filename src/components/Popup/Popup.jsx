@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 // import Backdrop from "@/components/Backdrop";
 import "./popup.scss"
+import Backdrop from "../Backdrop.jsx";
 
 const Popup = ({isOpen, className, isWithBackdrop, children, backdropClass = "", onClose, ...attr}) => {
 
@@ -20,7 +21,7 @@ const Popup = ({isOpen, className, isWithBackdrop, children, backdropClass = "",
 
     return (
         <div>
-            {/*{isWithBackdrop && isOpen && <Backdrop className={backdropClass} onClose={onClose}  />}*/}
+            {isWithBackdrop && isOpen && <Backdrop className={backdropClass} onClose={onClose}  />}
             <div ref={popupRef} tabIndex={-1} onBlur={handleBlur}
                  className={`popup absolute rounded-md p-4 bg-white ${!isOpen ? "popup--close" : "popup--open"} ${className}`} {...attr}>
                 {children}

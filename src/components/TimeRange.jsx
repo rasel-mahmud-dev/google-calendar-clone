@@ -191,7 +191,7 @@ const TimeRange = ({disableTimeLoop = false}) => {
                 </div>
 
 
-                {!disableTimeLoop && <div className=" mt-2 gap-x-6">
+                {!disableTimeLoop && <div className="gap-x-6">
 
                     <div className="flex items-center  gap-x-2">
                         <div className="flex flex-row w-max gap-x-2 ml-2  ">

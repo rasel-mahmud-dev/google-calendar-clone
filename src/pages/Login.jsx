@@ -21,10 +21,8 @@ const Login = ({setTab}) => {
         data,
         setState
     ] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
+        email: "test@gmail.com",
+        password: "123",
     });
 
     const [errors, setErrors] = useState({})

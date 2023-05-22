@@ -1,16 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {BsFillTrash2Fill, FaAngleLeft} from "react-icons/all";
 import EventModalTitle from "./EventModalTitle";
-import Select from "../Form/Select";
 import CalendarContext from "../../context/CalendarContext";
 import Input from "../Form/Input";
 import axios from "axios";
 import fullName from "../../utils/fullName.js";
 import Avatar from "../Avatar/Avatar.jsx";
+import useAuthContext from '../../context/useAuthContext';
 
 const AddUser = ({handleClose, handleChange, setModalId}) => {
 
-    const {newEventData, auth, setNewEventData} = useContext(CalendarContext)
+    const {newEventData, setNewEventData} = useContext(CalendarContext)
+    const [{auth}]  = useAuthContext()
 
     const [usersList, setUsers] = useState([])
 
@@ -31,7 +32,7 @@ const AddUser = ({handleClose, handleChange, setModalId}) => {
     }, [userPayload])
 
     function findUsers(email) {
-        let users = usersList.filter(u => u.email.includes(email) || fullName(u).includes(email))
+        let users = usersList.filter(u => u?.email?.includes(email) || fullName(u).includes(email))
         setSearchUsersList(users)
     }
 
@@ -89,7 +90,7 @@ const AddUser = ({handleClose, handleChange, setModalId}) => {
                     <div>
                         <li className="flex items-center justify-between">
                             <p className="flex items-center ">
-                                <img className="w-6  rounded-full mr-1" src={auth.image} alt=""/>
+                                <img className="w-6  rounded-full mr-1" src={auth.avatar} alt=""/>
                                 <span> {auth.email} (Organizer) </span>
                             </p>
                         </li>

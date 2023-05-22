@@ -9,11 +9,13 @@ import axios from "axios";
 function App() {
 
 
-    if (import.meta.env.DEV) {
-        axios.defaults.baseURL = "http://localhost:4000"
-    } else {
-        axios.defaults.baseURL = "https://google-calendar-api-psi.vercel.app"
-    }
+    // if (import.meta.env.DEV) {
+    //     axios.defaults.baseURL = "http://localhost:4000"
+    // } else {
+    //     axios.defaults.baseURL = "https://google-calendar-api-psi.vercel.app"
+    // }
+
+    axios.defaults.baseURL = "https://google-calendar-api-psi.vercel.app"
 
     axios.interceptors.request.use(function (config) {
 

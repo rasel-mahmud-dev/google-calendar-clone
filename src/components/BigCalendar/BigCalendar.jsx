@@ -98,7 +98,7 @@ const BigCalendar = (props) => {
                 start: new Date(startDateTime).toISOString(), // for instant preview
                 end: new Date(endDateTime).toISOString(), // for instant preview
                 endDateTime: endDateTime,
-                monthIndex: monthIndex
+                monthIndex: monthIndex,
             }
 
             // add new event entry
@@ -107,14 +107,14 @@ const BigCalendar = (props) => {
                 createdBy: {
                     ...auth
                 },
-                ...newEvent
+                ...newEvent,
+                status: "pending"
             })
 
             return newEvent
         })
 
     }
-
 
     // open update event when click on event name
     function handleClickOnEventName(evt, monthIndex) {
@@ -138,6 +138,7 @@ const BigCalendar = (props) => {
         setShowAllEventDate(prev => prev === eventDate ? null : eventDate)
     }
 
+
     function renderEvents(day, monthIndex) {
 
         const eventGroupByDate = {}
@@ -157,6 +158,8 @@ const BigCalendar = (props) => {
             //     )
             // }
         })
+
+
 
         return Object.keys(eventGroupByDate).map(eventDate => {
             let more = 0

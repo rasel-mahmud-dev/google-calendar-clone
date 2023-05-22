@@ -187,9 +187,8 @@ const Main = () => {
             
             <ToastContainer
                 position="top-right"
-                autoClose={false}
-                hideProgressBar={false}
-                newestOnTop={false}
+                autoClose={true}
+                newestOnTop={true}
                 closeOnClick
                 rtl={false}
                 pauseOnFocusLoss

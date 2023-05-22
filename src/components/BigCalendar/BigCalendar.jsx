@@ -118,9 +118,6 @@ const BigCalendar = (props) => {
 
     // open update event when click on event name
     function handleClickOnEventName(evt, monthIndex) {
-        if (!auth) {
-            return toast.error("To create an event, you need to login first.")
-        }
         clickOnEventName(evt, monthIndex, events, setNewEventData)
     }
 

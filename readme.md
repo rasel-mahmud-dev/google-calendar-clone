@@ -1,6 +1,6 @@
 ## Google Calendar Clone
 
 
-Live: https://g-calendar-copy.web.app/calendar/month
+Live: https://google-calendar-clone01.netlify.app
 
 

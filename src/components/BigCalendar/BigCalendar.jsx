@@ -206,7 +206,7 @@ const BigCalendar = (props) => {
                                                     <li onClick={e => withStopPropagation(e, handleOpenEventDetailRoute(eachEvt._id))}
                                                         key={i}
                                                         style={{background: colors[eachEvt.eventColor]}}
-                                                        className="py-1 popup-item text-xs text-gray-100">
+                                                        className="py-1 popup-item text-xs text-gray-800">
 
                                                         {eachEvt.title}</li>
                                                 ))}

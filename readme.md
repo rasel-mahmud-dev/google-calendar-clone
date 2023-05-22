@@ -18,6 +18,11 @@ Built custom calendar using dayjs.
 - html-react-parser
 - react-hook-form
 - yup
+- Nodejs
+- ExpressJS
+- Mongoose
+- Cloudinary (image upload)
+- Formidable (parse form data)
 
 
 

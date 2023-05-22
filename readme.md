@@ -3,6 +3,9 @@
 Create custom calendar without any 3rd party library inspired by google. 
 Built custom calendar using dayjs. 
 
+This calendar helps in creating meetings, managing day-to-day activities, and serving other purposes for this company. I was inspired by Google Calendar while developing it. The calendar was built using ReactJS, SCSS, dayjs, and Tailwind CSS. I used Context API for global state management.
+
+
 ## Features
 - User can create event, invited users who are registerd.
 - Month and day view.
@@ -13,6 +16,7 @@ Built custom calendar using dayjs.
 ## Technology uses: 
 - dayjs
 - ReactJS
+- Context API
 - Sass
 - React-Quil
 - html-react-parser
